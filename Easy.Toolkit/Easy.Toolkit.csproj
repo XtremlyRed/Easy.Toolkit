@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>  
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>$(SolutionDir)\easyToolkit.snk</AssemblyOriginatorKeyFile> 
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	</PropertyGroup>
+	
+
+	<ItemGroup>
+		<None Include="LICENSE" Pack="true" PackagePath="" /> 
+	</ItemGroup>
+	
+	<PropertyGroup>
+		<TargetFrameworks>
+			<!--net40;-->
+			net451;
+			net48;
+			netcoreapp3.1;
+			net5.0;
+			net6.0;
+			net7.0;
+			netstandard2.0;
+			netstandard2.1;
+		</TargetFrameworks>
+	</PropertyGroup>
+
+
+	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
+
+</Project>
