@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Easy.Toolkit
 {
-    public static class FileSystem
+    public static class EasyFolder
     {
         public static readonly CurrentFolder Current = new();
         public static readonly DesktopFolder Desktop = new();

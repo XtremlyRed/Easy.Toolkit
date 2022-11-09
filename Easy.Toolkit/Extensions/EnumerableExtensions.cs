@@ -12,16 +12,67 @@ namespace Easy.Toolkit
     {
 
         /// <summary>
+        ///  array is  null  or empty
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty<Target>(this Target[] array)
+        {
+            return array is null || array.Length == 0;
+        }
+
+        /// <summary>
         ///  collection is  null  or empty
         /// </summary>
         /// <typeparam name="Target"></typeparam>
         /// <param name="collection"></param>
         /// <returns></returns>
-        public static bool IsNullOrEmpty<Target>(this IEnumerable<Target> collection)
+        public static bool IsNullOrEmpty<Target>(this ICollection<Target> collection)
         {
-            return collection is null ? true : collection.GetEnumerator().MoveNext() == false;
+            return collection is null || collection.Count == 0;
         }
 
+
+        /// <summary>
+        ///  collection is  null  or empty
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static TSource FindFirst<TSource>(this IEnumerable<TSource> collection, Func<TSource, bool> predicate, Action<TSource> invoker)
+        {
+            if (collection is null)
+            {
+                return default;
+            }
+
+            TSource first = predicate is null ? collection.FirstOrDefault() : collection.FirstOrDefault(predicate);
+
+            invoker?.Invoke(first);
+
+            return first;
+        }
+
+        /// <summary>
+        ///  collection is  null  or empty
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> collection, Action<TSource> invoker)
+        {
+            if (collection is null)
+            {
+                return default;
+            }
+
+            TSource first = collection.FirstOrDefault();
+
+            invoker?.Invoke(first);
+
+            return first;
+        }
 
         /// <summary>
         /// forEach   collection 
@@ -46,7 +97,6 @@ namespace Easy.Toolkit
                 forEachBody(item);
             }
         }
-
 
         /// <summary>
         /// loop collection{<typeparamref name="Target"/>} by forEachBody and element Index
@@ -181,7 +231,7 @@ namespace Easy.Toolkit
             }
             if (items is null)
             {
-                throw new ArgumentNullException(nameof(items));
+                return collection;
             }
 
             foreach (Target item in items)

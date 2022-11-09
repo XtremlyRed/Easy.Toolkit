@@ -26,11 +26,7 @@ namespace Easy.Toolkit
         }
     }
 
-
-
-
-
-
+     
     /// <summary>
     ///  default pool manager of   <typeparamref name="Target"/>
     /// </summary>

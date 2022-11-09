@@ -1,150 +1,192 @@
 ﻿
 using System;
-using System.ComponentModel;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 
 namespace Easy.Toolkit
 {
     /// <summary>
-    /// class of  <see cref="EasyTimer"/>
+    /// <para> class of  <see cref="EasyTimer"/></para>
+    /// <para> a timer helper class of the execute time</para>
     /// </summary>
     public sealed class EasyTimer : IDisposable
     {
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private static readonly ConcurrentDictionary<object, EasyTimer> timerMapper = new();
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public static EasyTimer Shared => new();
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly Stopwatch stopwatch;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private System.Timers.Timer timer;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private Action<object, System.Timers.ElapsedEventArgs> callbackAction2;
 
-        /// <summary>
-        /// the status of the Timer
-        /// </summary>
-        public bool IsRunning { get; private set; }
-
-        /// <summary>
-        /// create a new Timer instance
-        /// </summary>
-        public EasyTimer()
+        private EasyTimer()
         {
-            timer = new System.Timers.Timer
-            {
-                AutoReset = true
-            };
-
-
-            timer.Elapsed += Timer_Elapsed;
+            stopwatch = Stopwatch.StartNew();
         }
-
         /// <summary>
-        /// 
+        /// dispose this timer
         /// </summary>
         ~EasyTimer()
         {
             Dispose();
         }
-
         /// <summary>
         /// dispose this timer
         /// </summary>
         public void Dispose()
         {
-            if (timer is null)
+            Stop();
+        }
+
+
+        private void Stop()
+        {
+            if (stopwatch.IsRunning)
             {
-                return;
+                stopwatch.Stop();
             }
-            IsRunning = false;
+        }
 
+        /// <summary>
+        /// stop this timer and return  execute  use time
+        /// </summary>
+        /// <returns></returns>
+        public TimeSpan GetTimeSpan()
+        {
+            Stop();
 
-            timer.Elapsed -= Timer_Elapsed;
+            return stopwatch.Elapsed;
+        }
+
+        /// <summary>
+        ///  stop this timer and return  execute  use time
+        /// </summary>
+        /// <returns></returns>
+        public long GetTotalMilliseconds()
+        {
+            Stop();
+
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+        /// <summary>
+        /// ToString()
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"Timer:{stopwatch.ElapsedMilliseconds} ms";
+        }
+
+        /// <summary>
+        /// start a new timer
+        /// </summary>
+        /// <returns></returns>
+        public static EasyTimer StartNew()
+        {
+            return new EasyTimer();
+        }
+
+        /// <summary>
+        /// set a token  and  start a new timer by token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public static EasyTimer SetTimer(object token)
+        {
+            return token is null
+                ? throw new ArgumentNullException(nameof(token))
+                : timerMapper.TryGetValue(token, out EasyTimer timer)
+                ? throw new ArgumentException($"Token:{token} registered", nameof(token))
+                : (timerMapper[token] = new EasyTimer());
+        }
+
+        /// <summary>
+        /// get used time by token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="removeTokenAfterRead"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
+        public static TimeSpan GetTimeSpan(object token, bool removeTokenAfterRead = true)
+        {
+            if (token is null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
+
+            if (!timerMapper.TryGetValue(token, out EasyTimer timer))
+            {
+                throw new NotSupportedException($"Token:{token} not registered ");
+            }
+
+            if (removeTokenAfterRead)
+            {
+                timerMapper.TryRemove(token, out EasyTimer _);
+            }
+
+            return timer.GetTimeSpan();
+        }
+
+        /// <summary>
+        /// get used time by token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="removeTokenAfterRead"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
+        public static double GetTotalMilliseconds(object token, bool removeTokenAfterRead = true)
+        {
+            if (token is null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
+
+            if (!timerMapper.TryGetValue(token, out EasyTimer timer))
+            {
+                throw new NotSupportedException($"Token:{token} not registered ");
+            }
+
             timer.Stop();
-            timer.Dispose();
-            timer = null;
-            callbackAction2 = null;
+
+            if (removeTokenAfterRead)
+            {
+                timerMapper.TryRemove(token, out EasyTimer _);
+            }
+
+            return timer.GetTotalMilliseconds();
         }
 
 
         /// <summary>
-        /// UesCallback
+        /// run an action and return a timer
         /// </summary>
-        /// <param name="callbackAction"></param>
+        /// <param name="action">action callback</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public EasyTimer UseCallback(Action<object, System.Timers.ElapsedEventArgs> callbackAction)
+        public static EasyTimer Run(Action action)
         {
-            callbackAction2 = callbackAction ?? throw new ArgumentNullException(nameof(callbackAction));
-            return this;
-        }
+            if (action is null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
-        /// <summary>
-        /// UseAutoReset
-        /// </summary>
-        /// <param name="autoReset"></param>
-        /// <returns></returns>
-        public EasyTimer UseAutoReset(bool autoReset)
-        {
-            timer.AutoReset = autoReset;
-            return this;
-        }
+            EasyTimer timer = EasyTimer.StartNew();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                timer.Stop();
+            }
 
-        /// <summary>
-        /// UseInterval
-        /// </summary>
-        /// <param name="milliseconds">milliseconds</param>
-        /// <returns></returns>
-        public EasyTimer UseInterval(int milliseconds)
-        {
-            timer.Interval = milliseconds;
-            return this;
-        }
-        /// <summary>
-        /// UseSynchronizingObject
-        /// </summary>
-        /// <param name="synchronizingObject"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public EasyTimer UseSynchronizingObject(ISynchronizeInvoke synchronizingObject)
-        {
-            timer.SynchronizingObject = synchronizingObject ?? throw new ArgumentNullException(nameof(synchronizingObject));
-            return this;
-        }
-
-        /// <summary>
-        /// UseSite
-        /// </summary>
-        /// <param name="site"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public EasyTimer UseSite(ISite site)
-        {
-            timer.Site = site ?? throw new ArgumentNullException(nameof(site));
-            return this;
-        }
-
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            callbackAction2?.Invoke(sender, e);
-        }
-
-        /// <summary>
-        /// start the timer
-        /// </summary>
-        /// <returns></returns>
-        public EasyTimer RunAsync()
-        {
-            timer?.Start();
-            IsRunning = true;
-            return this;
-        }
-
-        /// <summary>
-        /// exit the timer
-        /// </summary>
-        public void Exit()
-        {
-            IsRunning = false;
-            timer?.Stop();
+            return timer;
         }
     }
 }

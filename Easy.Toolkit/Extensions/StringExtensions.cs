@@ -10,6 +10,25 @@ namespace Easy.Toolkit
     /// </summary>
     public static class StringExtensions
     {
+        /// <summary>
+        /// <c>@string</c> IsNullOrWhiteSpace
+        /// </summary>
+        /// <param name="string"></param>
+        /// <returns></returns>
+        public static bool IsNullOrWhiteSpace(this string @string)
+        {
+            return string.IsNullOrWhiteSpace(@string);
+        }
+
+        /// <summary>
+        /// <c>@string</c> IsNullOrEmpty
+        /// </summary>
+        /// <param name="string"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty(this string @string)
+        {
+            return string.IsNullOrEmpty(@string);
+        }
 
         /// <summary>
         /// Compare two strings for equality
@@ -39,7 +58,7 @@ namespace Easy.Toolkit
         /// <returns></returns>
         public static bool Compare(this string originString, string compareString, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase)
         {
-            return originString is null || compareString is null ? false : string.Compare(originString, compareString, stringComparison) == 0;
+            return originString is not null && compareString is not null && string.Compare(originString, compareString, stringComparison) == 0;
         }
 
         /// <summary>

@@ -5,3 +5,13 @@
 /.vs
 /bin/AnyCPU
 /Easy.Toolkit/obj
+/Easy.Toolkit.Dynamic/obj
+/Easy.ToolKit.Test/bin
+/Easy.ToolKit.Test/obj
+/Easy.Toolkit.SourceGenerator
+/Easy.Toolkit.Dynamic
+/Easy.Toolkit.Wpf/obj
+/Easy.Toolkit.Wpf.Test/bin/Debug/net6.0-windows
+/Easy.Toolkit.Wpf.Test/obj
+/Easy.ToolKit.Test
+/Easy.Toolkit.Wpf.Test

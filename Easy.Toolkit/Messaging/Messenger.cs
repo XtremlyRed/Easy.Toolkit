@@ -1,22 +1,33 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-
 namespace Easy.Toolkit
 {
     public class Messenger : IMessenger
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never),EditorBrowsable(EditorBrowsableState.Never)]
         private readonly ConcurrentDictionary<string, Mapper> mappers = new();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
         public virtual void Unregister(string token)
         {
-            mappers.TryRemove(token, out _);
+            mappers.TryRemove(token, out Mapper mapper);
+            mapper?.Dispose();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subscriber"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public virtual void UnregisterAll(object subscriber)
         {
             if (subscriber == null)
@@ -24,517 +35,1076 @@ namespace Easy.Toolkit
                 throw new ArgumentNullException(nameof(subscriber));
             }
 
-            System.Collections.Generic.KeyValuePair<string, Mapper>[] exists = mappers.Where(i => i.Value.Subscriber == subscriber).ToArray();
-            foreach (System.Collections.Generic.KeyValuePair<string, Mapper> item in exists)
+            KeyValuePair<string, Mapper>[] exists = mappers.Where(i => i.Value.Subscriber == subscriber).ToArray();
+            foreach (KeyValuePair<string, Mapper> item in exists)
             {
-                mappers.TryRemove(item.Key, out _);
+                mappers.TryRemove(item.Key, out Mapper mapper);
+                mapper?.Dispose();
             }
         }
 
-
+        /// <summary>
+        /// Publish
+        /// </summary>
+        /// <param name="publishToken"></param>
+        /// <param name="messengerParamters"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public virtual void Publish(string publishToken, params object[] messengerParamters)
         {
-            if (string.IsNullOrWhiteSpace(publishToken))
-            {
-                throw new ArgumentNullException(nameof(publishToken));
-            }
+            _ = publishToken ?? throw new ArgumentNullException(nameof(publishToken));
 
             if (mappers.TryGetValue(publishToken, out Mapper mapper))
             {
-                messengerParamters ??= new object[] { null };
-                 
-                mapper.Invoke(messengerParamters);
+                if (string.Compare(mapper.ReturnType.Name, "void", StringComparison.OrdinalIgnoreCase) != 0)
+                {
+                    throw new ArgumentException("return type error or type exception");
+                }
+
+                mapper.Invoke(messengerParamters ?? new object[] { null });
 
                 return;
             }
 
-            throw new ArgumentException("Token does not exist");
+            throw new ArgumentException($"{nameof(publishToken)} does not exist");
         }
 
+        /// <summary>
+        ///  Publish
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="publishToken"></param>
+        /// <param name="messengerParamters"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public virtual TResult Publish<TResult>(string publishToken, params object[] messengerParamters)
         {
-            if (string.IsNullOrWhiteSpace(publishToken))
-            {
-                throw new ArgumentNullException(nameof(publishToken));
-            }
+            _ = publishToken ?? throw new ArgumentNullException(nameof(publishToken));
 
             if (mappers.TryGetValue(publishToken, out Mapper mapper))
-            { 
+            {
                 if (Equals(mapper.ReturnType, typeof(TResult)) == false)
                 {
                     throw new ArgumentException("return type error or type exception");
                 }
 
-                messengerParamters ??= new object[] { null };
-
-                object invokerValue = mapper.Invoke(messengerParamters);
+                object invokerValue = mapper.Invoke(messengerParamters ?? new object[] { null });
 
                 return invokerValue is TResult returnValue ? returnValue : default;
             }
 
-            throw new ArgumentException("Token does not exist");
+            throw new ArgumentException("publishToken does not exist");
 
         }
 
-        public virtual Task PublishAsync(string token, params object[] messageParams)
+        /// <summary>
+        ///  PublishAsync
+        /// </summary>
+        /// <param name="publishToken"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="messageParams"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual Task PublishAsync(string publishToken, System.Threading.CancellationToken cancellationToken, params object[] messageParams)
         {
-            return string.IsNullOrWhiteSpace(token)
-                ? throw new ArgumentNullException(nameof(token))
-                : Task.Factory.StartNew(() =>
-            {
-                Publish(token, messageParams);
-            }, System.Threading.CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
+            _ = publishToken ?? throw new ArgumentNullException(nameof(publishToken));
+
+            return Task.Factory.StartNew(() => Publish(publishToken, messageParams), cancellationToken, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
 
-        public virtual Task<TResult> PublishAsync<TResult>(string token, params object[] messageParams)
+        /// <summary>
+        ///  PublishAsync
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="publishToken"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="messageParams"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual Task<TResult> PublishAsync<TResult>(string publishToken, System.Threading.CancellationToken cancellationToken, params object[] messageParams)
         {
-            return string.IsNullOrWhiteSpace(token)
-                ? throw new ArgumentNullException(nameof(token))
-                : Task.Factory.StartNew(() =>
-            {
-                return Publish<TResult>(token, messageParams);
-            }, System.Threading.CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
-        }
+            _ = publishToken ?? throw new ArgumentNullException(nameof(publishToken));
 
+            return Task.Factory.StartNew(() => Publish<TResult>(publishToken, messageParams), cancellationToken, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
+        }
+         
+        /// <summary>
+        /// subscribe function
+        /// </summary> 
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TResult>(object subscriber, string token, Func<TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+        /// <summary>
+        /// subscribe function
+        /// </summary> 
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe(object subscriber, string token, Action subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage, TResult>(object subscriber, string token, Func<TMessage, TResult> subscribeDelegate)
+
+        #region 1
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1>(object subscriber, string token, Action<TMessage1> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage>(object subscriber, string token, Action<TMessage> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TResult>(object subscriber, string token, Func<TMessage1, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TResult> subscribeDelegate)
-        {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
 
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
-            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
-        }
-
+        #endregion
+        #region 2
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2>(object subscriber, string token, Action<TMessage1, TMessage2> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TResult> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+
+        #endregion
+        #region 3
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2, TMessage3>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TResult> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+
+        #endregion
+        #region 4
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TResult> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+
+        #endregion
+        #region 5
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TResult> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+
+        #endregion
+        #region 6
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TResult> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+
+        #endregion
+        #region 7
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TResult> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+
+        #endregion
+        #region 8
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TResult> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+
+        #endregion
+        #region 9
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TResult> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+
+        #endregion
+        #region 10
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TResult> subscribeDelegate)
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TResult> subscribeDelegate)
         {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
+
+        #endregion
+        #region 11
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
         public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11> subscribeDelegate)
         {
-
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-
-            if (mappers.TryGetValue(token, out _))
-            {
-                throw new ArgumentException("Token already exists");
-            }
-
-            object subscriber1 = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
             MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
-            Mapper mapper = new(subscriber1, token, method, subscribeDelegate);
-            mappers[token] = mapper;
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
         }
 
-        private class Mapper
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TResult> subscribeDelegate)
         {
-            private readonly object Handler;
-            private readonly MethodInfo Method;
-            public Mapper(object subscriber, string token, MethodInfo method, object handler)
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        #endregion
+        #region 12
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TResult> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        #endregion
+        #region 13
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <typeparam name="TMessage13">parameter 13</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <typeparam name="TMessage13">parameter 13</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TResult> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        #endregion
+        #region 14
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <typeparam name="TMessage13">parameter 13</typeparam>
+        /// <typeparam name="TMessage14">parameter 14</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <typeparam name="TMessage13">parameter 13</typeparam>
+        /// <typeparam name="TMessage14">parameter 14</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TResult> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        #endregion
+        #region 15
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <typeparam name="TMessage13">parameter 13</typeparam>
+        /// <typeparam name="TMessage14">parameter 14</typeparam>
+        /// <typeparam name="TMessage15">parameter 15</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TMessage15>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TMessage15> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <typeparam name="TMessage13">parameter 13</typeparam>
+        /// <typeparam name="TMessage14">parameter 14</typeparam>
+        /// <typeparam name="TMessage15">parameter 15</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TMessage15, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TMessage15, TResult> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        #endregion
+        #region 16
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <typeparam name="TMessage13">parameter 13</typeparam>
+        /// <typeparam name="TMessage14">parameter 14</typeparam>
+        /// <typeparam name="TMessage15">parameter 15</typeparam>
+        /// <typeparam name="TMessage16">parameter 16</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TMessage15, TMessage16>(object subscriber, string token, Action<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TMessage15, TMessage16> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        /// <summary>
+        /// subscribe function
+        /// </summary>
+        /// <typeparam name="TMessage1">parameter 1</typeparam>
+        /// <typeparam name="TMessage2">parameter 2</typeparam>
+        /// <typeparam name="TMessage3">parameter 3</typeparam>
+        /// <typeparam name="TMessage4">parameter 4</typeparam>
+        /// <typeparam name="TMessage5">parameter 5</typeparam>
+        /// <typeparam name="TMessage6">parameter 6</typeparam>
+        /// <typeparam name="TMessage7">parameter 7</typeparam>
+        /// <typeparam name="TMessage8">parameter 8</typeparam>
+        /// <typeparam name="TMessage9">parameter 9</typeparam>
+        /// <typeparam name="TMessage10">parameter 10</typeparam>
+        /// <typeparam name="TMessage11">parameter 11</typeparam>
+        /// <typeparam name="TMessage12">parameter 12</typeparam>
+        /// <typeparam name="TMessage13">parameter 13</typeparam>
+        /// <typeparam name="TMessage14">parameter 14</typeparam>
+        /// <typeparam name="TMessage15">parameter 15</typeparam>
+        /// <typeparam name="TMessage16">parameter 16</typeparam>
+        /// <typeparam name="TResult">return value type</typeparam>
+        /// <param name="subscriber">subscriber</param>
+        /// <param name="token">subscribe token</param>
+        /// <param name="callbackHandler">subscribe callback</param>
+        public virtual void Subscribe<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TMessage15, TMessage16, TResult>(object subscriber, string token, Func<TMessage1, TMessage2, TMessage3, TMessage4, TMessage5, TMessage6, TMessage7, TMessage8, TMessage9, TMessage10, TMessage11, TMessage12, TMessage13, TMessage14, TMessage15, TMessage16, TResult> subscribeDelegate)
+        {
+            _ = token ?? throw new ArgumentNullException(nameof(token));
+            _ = subscriber ?? throw new ArgumentNullException(nameof(subscriber));
+            MethodInfo method = subscribeDelegate?.Method ?? throw new ArgumentNullException(nameof(subscribeDelegate));
+            if (mappers.TryGetValue(token, out Mapper mapper) == false)
+            {
+                mappers[token] = mapper = new Mapper();
+            }
+            mapper.Update(subscriber, token, method, subscribeDelegate);
+        }
+
+
+        #endregion
+
+
+
+
+        private class Mapper : IDisposable
+        {
+            private object Handler;
+            private MethodInfo Method;
+
+            public void Update(object subscriber, string token, MethodInfo method, object handler)
             {
                 Token = token;
                 Subscriber = subscriber;
@@ -544,14 +1114,23 @@ namespace Easy.Toolkit
                 Method = Handler.GetType().GetMethod(nameof(MethodInfo.Invoke));
             }
 
-            public string Token { get; }
+            public string Token { get; private set; }
 
-            public object Subscriber { get; }
+            public object Subscriber { get; private set; }
 
-            public Type[] Arguments { get; }
+            public Type[] Arguments { get; private set; }
 
-            public Type ReturnType { get; }
+            public Type ReturnType { get; private set; }
 
+            public void Dispose()
+            {
+                Subscriber = null;
+                Token = null;
+                Arguments = null;
+                ReturnType = null;
+                Method = null;
+                Handler = null;
+            }
 
             public object Invoke(params object[] messageParams)
             {

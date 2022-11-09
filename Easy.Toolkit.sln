@@ -3,9 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32916.344
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TookKits", "TookKits", "{BC32F9E7-42F4-4284-B81D-B107C75E10FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.Toolkit", "Easy.Toolkit\Easy.Toolkit.csproj", "{C5E768A9-1279-41B6-856A-0D3F6A38E57D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Easy.Toolkit", "Easy.Toolkit\Easy.Toolkit.csproj", "{C5E768A9-1279-41B6-856A-0D3F6A38E57D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.ToolKit.Test", "Easy.ToolKit.Test\Easy.ToolKit.Test.csproj", "{58B03E77-1FC5-456D-AFF8-C5E6F3520793}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{9CB3F0E0-9EBA-40F3-9938-A30E785973DD}"
+	ProjectSection(SolutionItems) = preProject
+		GlobalCompileSettings.Targets = GlobalCompileSettings.Targets
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.Toolkit.Wpf", "Easy.Toolkit.Wpf\Easy.Toolkit.Wpf.csproj", "{E07E4BA1-C7F9-4CA3-8E4B-B23F71C1876B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Easy.Toolkit.Wpf.Test", "Easy.Toolkit.Wpf.Test\Easy.Toolkit.Wpf.Test.csproj", "{F8BACE2F-4C95-40BC-8874-DED23039F19C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +26,21 @@ Global
 		{C5E768A9-1279-41B6-856A-0D3F6A38E57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5E768A9-1279-41B6-856A-0D3F6A38E57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5E768A9-1279-41B6-856A-0D3F6A38E57D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58B03E77-1FC5-456D-AFF8-C5E6F3520793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58B03E77-1FC5-456D-AFF8-C5E6F3520793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58B03E77-1FC5-456D-AFF8-C5E6F3520793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58B03E77-1FC5-456D-AFF8-C5E6F3520793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E07E4BA1-C7F9-4CA3-8E4B-B23F71C1876B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E07E4BA1-C7F9-4CA3-8E4B-B23F71C1876B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E07E4BA1-C7F9-4CA3-8E4B-B23F71C1876B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E07E4BA1-C7F9-4CA3-8E4B-B23F71C1876B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8BACE2F-4C95-40BC-8874-DED23039F19C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8BACE2F-4C95-40BC-8874-DED23039F19C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8BACE2F-4C95-40BC-8874-DED23039F19C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8BACE2F-4C95-40BC-8874-DED23039F19C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{C5E768A9-1279-41B6-856A-0D3F6A38E57D} = {BC32F9E7-42F4-4284-B81D-B107C75E10FB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D63D8FE8-9948-4D9F-A40F-EAACE7693F35}

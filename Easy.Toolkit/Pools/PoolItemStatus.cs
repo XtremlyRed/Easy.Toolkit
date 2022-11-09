@@ -3,7 +3,7 @@
     /// <summary>
     /// object pool item status
     /// </summary>
-    public    enum PoolItemStatus
+    public enum PoolItemStatus
     {
         /// <summary>
         /// free

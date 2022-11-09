@@ -9,10 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 
 namespace Easy.Toolkit
-{
-
-
-
+{ 
     /// <summary>
     /// simple mvvm ViewModelBase
     /// </summary>
