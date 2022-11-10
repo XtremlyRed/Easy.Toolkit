@@ -4,9 +4,10 @@ using System.Windows.Threading;
 namespace Easy.Toolkit
 {
     /// <summary>
-    ///  navigation depute 
+    ///  navigation deliver 
     /// </summary>
-    public interface INavigationDepute
+    public interface INavigationDeliver
+
     {
         /// <summary>
         /// navigation  identity
@@ -31,9 +32,9 @@ namespace Easy.Toolkit
 
 
     /// <summary>
-    ///  navigation depute 
+    ///  navigation deliver 
     /// </summary>
-    public sealed class NavigationDepute : INavigationDepute
+    public sealed class NavigationDeliver : INavigationDeliver
     {
 
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]

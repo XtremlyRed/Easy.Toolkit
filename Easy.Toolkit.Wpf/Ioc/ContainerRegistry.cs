@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 
+using Microsoft.Win32;
+
 namespace Easy.Toolkit
 {
     internal class ContainerRegistry : IContainerRegistry
@@ -8,6 +10,10 @@ namespace Easy.Toolkit
         [EditorBrowsable(EditorBrowsableState.Never)]
         internal Container Container = new();
 
+        public IContainerProvider Buidler()
+        {
+            return new ContainerProvider(this); 
+        }
 
         public IRegisteredType Register<Target>(Type type)
         {

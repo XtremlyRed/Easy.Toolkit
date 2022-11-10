@@ -18,7 +18,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="navigationIdentity"></param>
         /// <returns></returns>
-        INavigationDepute this[string navigationIdentity] { get; }
+        INavigationDeliver this[string navigationIdentity] { get; }
 
 
         /// <summary>
@@ -64,6 +64,7 @@ namespace Easy.Toolkit
                 {
                     throw new Exception($"{s.GetType()} must inherit interface:{typeof(INavigationControl)}");
                 }
+                  
 
                 if (e.NewValue is true)
                 {
@@ -71,7 +72,7 @@ namespace Easy.Toolkit
                     {
                         return;
                     }
-                    navigationAwares[control] = new NavigationDepute()
+                    navigationAwares[control] = new NavigationDeliver()
                     {
                         Navigation = control,
                         Dispatcher = s.Dispatcher,
@@ -79,7 +80,7 @@ namespace Easy.Toolkit
                     return;
                 }
 
-                if (!navigationAwares.TryGetValue(control, out NavigationDepute value))
+                if (!navigationAwares.TryGetValue(control, out NavigationDeliver value))
                 {
                     return;
                 }
@@ -103,9 +104,9 @@ namespace Easy.Toolkit
 
 
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal static Dictionary<INavigationControl, NavigationDepute> navigationAwares = new Dictionary<INavigationControl, NavigationDepute>();
+        internal static Dictionary<INavigationControl, NavigationDeliver> navigationAwares = new Dictionary<INavigationControl, NavigationDeliver>();
 
-        public INavigationDepute this[string navigationIdentity]
+        public INavigationDeliver this[string navigationIdentity]
         {
             get
             {
@@ -114,7 +115,7 @@ namespace Easy.Toolkit
                     throw new ArgumentNullException(nameof(navigationIdentity));
                 }
 
-                NavigationDepute proxy = navigationAwares.Values.FirstOrDefault(i => string.Compare(i.Navigation?.Identity, navigationIdentity) == 0);
+                NavigationDeliver proxy = navigationAwares.Values.FirstOrDefault(i => string.Compare(i.Navigation?.Identity, navigationIdentity) == 0);
 
                 return proxy;
             }
@@ -127,7 +128,7 @@ namespace Easy.Toolkit
                 throw new ArgumentNullException(nameof(navigationIdentity));
             }
 
-            NavigationDepute proxy = navigationAwares.Values.FirstOrDefault(i => string.Compare(i.Navigation?.Identity, navigationIdentity) == 0);
+            NavigationDeliver proxy = navigationAwares.Values.FirstOrDefault(i => string.Compare(i.Navigation?.Identity, navigationIdentity) == 0);
 
             if (proxy is null)
             {
@@ -144,7 +145,7 @@ namespace Easy.Toolkit
                 throw new ArgumentNullException(nameof(navigationIdentity));
             }
 
-            NavigationDepute proxy = navigationAwares.Values.FirstOrDefault(i => string.Compare(i.Navigation?.Identity, navigationIdentity) == 0);
+            NavigationDeliver proxy = navigationAwares.Values.FirstOrDefault(i => string.Compare(i.Navigation?.Identity, navigationIdentity) == 0);
 
             if (proxy is null)
             {

@@ -29,6 +29,10 @@ namespace Easy.Toolkit
         [EditorBrowsable(EditorBrowsableState.Never)]
         private static bool _initialized = false;
 
+        /// <summary>
+        /// initialize default themes
+        /// </summary>
+        /// <param name="application"></param>
         public static void Initialize(Application application = null)
         {
             application ??= Application.Current;

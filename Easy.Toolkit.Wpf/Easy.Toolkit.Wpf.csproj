@@ -29,13 +29,7 @@
 
 		</TargetFrameworks>
 	</PropertyGroup>
-
-
-	<ItemGroup Label="Package">
-		<None Include="$(OutputPath)\$(AssemblyName).SourceGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-	</ItemGroup>
-
-
+ 
 	<ItemGroup>
 	  <ProjectReference Include="..\Easy.Toolkit\Easy.Toolkit.csproj" />
 	</ItemGroup>

@@ -24,20 +24,37 @@ namespace Easy.Toolkit
 
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string identity;
-        string INavigationControl.Identity => identity;
+
+        string INavigationControl.Identity
+        {
+            get
+            {
+                if (identity is null)
+                {
+                    throw new Exception($"{GetType()} property:{nameof(INavigationControl.Identity)} value must be unique and cannot be empty or null");
+                }
+
+                return identity;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
         public static DependencyProperty IdentityProperty = PropertyAssist.PropertyRegister<NavigationControl, string>(i => i.Identity, null, (s, e) =>
         {
+            if (s is not INavigationControl control)
+            {
+                throw new Exception($"{s.GetType()} must inherit interface:{typeof(INavigationControl)}");
+            }
+
             s.identity = e.NewValue;
 
-            if (NavigationManager.navigationAwares.TryGetValue(s, out NavigationDepute proxy) == false)
+            if (NavigationManager.navigationAwares.TryGetValue(s, out NavigationDeliver deliver) == false)
             {
-                NavigationManager.navigationAwares[s] = proxy = new NavigationDepute();
+                NavigationManager.navigationAwares[s] = deliver = new NavigationDeliver();
             }
-            proxy.Dispatcher = s.Dispatcher;
-            proxy.Navigation = s;
+            deliver.Dispatcher = s.Dispatcher;
+            deliver.Navigation = s;
         });
 
         [Bindable(true)]
@@ -98,7 +115,7 @@ namespace Easy.Toolkit
         }
 
 
-        private void ExecuteLink(object view, NavigationParameters parameters = null, bool toNew = true)
+        internal static void ExecuteLink(object view, NavigationParameters parameters = null, bool toNew = true)
         {
             if (view == null)
             {

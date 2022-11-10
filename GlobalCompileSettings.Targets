@@ -10,10 +10,9 @@
 
 
 
-	<PropertyGroup>
-		<Copyright>© Xtremly</Copyright>
-		<Version>1.0</Version>
-		<AssemblyVersion>1.0</AssemblyVersion>
+	<PropertyGroup> 
+		<Version>2.0.1</Version>
+		<AssemblyVersion>2.0.1</AssemblyVersion>
 		<LangVersion>11.0</LangVersion>
 		<PackageProjectUrl>https://github.com/XtremlyRed/Easy.Toolkit</PackageProjectUrl>
 	</PropertyGroup>

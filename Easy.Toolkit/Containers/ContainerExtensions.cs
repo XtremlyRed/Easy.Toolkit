@@ -86,7 +86,7 @@ namespace Easy.Toolkit
         /// <param name="container">This container instance</param>
         /// <typeparam name="T">Type to register</typeparam>
         /// <returns>IRegisteredType object</returns>
-        public static IRegisteredType Register (this Container container,Type implementationType)
+        public static IRegisteredType Register(this Container container, Type implementationType)
         {
             return container.Register(implementationType, new[] { implementationType });
         }

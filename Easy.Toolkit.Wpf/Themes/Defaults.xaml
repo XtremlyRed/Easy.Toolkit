@@ -4,6 +4,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="HeaderStyles.xaml" />
         <ResourceDictionary Source="SelectorStyles.xaml" />
+        <ResourceDictionary Source="PopupStyles.xaml" />
+        <ResourceDictionary Source="TransitioningStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
