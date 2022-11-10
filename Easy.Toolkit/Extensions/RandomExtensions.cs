@@ -4,8 +4,20 @@ using System.Collections.Generic;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// random extensions
+    /// </summary>
     public static class RandomExtensions
     {
+        /// <summary>
+        /// random one in scope
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="random"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static Target InScope<Target>(this Random random, IList<Target> collection)
         {
             if (random is null)
@@ -26,6 +38,15 @@ namespace Easy.Toolkit
             return collection[index];
         }
 
+        /// <summary>
+        /// random one in scope
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="random"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static Target InScope<Target>(this Random random, params Target[] collection)
         {
             if (random is null)

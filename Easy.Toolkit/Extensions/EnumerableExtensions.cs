@@ -15,7 +15,7 @@ namespace Easy.Toolkit
         ///  array is  null  or empty
         /// </summary>
         /// <typeparam name="Target"></typeparam>
-        /// <param name="collection"></param>
+        /// <param name="array"></param>
         /// <returns></returns>
         public static bool IsNullOrEmpty<Target>(this Target[] array)
         {
@@ -37,10 +37,12 @@ namespace Easy.Toolkit
         /// <summary>
         ///  collection is  null  or empty
         /// </summary>
-        /// <typeparam name="Target"></typeparam>
+        /// <typeparam name="TSource"></typeparam>
         /// <param name="collection"></param>
+        /// <param name="predicate"></param>
+        /// <param name="firstInvoke"></param>
         /// <returns></returns>
-        public static TSource FindFirst<TSource>(this IEnumerable<TSource> collection, Func<TSource, bool> predicate, Action<TSource> invoker)
+        public static TSource FindFirst<TSource>(this IEnumerable<TSource> collection, Func<TSource, bool> predicate, Action<TSource> firstInvoke)
         {
             if (collection is null)
             {
@@ -49,31 +51,11 @@ namespace Easy.Toolkit
 
             TSource first = predicate is null ? collection.FirstOrDefault() : collection.FirstOrDefault(predicate);
 
-            invoker?.Invoke(first);
+            firstInvoke?.Invoke(first);
 
             return first;
         }
-
-        /// <summary>
-        ///  collection is  null  or empty
-        /// </summary>
-        /// <typeparam name="Target"></typeparam>
-        /// <param name="collection"></param>
-        /// <returns></returns>
-        public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> collection, Action<TSource> invoker)
-        {
-            if (collection is null)
-            {
-                return default;
-            }
-
-            TSource first = collection.FirstOrDefault();
-
-            invoker?.Invoke(first);
-
-            return first;
-        }
-
+  
         /// <summary>
         /// forEach   collection 
         /// </summary>

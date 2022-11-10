@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -9,8 +9,10 @@ namespace Easy.Toolkit
 {
     public class RelayCommand : ICommand, IRelayCommandAsync
     {
-
-        public event EventHandler CanExecuteChanged;
+      
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        private readonly SynchronizationContext synchronizationContext = SynchronizationContext.Current;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -46,6 +48,9 @@ namespace Easy.Toolkit
             this.executeCallback = executeCallback;
             this.canExecuteCallback = canExecuteCallback;
         }
+
+
+        public event EventHandler CanExecuteChanged;
 
         bool ICommand.CanExecute(object parameter)
         {
@@ -107,15 +112,12 @@ namespace Easy.Toolkit
                 return Task.FromResult(false);
             }
             isExecuting = true;
-
-            RaiseCanExecuteChanged();
-
+             
             return executeFuncCallback
                    .Invoke()
                    .ContinueWith(y =>
                    {
-                       isExecuting = false;
-                       RaiseCanExecuteChanged();
+                       isExecuting = false; 
                        y.Wait();
                    });
         }
@@ -123,9 +125,9 @@ namespace Easy.Toolkit
 
         public static implicit operator RelayCommand(Action commandAction)
         {
-            return new RelayCommand(commandAction  );
+            return new RelayCommand(commandAction);
         }
-         
+
     }
 
 }

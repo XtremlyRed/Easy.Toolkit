@@ -11,6 +11,12 @@ namespace Easy.Toolkit
     /// </summary>
     public static class Invoker
     {
+        /// <summary>
+        /// invoke callback where <paramref name="target"/> not null
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="target"></param>
+        /// <param name="whenCallback"></param>
         public static void WhenNotNull<Target>(Target target, Action<Target> whenCallback) where Target : class
         {
             if (target is null)
@@ -21,6 +27,11 @@ namespace Easy.Toolkit
             whenCallback?.Invoke(target);
         }
 
+        /// <summary>
+        /// invoke callback when <paramref name="condition"/> is true
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="whenCallback"></param>
         public static void WhenTrue(bool condition, Action whenCallback)
         {
             if (condition)
@@ -29,6 +40,12 @@ namespace Easy.Toolkit
             }
         }
 
+        /// <summary>
+        /// invoke callback where <paramref name="condition"/> result is true
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="whenCallback"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public static void WhenTrue(Func<bool> condition, Action whenCallback)
         {
             if (condition is null)

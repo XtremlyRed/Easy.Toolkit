@@ -96,7 +96,9 @@ namespace Easy.Toolkit
         {
             return targets is null
                 ? throw new ArgumentNullException(nameof(targets))
-                : joinString is null ? throw new ArgumentNullException(nameof(joinString)) : string.Join(joinString, targets);
+                : joinString is null 
+                ? throw new ArgumentNullException(nameof(joinString)) 
+                : string.Join(joinString, targets);
         }
 
         /// <summary>

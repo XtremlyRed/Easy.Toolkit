@@ -22,6 +22,9 @@ namespace Easy.Toolkit
 
 
 
+    /// <summary>
+    /// navigation parameters
+    /// </summary>
     public class NavigationParameters
     {
         private readonly Dictionary<string, object> dictionary = new Dictionary<string, object>();

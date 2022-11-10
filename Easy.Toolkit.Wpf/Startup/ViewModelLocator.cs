@@ -9,19 +9,34 @@ using System.Windows;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// Used to actively position ViewModel
+    /// </summary>
     public static class ViewModelLocator
     {
+        /// <summary>
+        /// automatically associate view model  when true
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static bool? GetAutoAware(DependencyObject obj)
         {
             return (bool?)obj.GetValue(AutoAwareProperty);
         }
 
+        /// <summary>
+        /// automatically associate view model  when true
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="value"></param>
         public static void SetAutoAware(DependencyObject obj, bool? value)
         {
             obj.SetValue(AutoAwareProperty, value);
         }
 
-
+        /// <summary>
+        /// automatically associate view model when true
+        /// </summary>
         public static readonly DependencyProperty AutoAwareProperty =
             DependencyProperty.RegisterAttached("AutoAware", typeof(bool?),
             typeof(ViewModelLocator),
@@ -52,6 +67,7 @@ namespace Easy.Toolkit
             }));
 
 
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
         internal static Func<Type, Type> defaultViewTypeToViewModelTypeResolver =
           viewType =>
@@ -65,6 +81,10 @@ namespace Easy.Toolkit
           };
 
 
+        /// <summary>
+        /// default view type to view model type resolver
+        /// </summary>
+        /// <param name="viewTypeToViewModelTypeResolver"></param>
         public static void SetDefaultViewTypeToViewModelTypeResolver(Func<Type, Type> viewTypeToViewModelTypeResolver)
         {
             if (viewTypeToViewModelTypeResolver is null)
@@ -75,61 +95,7 @@ namespace Easy.Toolkit
             defaultViewTypeToViewModelTypeResolver = viewTypeToViewModelTypeResolver;
         }
 
-
-
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        internal static IDictionary<string, ViewViewModelAware> viewNameAwares = new Dictionary<string, ViewViewModelAware>();
-
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        internal static IDictionary<Type, ViewViewModelAware> viewTypeAwares = new Dictionary<Type, ViewViewModelAware>();
-
-
-        public static void RegisterView<TView>(this IContainerRegistry registry, string viewName = null, bool autoWareViewModel = true, bool notExistViewModelThrowException = false)
-        {
-            Type viewType = typeof(TView);
-
-            viewName ??= viewType.Name;
-
-            if (viewNameAwares.TryGetValue(viewName, out ViewViewModelAware viewViewModelAware) && viewViewModelAware != null)
-            {
-                throw new Exception($"view name : {viewName} already exists");
-            }
-
-            Type viewModelType = viewType.GetAttribute<ViewModelLocatorAttribute>()?.ViewModelType;
-
-            ViewViewModelAware aware = new ViewViewModelAware
-            {
-                AutoWareViewModel = viewModelType is null && autoWareViewModel,
-                NotExistViewModelThrowException = notExistViewModelThrowException,
-                ViewType = viewType,
-                ViewName = viewName,
-                ViewModelType = viewModelType
-            };
-
-            viewTypeAwares[aware.ViewType] = aware;
-            viewNameAwares[aware.ViewName] = aware;
-
-            registry.Register<TView>().AsSingleton();
-        }
-
-
-        public static void RegisterView<TView, TViewModel>(this IContainerRegistry registry, string viewName = null)
-        {
-            Type viewType = typeof(TView);
-
-            viewName ??= viewType.Name;
-
-            RegisterView<TView>(registry, viewName, false, false);
-
-            viewNameAwares[viewName].ViewModelType = typeof(TViewModel);
-
-            registry.Register<TViewModel>().AsSingleton();
-        }
-
-
-
+         
         internal class ViewViewModelAware
         {
             public Type ViewType;

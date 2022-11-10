@@ -39,13 +39,6 @@ namespace Easy.Toolkit
         }
         public TransitioningControl()
         {
-            //IsVisibleChanged += (s, e) =>
-            //{
-            //    if (e.NewValue is bool r && r)
-            //    {
-            //        RunTransition();
-            //    }
-            //};
             Loaded += (s, e) => RunTransition();
 
         }
@@ -90,23 +83,20 @@ namespace Easy.Toolkit
             get => base.GetValue(ContentProperty);
             set
             {
-                try
+                if (value is null)
                 {
-                    if (value != null)
-                    {
-                        Visibility = Visibility.Collapsed;
-                    }
                     base.SetValue(ContentProperty, value);
+                    return;
                 }
-                finally
-                {
-                    RunTransition();
-                    Visibility = Visibility.Visible;
-                }
+
+                Visibility = Visibility.Collapsed;
+                base.SetValue(ContentProperty, value);
+                RunTransition();
+                Visibility = Visibility.Visible;
             }
         }
 
-        public void RunTransition()
+        private void RunTransition()
         {
             if (!IsArrangeValid || contentPresenter == null)
             {
@@ -134,14 +124,17 @@ namespace Easy.Toolkit
             {
                 return;
             }
+
             Storyboard storyboard = ResourceAssist.GetResource<Storyboard>($"{mode}Transition");
             storyboard?.Begin(contentPresenter);
         }
 
+        /// <summary>
+        /// <seealso cref="OnApplyTemplate"/>
+        /// </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
             contentPresenter = GetTemplateChild("PATH_Container") as FrameworkElement;
         }
 

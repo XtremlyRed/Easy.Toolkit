@@ -15,7 +15,7 @@ namespace Easy.Toolkit
         string Identity { get; }
 
         /// <summary>
-        /// <para> Use the method <see cref="ViewModelLocator.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register views. </para>
+        /// <para> Use the method <see cref="ViewRegisterExtensions.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register views. </para>
         /// <para> The parameter <paramref name="viewName"/> is the viewName here</para>
         /// </summary>
         /// <param name="viewName">view name</param>
@@ -59,7 +59,7 @@ namespace Easy.Toolkit
 
 
         /// <summary>
-        /// <para> Use the method <see cref="ViewModelLocator.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register views. </para>
+        /// <para> Use the method <see cref="ViewRegisterExtensions.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register views. </para>
         /// <para> The parameter <paramref name="viewName"/> is the viewName here</para>
         /// </summary>
         /// <param name="viewName">view name</param>
@@ -72,7 +72,7 @@ namespace Easy.Toolkit
                 throw new ArgumentNullException(nameof(viewName));
             }
 
-            if (ViewModelLocator.viewNameAwares.TryGetValue(viewName, out ViewModelLocator.ViewViewModelAware viewViewModelAware) == false)
+            if (ViewRegisterExtensions.viewNameAwares.TryGetValue(viewName, out ViewModelLocator.ViewViewModelAware viewViewModelAware) == false)
             {
                 throw new Exception($"view:{viewName} not registered");
             }

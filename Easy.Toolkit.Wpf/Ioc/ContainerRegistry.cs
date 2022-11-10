@@ -88,7 +88,7 @@ namespace Easy.Toolkit
             {
                 if (frameworkElement.DataContext is null)
                 {
-                    if (ViewModelLocator.viewTypeAwares.TryGetValue(type, out ViewModelLocator.ViewViewModelAware aware))
+                    if (ViewRegisterExtensions.viewTypeAwares.TryGetValue(type, out ViewModelLocator.ViewViewModelAware aware))
                     {
                         if (aware.ViewModelType is null && aware.AutoWareViewModel == true)
                         {

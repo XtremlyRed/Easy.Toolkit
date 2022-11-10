@@ -24,7 +24,7 @@ namespace Easy.Toolkit
         /// <summary>
         /// <para> <c>explain:</c>></para>
         /// <para> use thr property <see cref="NavigationControl.Identity"/> to register <paramref name="navigationIdentity"/></para>
-        /// <para> use the method <see cref="ViewModelLocator.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register view. </para>
+        /// <para> use the method <see cref="ViewRegisterExtensions.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register view. </para>
         /// <para> the parameter <paramref name="viewName"/> is the viewName here</para> 
         /// </summary>
         /// <param name="navigationIdentity"></param>

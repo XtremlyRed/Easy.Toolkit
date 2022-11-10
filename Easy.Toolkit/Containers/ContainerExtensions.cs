@@ -5,7 +5,7 @@ namespace Easy.Toolkit
     /// <summary>
     /// Extension methods for Container
     /// </summary>
-    public static class ContainerExtensions
+    public static partial class ContainerExtensions
     {
         /// <summary>
         /// Registers an implementation implementationType for the specified interface

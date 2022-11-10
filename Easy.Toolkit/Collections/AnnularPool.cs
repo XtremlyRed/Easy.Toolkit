@@ -11,6 +11,9 @@ namespace Easy.Toolkit
     public class AnnularPool<Target>
     {
 
+        /// <summary>
+        /// Capacity
+        /// </summary>
         public readonly int Capacity;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -25,6 +28,10 @@ namespace Easy.Toolkit
         [EditorBrowsable(EditorBrowsableState.Never)]
         private int writeTotalPos;
 
+        /// <summary>
+        /// create a new <see cref="AnnularPool{Target}"/> by capacity
+        /// </summary>
+        /// <param name="capacity"></param>
         public AnnularPool(int capacity = 0)
         {
             int defaultCapacity = 1024;

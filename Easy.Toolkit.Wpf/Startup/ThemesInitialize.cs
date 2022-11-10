@@ -2,8 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Markup;
-[assembly: XmlnsDefinition("http://easytoolkit.org/", "Easy.Toolkit")]
+using System.Windows.Markup; 
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located

@@ -120,7 +120,11 @@ namespace Easy.Toolkit
 
 
 
-
+        /// <summary>
+        /// get type string name
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static string GetTypeName(Type type)
         {
             string typeName = type.Name;

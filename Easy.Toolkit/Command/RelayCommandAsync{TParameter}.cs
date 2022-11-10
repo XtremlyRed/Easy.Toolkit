@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -9,6 +10,9 @@ namespace Easy.Toolkit
 
     public class RelayCommandAsync<TParameter> : ICommand, IRelayCommandAsync<TParameter>
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        private readonly SynchronizationContext synchronizationContext = SynchronizationContext.Current;
         public event EventHandler CanExecuteChanged;
 
 
@@ -70,17 +74,12 @@ namespace Easy.Toolkit
             }
 
             isExecuting = true;
-
-            RaiseCanExecuteChanged();
-
+             
             return executeCallback
                 .Invoke(parameter)
                 .ContinueWith(t =>
                 {
-                    isExecuting = false;
-
-                    RaiseCanExecuteChanged();
-
+                    isExecuting = false; 
                     t.Wait();
                 });
 
@@ -92,7 +91,7 @@ namespace Easy.Toolkit
         }
 
 
-        public static implicit operator RelayCommandAsync<TParameter>(Func<TParameter,Task> commandAction)
+        public static implicit operator RelayCommandAsync<TParameter>(Func<TParameter, Task> commandAction)
         {
             return new RelayCommandAsync<TParameter>(commandAction);
         }

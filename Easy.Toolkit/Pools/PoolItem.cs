@@ -106,8 +106,7 @@ namespace Easy.Toolkit.Pools
         /// </summary> 
         [EditorBrowsable(EditorBrowsableState.Never)]
         void IDisposable.Dispose()
-        {
-
+        { 
             poolManager.Return(this);
         }
 

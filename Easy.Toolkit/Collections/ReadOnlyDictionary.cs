@@ -53,12 +53,12 @@ namespace Easy.Toolkit
         /// <summary>
         /// all key
         /// </summary>
-        public IEnumerable<TKey> Keys => collection.Keys;
+        public IEnumerable<TKey> Keys => collection.Keys.ToReadOnlyList();
 
         /// <summary>
         /// all value
         /// </summary>
-        public IEnumerable<TValue> Values => collection.Values;
+        public IEnumerable<TValue> Values => collection.Values.ToReadOnlyList();
 
         /// <summary>
         /// count
