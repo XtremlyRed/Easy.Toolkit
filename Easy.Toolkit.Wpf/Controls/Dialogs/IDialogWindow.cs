@@ -24,7 +24,7 @@ namespace Easy.Toolkit
         /// </summary>        
         Window Owner { get; set; }
         /// <summary>
-        /// The data context must implement Prism.Services.Dialogs.IDialogAware.
+        /// The data context must implement <see cref="IDialogViewModelAware"/>
         /// </summary>        
         object DataContext { get; set; }
         /// <summary>
