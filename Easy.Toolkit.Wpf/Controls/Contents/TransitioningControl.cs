@@ -188,7 +188,7 @@ namespace Easy.Toolkit
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly Stack<object> activitedView = new Stack<object>();
 
-        async Task INavigationControl.NavigateToAsync(object view, NavigationParameters parameters = null)
+        async Task INavigationControl.NavigateToAsync(object view, INavigationParameters parameters = null)
         {
 
             await Dispatcher.InvokeAsync(() =>

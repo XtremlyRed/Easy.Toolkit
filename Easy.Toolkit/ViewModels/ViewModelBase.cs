@@ -1,15 +1,10 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Easy.Toolkit
-{ 
+{
     /// <summary>
     /// simple mvvm ViewModelBase
     /// </summary>

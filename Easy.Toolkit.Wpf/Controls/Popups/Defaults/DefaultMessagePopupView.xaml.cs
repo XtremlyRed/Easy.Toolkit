@@ -33,5 +33,7 @@ namespace Easy.Toolkit.Popups
         }
 
         public event EventHandler<PopupResultEventArgs> RequestClose;
+
+         
     }
 }

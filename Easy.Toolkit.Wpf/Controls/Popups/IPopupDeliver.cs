@@ -11,7 +11,7 @@ namespace Easy.Toolkit
 
         Task<bool> ConfirmAsync(string confirmMessage);
 
-        Task<object> PopupAsync<TView>(Func<TView> viewCreator) where TView : IPopupControl;
+        Task<object> PopupAsync<TView>(Func<TView> viewCreator) where TView : IPopupView;
 
     }
 
@@ -29,7 +29,7 @@ namespace Easy.Toolkit
             return Popup.ConfirmAsync(confirmMessage);
         }
 
-        public Task<object> PopupAsync<TView>(Func<TView> viewCreator) where TView : IPopupControl
+        public Task<object> PopupAsync<TView>(Func<TView> viewCreator) where TView : IPopupView
         {
             return Popup.PopupAsync(viewCreator);
         }

@@ -21,7 +21,7 @@ namespace Easy.Toolkit
         /// <param name="viewName">view name</param>
         /// <param name="navigationParameters"></param>
         /// <returns></returns>
-        public Task NavigateToAsync(string viewName, NavigationParameters navigationParameters = null);
+        public Task NavigateToAsync(string viewName, INavigationParameters navigationParameters = null);
 
         /// <summary>
         /// navigation back
@@ -65,7 +65,7 @@ namespace Easy.Toolkit
         /// <param name="viewName">view name</param>
         /// <param name="navigationParameters"></param>
         /// <returns></returns>
-        public async Task NavigateToAsync(string viewName, NavigationParameters navigationParameters = null)
+        public async Task NavigateToAsync(string viewName, INavigationParameters navigationParameters = null)
         {
             if (viewName is null)
             {

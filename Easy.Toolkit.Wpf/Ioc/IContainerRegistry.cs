@@ -15,7 +15,9 @@ namespace Easy.Toolkit
         IRegisteredType Register<Target>(Func<object> factory);
          
         IRegisteredType Register<Target>();
-         
+
+        void RegisterInstance(object target);
+
         IContainerProvider Buidler();
     }
 

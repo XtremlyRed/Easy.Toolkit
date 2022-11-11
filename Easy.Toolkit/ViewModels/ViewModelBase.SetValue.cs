@@ -121,7 +121,13 @@ namespace Easy.Toolkit
             }
 
             object value = PropertyValueMapper.GetOrAdd(propertyName, i => defaultValue);
-            return (TType)value;
+
+            if(value is not TType tValue)
+            {
+                return default;
+            }
+
+            return tValue;
         }
     }
 }

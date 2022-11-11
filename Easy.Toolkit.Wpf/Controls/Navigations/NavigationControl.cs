@@ -10,7 +10,7 @@ namespace Easy.Toolkit
     {
         string Identity { get; }
         Task NavigateBackAsync();
-        Task NavigateToAsync(object view, NavigationParameters parameters = null);
+        Task NavigateToAsync(object view, INavigationParameters parameters = null);
     }
 
 
@@ -68,7 +68,7 @@ namespace Easy.Toolkit
 
 
 
-        public async Task NavigateToAsync(object view, NavigationParameters parameters = null)
+        public async Task NavigateToAsync(object view, INavigationParameters parameters = null)
         {
             if (currentView == view)
             {
@@ -115,23 +115,11 @@ namespace Easy.Toolkit
         }
 
 
-        internal static void ExecuteLink(object view, NavigationParameters parameters = null, bool toNew = true)
+        internal static void ExecuteLink(object view, INavigationParameters parameters = null, bool toNew = true)
         {
             if (view == null)
             {
                 return;
-            }
-
-            if (view is INavigationViewAware viewLink)
-            {
-                if (toNew)
-                {
-                    viewLink.NavigateTo(parameters);
-                }
-                else
-                {
-                    viewLink.NavigateFrom();
-                }
             }
 
             if (view is not FrameworkElement framework1)
@@ -139,7 +127,12 @@ namespace Easy.Toolkit
                 return;
             }
 
-            if (framework1.DataContext is INavigationViewAware dataContextLink)
+            if (framework1.DataContext is null)
+            {
+                return;
+            }
+
+            if (framework1.DataContext is INavigationViewModelAware dataContextLink)
             {
                 if (toNew)
                 {

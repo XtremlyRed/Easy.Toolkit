@@ -81,9 +81,12 @@ namespace Easy.Toolkit
 
 
 
-
         private IRegisteredType RegisterType(Type[] serviceTypes, Func<ILifetime, object> factory)
         {
+            if (factory is null)
+            {
+                throw new ArgumentNullException(nameof(factory));
+            }
             return new RegisteredType(serviceTypes, (t, creator) => registeredTypes[t] = creator, new FunCreator(factory));
         }
 
@@ -107,7 +110,7 @@ namespace Easy.Toolkit
         /// <summary>
         /// Returns the object registered for the given type, if registered
         /// </summary>
-        /// <param name="type">Type as registered with the container</param>
+        /// <param name="serviceType">Type as registered with the container</param>
         /// <returns>Instance of the registered type, if registered; otherwise <see langword="null"/></returns>
         public object GetService(Type serviceType)
         {

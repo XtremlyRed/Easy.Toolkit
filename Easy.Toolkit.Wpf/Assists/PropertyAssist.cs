@@ -248,9 +248,7 @@ namespace Easy.Toolkit
         #endregion
 
         /// <summary>
-        /// RoutedEvent
-        /// public static readonly RoutedEvent NameRoutedEvent = ElementBase.RoutedEvent<T,T>(string,T);
-        /// public event EventHandler Name { add { AddHandler(EventHandler, value); } remove { RemoveHandler(EventHandler, value); } }
+        /// RoutedEvent 
         /// </summary>
         /// <typeparam name="thisType"></typeparam>
         /// <typeparam name="propertyType"></typeparam>

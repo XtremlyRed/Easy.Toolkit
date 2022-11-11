@@ -55,7 +55,7 @@ namespace Easy.Toolkit
             return false;
         }
 
-        public async Task<object> PopupAsync<TView>(Func<TView> viewCreator) where TView : IPopupControl
+        public async Task<object> PopupAsync<TView>(Func<TView> viewCreator) where TView : IPopupView
         {
             PopupAware popupAware = new PopupAware(PopupMode.Popup, "")
             {

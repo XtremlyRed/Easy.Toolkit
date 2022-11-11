@@ -1,7 +1,5 @@
 ﻿using System.Windows;
 
-using Microsoft.Win32;
-
 namespace Easy.Toolkit
 {
     internal class ContainerRegistry : IContainerRegistry
@@ -12,7 +10,7 @@ namespace Easy.Toolkit
 
         public IContainerProvider Buidler()
         {
-            return new ContainerProvider(this); 
+            return new ContainerProvider(this);
         }
 
         public IRegisteredType Register<Target>(Type type)
@@ -27,6 +25,10 @@ namespace Easy.Toolkit
 
         public IRegisteredType Register<Target>(Func<object> factory)
         {
+            if (factory is null)
+            {
+                throw new ArgumentNullException(nameof(factory));
+            }
             return Container.Register<Target>(factory);
         }
 
@@ -46,9 +48,13 @@ namespace Easy.Toolkit
             return Container.Register(type);
         }
 
-        public void RegisterInstance<Target>(Target instace)
+        public void RegisterInstance(object instace)
         {
-            Container.Register<Target>(() => instace).AsSingleton();
+            if (instace is null)
+            {
+                throw new ArgumentNullException(nameof(instace));
+            }
+            Container.Register(instace.GetType(), () => instace).AsSingleton();
         }
 
         public IRegisteredType RegisterMany(Type implementationType, Type[] serviceTypes)
@@ -84,45 +90,43 @@ namespace Easy.Toolkit
         {
             object @object = Container.GetService(type);
 
-            if (@object is FrameworkElement frameworkElement)
+            if (@object is not FrameworkElement frameworkElement || frameworkElement.DataContext is not null)
             {
-                if (frameworkElement.DataContext is null)
-                {
-                    if (ViewRegisterExtensions.viewTypeAwares.TryGetValue(type, out ViewModelLocator.ViewViewModelAware aware))
-                    {
-                        if (aware.ViewModelType is null && aware.AutoWareViewModel == true)
-                        {
-                            aware.ViewModelType = ViewModelLocator.defaultViewTypeToViewModelTypeResolver(aware.ViewType);
-                        }
-
-                        if (aware.ViewModelType is null)
-                        {
-                            if (aware.NotExistViewModelThrowException == true)
-                            {
-                                throw new Exception("no valid view model type matched");
-                            }
-                        }
-                        else
-                        {
-                            aware.AutoWareViewModel = false;
-
-                            if (ContainerLocator.Container is ContainerProvider container)
-                            {
-                                if (container.Container.IsRegistered(aware.ViewModelType) == false)
-                                {
-                                    ContainerLocator.Registry.Register(aware.ViewModelType).AsSingleton();
-                                }
-                            }
-
-                            frameworkElement.DataContext = ContainerLocator.Container.Resolve(aware.ViewModelType);
-                        }
-
-                        
-                    }
-                }
+                return @object;
             }
 
+            if (ViewRegisterExtensions.viewTypeAwares.TryGetValue(type, out ViewModelLocator.ViewViewModelAware aware) == false)
+            {
+                return @object;
+            }
 
+            if (aware.ViewModelType is null && aware.AutoWareViewModel == true)
+            {
+                aware.ViewModelType = ViewModelLocator.defaultViewTypeToViewModelTypeResolver(aware.ViewType);
+            }
+
+            if (aware.ViewModelType is null)
+            {
+                if (aware.NotExistViewModelThrowException == true)
+                {
+                    throw new Exception("no valid view model type matched");
+                }
+            }
+            else
+            {
+                aware.AutoWareViewModel = false;
+
+                if (ContainerLocator.Container is ContainerProvider container)
+                {
+                    if (container.Container.IsRegistered(aware.ViewModelType) == false)
+                    {
+                        ContainerLocator.Registry.Register(aware.ViewModelType).AsSingleton();
+                    }
+                }
+
+                frameworkElement.DataContext = ContainerLocator.Container.Resolve(aware.ViewModelType);
+            }
+             
             return @object;
         }
     }

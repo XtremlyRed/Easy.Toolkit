@@ -12,7 +12,7 @@ namespace Easy.Toolkit
 
         Task<bool> ConfirmAsync(string popupIdentity, string confirmMessage);
 
-        Task<object> PopupAsync<TView>(string popupIdentity, Func<TView> viewCreator) where TView : IPopupControl;
+        Task<object> PopupAsync<TView>(string popupIdentity, Func<TView> viewCreator) where TView : IPopupView;
         Task ShowAsync(string popupIdentity, string showMessage);
     }
 
@@ -110,7 +110,7 @@ namespace Easy.Toolkit
             return proxy.ConfirmAsync(confirmMessage);
         }
 
-        public Task<object> PopupAsync<TView>(string popupIdentity, Func<TView> viewCreator) where TView : IPopupControl
+        public Task<object> PopupAsync<TView>(string popupIdentity, Func<TView> viewCreator) where TView : IPopupView
         {
             if (popupIdentity is null)
             {
