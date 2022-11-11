@@ -12,10 +12,10 @@ namespace Easy.Toolkit
         /// <para> <c>explain:</c></para> 
         /// <para> use the method <see cref="ViewRegisterExtensions.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register view. </para>
         /// <para> the parameter <paramref name="viewName"/> is the viewName here</para> 
-        /// </summary>
-        /// <param name="navigationIdentity"></param>
+        /// </summary> 
         /// <param name="viewName"></param>
-        /// <param name="navigationParameters"></param>
+        /// <param name="parameters"></param>
+        /// <param name="callback"></param>
         /// <returns></returns>
         void Show(string viewName, IDialogParameters parameters, Action<DialogResult> callback);
 
@@ -24,10 +24,10 @@ namespace Easy.Toolkit
         /// <para> <c>explain:</c></para> 
         /// <para> use the method <see cref="ViewRegisterExtensions.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register view. </para>
         /// <para> the parameter <paramref name="viewName"/> is the viewName here</para> 
-        /// </summary>
-        /// <param name="navigationIdentity"></param>
+        /// </summary> 
         /// <param name="viewName"></param>
-        /// <param name="navigationParameters"></param>
+        /// <param name="parameters"></param>
+        /// <param name="callback"></param> 
         /// <returns></returns>
         void ShowDialog(string viewName, IDialogParameters parameters, Action<DialogResult> callback);
 

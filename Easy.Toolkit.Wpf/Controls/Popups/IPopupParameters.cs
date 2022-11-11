@@ -3,27 +3,9 @@
 namespace Easy.Toolkit
 {
     /// <summary>
-    /// navigation aware
+    /// popup parameter collection
     /// </summary>
-    public interface INavigationViewModelAware 
-    {
-        /// <summary>
-        /// navigetion to this view aware from old view 
-        /// </summary>
-        /// <param name="navigationParameters"></param>
-        public void NavigateTo(INavigationParameters navigationParameters = null);
-
-        /// <summary>
-        /// navigetion from this view to new view
-        /// </summary>
-        public void NavigateFrom();
-
-    }
-
-    /// <summary>
-    /// navigation parameter collection
-    /// </summary>
-    public interface INavigationParameters
+    public interface IPopupParameters
     {
         /// <summary>
         /// try get parameter value by <paramref name="parameterKey"/>
@@ -39,13 +21,16 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="parameterKey"></param>
         /// <param name="value"></param>
-        INavigationParameters SetValue(string parameterKey, object value);
+        IPopupParameters SetValue(string parameterKey, object value);
     }
 
+
+
+
     /// <summary>
-    /// navigation parameters
+    /// popup parameters
     /// </summary>
-    public class NavigationParameters: INavigationParameters
+    public class PopupParameters : IPopupParameters
     {
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -84,7 +69,7 @@ namespace Easy.Toolkit
         /// <param name="parameterKey"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentException"></exception>
-        public INavigationParameters SetValue(string parameterKey, object value)
+        public IPopupParameters SetValue(string parameterKey, object value)
         {
             if (string.IsNullOrEmpty(parameterKey))
             {
@@ -96,5 +81,22 @@ namespace Easy.Toolkit
             return this;
         }
     }
-}
 
+
+    /// <summary>
+    /// popup view model aware
+    /// </summary>
+    public interface IPopupViewModelAware
+    {
+        /// <summary>
+        /// called when the popup is closed.
+        /// </summary>
+        void OnPopupClosed();
+
+        /// <summary>
+        /// called when the popup is opened.
+        /// </summary>
+        /// <param name="parameters">The parameters passed to the popup.</param>
+        void OnPopupOpened(IPopupParameters parameters);
+    }
+}

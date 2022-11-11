@@ -30,7 +30,7 @@ namespace Easy.Toolkit
         string Title { get; }
 
         /// <summary>
-        /// the event <see cref="DialogWindow"/> to close the dialog.
+        /// the event <see cref="RequestClose"/> to close the dialog.
         /// </summary>
         event Action<DialogResult> RequestClose;
     }

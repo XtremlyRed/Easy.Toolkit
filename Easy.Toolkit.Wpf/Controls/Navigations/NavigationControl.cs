@@ -37,6 +37,7 @@ namespace Easy.Toolkit
                 return identity;
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -79,7 +80,7 @@ namespace Easy.Toolkit
               {
                   ExecuteLink(currentView, null, false);
 
-                  ExecuteLink(view, parameters, true);
+                  ExecuteLink(view, parameters ?? new NavigationParameters(), true);
 
                   if (currentView != null)
                   {

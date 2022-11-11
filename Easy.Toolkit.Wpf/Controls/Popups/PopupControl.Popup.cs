@@ -11,6 +11,7 @@ namespace Easy.Toolkit
     {
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string identity;
+
         string IPopupControl.Identity
         {
             get
@@ -26,6 +27,11 @@ namespace Easy.Toolkit
 
 
 
+        /// <summary>
+        /// popup message
+        /// </summary>
+        /// <param name="showMessage"></param>
+        /// <returns></returns>
         public async Task ShowAsync(string showMessage)
         {
             PopupAware popupAware = new PopupAware(PopupMode.Show, showMessage);
@@ -38,6 +44,11 @@ namespace Easy.Toolkit
 
         }
 
+        /// <summary>
+        /// popup confirm message
+        /// </summary>
+        /// <param name="confirmMessage"></param>
+        /// <returns></returns>
         public async Task<bool> ConfirmAsync(string confirmMessage)
         {
             PopupAware popupAware = new PopupAware(PopupMode.Confirm, confirmMessage);
@@ -55,6 +66,12 @@ namespace Easy.Toolkit
             return false;
         }
 
+        /// <summary>
+        /// popup view control
+        /// </summary>
+        /// <typeparam name="TView"></typeparam>
+        /// <param name="viewCreator"></param>
+        /// <returns></returns>
         public async Task<object> PopupAsync<TView>(Func<TView> viewCreator) where TView : IPopupView
         {
             PopupAware popupAware = new PopupAware(PopupMode.Popup, "")

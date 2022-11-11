@@ -6,19 +6,43 @@ using System.Windows.Media;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// interface of <see cref="IPopupControl"/>
+    /// </summary>
     public interface IPopupControl
     {
+        /// <summary>
+        /// will mark a control as a unique key
+        /// </summary>
         string Identity { get; }
 
+        /// <summary>
+        /// show message
+        /// </summary>
+        /// <param name="showMessage"></param>
+        /// <returns></returns>
         Task ShowAsync(string showMessage);
 
+        /// <summary>
+        /// show confirm message
+        /// </summary>
+        /// <param name="confirmMessage"></param>
+        /// <returns></returns>
         Task<bool> ConfirmAsync(string confirmMessage);
 
+        /// <summary>
+        /// popup view control
+        /// </summary>
+        /// <typeparam name="TView"></typeparam>
+        /// <param name="viewCreator">view creator</param>
+        /// <returns></returns>
         Task<object> PopupAsync<TView>(Func<TView> viewCreator) where TView : IPopupView;
 
     }
 
-
+    /// <summary>
+    /// popup control
+    /// </summary>
     [ContentProperty("Content")]
     [DefaultProperty("Content")]
     [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -41,7 +65,7 @@ namespace Easy.Toolkit
             }
 
             s.identity = e.NewValue;
-             
+
             if (PopupManager.popupAwares.TryGetValue(s, out PopupDeliver deliver) == false)
             {
                 PopupManager.popupAwares[s] = deliver = new PopupDeliver();
@@ -51,6 +75,9 @@ namespace Easy.Toolkit
         });
 
 
+        /// <summary>
+        /// will mark a control as a unique key
+        /// </summary>
         [Bindable(true)]
         [Category("Identity")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -133,6 +160,9 @@ namespace Easy.Toolkit
             set => base.SetValue(MessagePopupViewProperty, value);
         }
 
+        /// <summary>
+        /// <see cref="OnApplyTemplate"/>
+        /// </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();

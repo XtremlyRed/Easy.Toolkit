@@ -189,7 +189,7 @@ namespace Easy.Toolkit
                 return Task.FromResult(false);
             }
 
-            return proxy.NavigateToAsync(viewName, navigationParameters);
+            return proxy.NavigateToAsync(viewName, navigationParameters ?? new NavigationParameters());
         }
     }
 }
