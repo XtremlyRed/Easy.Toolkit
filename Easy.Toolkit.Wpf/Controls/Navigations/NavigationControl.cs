@@ -8,6 +8,9 @@ namespace Easy.Toolkit
 {
     public interface INavigationControl
     {
+        /// <summary>
+        /// will mark a navigation host control as a unique key
+        /// </summary>
         string Identity { get; }
         Task NavigateBackAsync();
         Task NavigateToAsync(object view, INavigationParameters parameters = null);
@@ -40,7 +43,7 @@ namespace Easy.Toolkit
 
         /// <summary>
         /// 
-        /// </summary>
+        /// </summary> 
         public static DependencyProperty IdentityProperty = PropertyAssist.PropertyRegister<NavigationControl, string>(i => i.Identity, null, (s, e) =>
         {
             if (s is not INavigationControl control)
@@ -58,6 +61,10 @@ namespace Easy.Toolkit
             deliver.Navigation = s;
         });
 
+
+        /// <summary>
+        /// will mark a navigation host control as a unique key
+        /// </summary>
         [Bindable(true)]
         [Category("Identity")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -115,7 +122,7 @@ namespace Easy.Toolkit
 
         }
 
-
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal static void ExecuteLink(object view, INavigationParameters parameters = null, bool toNew = true)
         {
             if (view == null)

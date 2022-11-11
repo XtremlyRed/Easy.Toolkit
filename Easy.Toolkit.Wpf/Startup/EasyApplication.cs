@@ -27,6 +27,7 @@ namespace Easy.Toolkit
         /// <summary>
         /// Gets or sets a UI that is automatically shown when an application starts.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public new Uri StartupUri { get; set; }
 
         /// <summary>

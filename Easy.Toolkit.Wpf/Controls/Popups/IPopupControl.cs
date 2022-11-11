@@ -12,7 +12,7 @@ namespace Easy.Toolkit
     public interface IPopupControl
     {
         /// <summary>
-        /// will mark a control as a unique key
+        /// will mark a popup host control as a unique key
         /// </summary>
         string Identity { get; }
 
@@ -56,7 +56,7 @@ namespace Easy.Toolkit
 
         /// <summary>
         /// 
-        /// </summary>
+        /// </summary> 
         public static DependencyProperty IdentityProperty = PropertyAssist.PropertyRegister<PopupControl, string>(i => i.Identity, null, (s, e) =>
         {
             if (s is not IPopupControl control)
@@ -76,11 +76,12 @@ namespace Easy.Toolkit
 
 
         /// <summary>
-        /// will mark a control as a unique key
+        /// will mark a popup host control as a unique key
         /// </summary>
         [Bindable(true)]
         [Category("Identity")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
+      
         public string Identity
         {
             get => base.GetValue(IdentityProperty) as string;

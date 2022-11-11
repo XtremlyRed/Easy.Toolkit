@@ -41,6 +41,7 @@ namespace Easy.Toolkit
     /// <summary>
     /// popup deliver
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public sealed class PopupDeliver : IPopupDeliver
     {
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]

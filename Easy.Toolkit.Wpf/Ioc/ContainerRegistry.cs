@@ -8,6 +8,8 @@ namespace Easy.Toolkit
         [EditorBrowsable(EditorBrowsableState.Never)]
         internal Container Container = new();
 
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IContainerProvider Buidler()
         {
             return new ContainerProvider(this);

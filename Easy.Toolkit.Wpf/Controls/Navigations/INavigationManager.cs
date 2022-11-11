@@ -43,6 +43,9 @@ namespace Easy.Toolkit
         Task NavigateBackAsync(string navigationIdentity);
     }
 
+    /// <summary>
+    /// navigation manager
+    /// </summary>
     public sealed class NavigationManager : INavigationManager
     {
         /// <summary>

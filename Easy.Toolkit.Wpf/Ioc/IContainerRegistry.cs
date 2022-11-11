@@ -18,6 +18,8 @@ namespace Easy.Toolkit
 
         void RegisterInstance(object target);
 
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         IContainerProvider Buidler();
     }
 

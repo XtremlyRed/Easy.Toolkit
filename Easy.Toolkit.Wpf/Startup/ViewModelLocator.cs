@@ -85,6 +85,7 @@ namespace Easy.Toolkit
         /// default view type to view model type resolver
         /// </summary>
         /// <param name="viewTypeToViewModelTypeResolver"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void SetDefaultViewTypeToViewModelTypeResolver(Func<Type, Type> viewTypeToViewModelTypeResolver)
         {
             if (viewTypeToViewModelTypeResolver is null)

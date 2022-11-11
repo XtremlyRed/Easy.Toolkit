@@ -34,6 +34,7 @@ namespace Easy.Toolkit
     /// <summary>
     ///  navigation deliver 
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public sealed class NavigationDeliver : INavigationDeliver
     {
 
