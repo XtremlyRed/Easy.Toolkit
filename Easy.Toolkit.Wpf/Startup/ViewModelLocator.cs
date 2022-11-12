@@ -115,14 +115,23 @@ namespace Easy.Toolkit
     }
 
 
-
+    /// <summary>
+    /// view model locator attribute
+    /// </summary>
     public class ViewModelLocatorAttribute : Attribute
     {
+        /// <summary>
+        /// create a new view model locator attribute from <paramref name="viewModelType"/>
+        /// </summary>
+        /// <param name="viewModelType"></param>
         public ViewModelLocatorAttribute(Type viewModelType)
         {
             ViewModelType = viewModelType;
         }
 
+        /// <summary>
+        /// view model type
+        /// </summary>
         public Type ViewModelType { get; }
     }
 }

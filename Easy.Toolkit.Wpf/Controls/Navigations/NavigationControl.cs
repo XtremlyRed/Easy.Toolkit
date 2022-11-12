@@ -6,17 +6,35 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 namespace Easy.Toolkit
 {
+    /// <summary>
+    ///  <c><see cref="INavigationControl"/></c>
+    /// </summary>
     public interface INavigationControl
     {
         /// <summary>
         /// will mark a navigation host control as a unique key
         /// </summary>
         string Identity { get; }
+
+        /// <summary>
+        /// navigate back in this navigation control
+        /// </summary>
+        /// <returns></returns>
         Task NavigateBackAsync();
+
+        /// <summary>
+        /// navigate to <paramref name="view"/> with <paramref name="parameters"/>
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         Task NavigateToAsync(object view, INavigationParameters parameters = null);
     }
 
 
+    /// <summary>
+    /// NavigationControl
+    /// </summary>
     public class NavigationControl : ContentControl, INavigationControl
     {
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -42,7 +60,7 @@ namespace Easy.Toolkit
         }
 
         /// <summary>
-        /// 
+        /// IdentityProperty
         /// </summary> 
         public static DependencyProperty IdentityProperty = PropertyAssist.PropertyRegister<NavigationControl, string>(i => i.Identity, null, (s, e) =>
         {
@@ -76,6 +94,12 @@ namespace Easy.Toolkit
 
 
 
+        /// <summary>
+        /// navigate to <paramref name="view"/> with <paramref name="parameters"/>
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public async Task NavigateToAsync(object view, INavigationParameters parameters = null)
         {
             if (currentView == view)
@@ -101,6 +125,10 @@ namespace Easy.Toolkit
         }
 
 
+        /// <summary>
+        /// navigate back in this navigation control
+        /// </summary>
+        /// <returns></returns>
         public async Task NavigateBackAsync()
         {
             if (activitedView.Count <= 0)

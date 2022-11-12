@@ -6,10 +6,17 @@ using System.Windows.Controls;
 namespace Easy.Toolkit
 {
 
-
+    /// <summary>
+    /// FolderSelectionChanged
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="folderPath"></param>
     public delegate void FolderSelectionChanged(object sender, string folderPath);
 
 
+    /// <summary>
+    /// FolderSelector
+    /// </summary>
     public class FolderSelector : ContentControl
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -25,6 +32,9 @@ namespace Easy.Toolkit
             PropertyAssist.DefaultStyle<FolderSelector>(DefaultStyleKeyProperty);
         }
 
+        /// <summary>
+        /// FolderSelector
+        /// </summary>
         public FolderSelector()
         {
             Content = nameof(FolderSelector);
@@ -50,13 +60,22 @@ namespace Easy.Toolkit
             };
         }
 
-
+        /// <summary>
+        /// FolderSelectionChanged
+        /// </summary>
         public event FolderSelectionChanged FolderSelectionChanged;
 
 
+        /// <summary>
+        /// FolderSelectionChangedCommandProperty
+        /// </summary>
         public static readonly DependencyProperty FolderSelectionChangedCommandProperty =
                 PropertyAssist.PropertyRegister<FolderSelector, IRelayCommand<string>>(i => i.FolderSelectionChangedCommand, null, FrameworkPropertyMetadataOptions.Inherits, (s, e) => { });
 
+
+        /// <summary>
+        /// FolderSelectionChangedCommand
+        /// </summary>
         [Bindable(true), Category("ICommand")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public IRelayCommand<string> FolderSelectionChangedCommand
@@ -65,12 +84,18 @@ namespace Easy.Toolkit
             set => SetValue(FolderSelectionChangedCommandProperty, value);
         }
 
+        /// <summary>
+        /// DescriptionProperty
+        /// </summary>
         public static readonly DependencyProperty DescriptionProperty =
           PropertyAssist.PropertyRegister<FolderSelector, string>(i => i.Description, "", defaultOptions, (s, e) =>
           {
               s.folderBrowserDialog.Description = e.NewValue;
           });
 
+        /// <summary>
+        /// Description
+        /// </summary>
         [Bindable(true), Category("Description")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public string Description
@@ -80,13 +105,18 @@ namespace Easy.Toolkit
         }
 
 
-
+        /// <summary>
+        /// ShowNewFolderButtonProperty
+        /// </summary>
         public static readonly DependencyProperty ShowNewFolderButtonProperty =
           PropertyAssist.PropertyRegister<FolderSelector, bool>(i => i.ShowNewFolderButton, false, defaultOptions, (s, e) =>
           {
               s.folderBrowserDialog.ShowNewFolderButton = e.NewValue;
           });
 
+        /// <summary>
+        /// ShowNewFolderButton
+        /// </summary>
         [Bindable(true), Category("ShowNewFolderButton")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public bool ShowNewFolderButton
@@ -95,13 +125,18 @@ namespace Easy.Toolkit
             set => SetValue(ShowNewFolderButtonProperty, value);
         }
 
-
+        /// <summary>
+        /// SelectedPathProperty
+        /// </summary>
         public static readonly DependencyProperty SelectedPathProperty =
        PropertyAssist.PropertyRegister<FolderSelector, string>(i => i.SelectedPath, "", defaultOptions, (s, e) =>
        {
            s.folderBrowserDialog.SelectedPath = e.NewValue;
        });
 
+        /// <summary>
+        /// SelectedPath
+        /// </summary>
         [Bindable(true), Category("SelectedPath")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public string SelectedPath
@@ -110,13 +145,18 @@ namespace Easy.Toolkit
             set => SetValue(SelectedPathProperty, value);
         }
 
-
+        /// <summary>
+        /// RootFolderProperty
+        /// </summary>
         public static readonly DependencyProperty RootFolderProperty =
             PropertyAssist.PropertyRegister<FolderSelector, Environment.SpecialFolder>(i => i.RootFolder, Environment.SpecialFolder.Desktop, defaultOptions, (s, e) =>
             {
                 s.folderBrowserDialog.RootFolder = e.NewValue;
             });
 
+        /// <summary>
+        /// RootFolder
+        /// </summary>
         [Bindable(true), Category("SelectedPath")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public Environment.SpecialFolder RootFolder
@@ -126,13 +166,18 @@ namespace Easy.Toolkit
         }
 
 
-
+        /// <summary>
+        /// UseDescriptionForTitleProperty
+        /// </summary>
         public static readonly DependencyProperty UseDescriptionForTitleProperty =
           PropertyAssist.PropertyRegister<FolderSelector, bool>(i => i.UseDescriptionForTitle, false, defaultOptions, (s, e) =>
           {
               s.folderBrowserDialog.ShowNewFolderButton = e.NewValue;
           });
 
+        /// <summary>
+        /// UseDescriptionForTitle
+        /// </summary>
         [Bindable(true), Category("ShowNewFolderButton")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public bool UseDescriptionForTitle
@@ -142,15 +187,23 @@ namespace Easy.Toolkit
         }
 
 
+        /// <summary>
+        /// Reset
+        /// </summary>
         public void Reset()
         {
             folderBrowserDialog.Reset();
         }
 
-
+        /// <summary>
+        /// CornerRadiusProperty
+        /// </summary>
         public static readonly DependencyProperty CornerRadiusProperty =
             PropertyAssist.PropertyRegister<FolderSelector, CornerRadius>(i => i.CornerRadius, new CornerRadius(0));
 
+        /// <summary>
+        /// CornerRadius
+        /// </summary>
         [Bindable(true), Category("CornerRadius")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public CornerRadius CornerRadius

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Easy.Toolkit
 {
@@ -30,10 +31,16 @@ namespace Easy.Toolkit
     /// <summary>
     /// popup parameters
     /// </summary>
+    [DebuggerDisplay("{KVs}")]
     public class PopupParameters : IPopupParameters
     {
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly Dictionary<string, object> dictionary = new Dictionary<string, object>();
+
+        /// <summary>
+        /// key value map
+        /// </summary>
+        public IReadOnlyDictionary<string, object> KVs => dictionary.ToReadOnlyDictionary();
 
         /// <summary>
         /// try get parameter value by <paramref name="parameterKey"/>
@@ -89,9 +96,15 @@ namespace Easy.Toolkit
     public interface IPopupViewModelAware
     {
         /// <summary>
+        /// called when view request close
+        /// </summary>
+        event EventHandler<PopupResultEventArgs> PopupRequestClose;
+
+
+        /// <summary>
         /// called when the popup is closed.
         /// </summary>
-        void OnPopupClosed();
+        void OnPopupClosed(PopupResultEventArgs popupResult);
 
         /// <summary>
         /// called when the popup is opened.

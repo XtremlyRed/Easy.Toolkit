@@ -1,10 +1,14 @@
-﻿
-using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Reflection;
 using System.Windows.Media.Animation;
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// AnimationBuildBase
+    /// </summary>
+    /// <typeparam name="TOwner"></typeparam>
+    /// <typeparam name="TAnimation"></typeparam>
+    /// <typeparam name="TType"></typeparam>
     public abstract class AnimationBuildBase<TOwner, TAnimation, TType> : AnimationBuildBase<TOwner, TAnimation>
        where TOwner : AnimationBuildBase<TOwner, TAnimation, TType>, new()
        where TAnimation : Timeline, new()
@@ -15,7 +19,13 @@ namespace Easy.Toolkit
         private const string @EasingFunctionString = "EasingFunction";
         private readonly ConcurrentDictionary<string, PropertyInfo> PropertyMapper = new();
 
-
+        /// <summary>
+        /// FromTo
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="milliseconds"></param>
+        /// <returns></returns>
         public TOwner FromTo(TType from, TType to, int milliseconds)
         {
             target.Duration = new System.Windows.Duration(TimeSpan.FromMilliseconds(milliseconds));
@@ -27,6 +37,12 @@ namespace Easy.Toolkit
             return (TOwner)this;
         }
 
+        /// <summary>
+        /// To
+        /// </summary>
+        /// <param name="to"></param>
+        /// <param name="milliseconds"></param>
+        /// <returns></returns>
         public TOwner To(TType to, int milliseconds)
         {
             target.Duration = new System.Windows.Duration(TimeSpan.FromMilliseconds(milliseconds));
@@ -34,6 +50,12 @@ namespace Easy.Toolkit
             toProperty?.SetValue(target, to);
             return (TOwner)this;
         }
+        /// <summary>
+        /// By
+        /// </summary>
+        /// <param name="by"></param>
+        /// <param name="milliseconds"></param>
+        /// <returns></returns>
         public TOwner By(TType by, int milliseconds)
         {
             target.Duration = new System.Windows.Duration(TimeSpan.FromMilliseconds(milliseconds));
@@ -42,6 +64,11 @@ namespace Easy.Toolkit
             return (TOwner)this;
         }
 
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        /// <param name="easingFunction"></param>
+        /// <returns></returns>
         public virtual TOwner EasingFunction(IEasingFunction easingFunction)
         {
             PropertyInfo easingFunctionProperty = PropertyMapper.GetOrAdd(@EasingFunctionString, i => target.GetType().GetRuntimeProperty(@EasingFunctionString));
@@ -50,11 +77,21 @@ namespace Easy.Toolkit
         }
     }
 
+    /// <summary>
+    ///  KeyFrameAnimationBuildBase
+    /// </summary>
+    /// <typeparam name="TOwner"></typeparam>
+    /// <typeparam name="TAnimation"></typeparam>
     public abstract class KeyFrameAnimationBuildBase<TOwner, TAnimation> : AnimationBuildBase<TOwner, TAnimation>
         where TOwner : KeyFrameAnimationBuildBase<TOwner, TAnimation>, new()
         where TAnimation : Timeline, IKeyFrameAnimation, new()
     {
 
+        /// <summary>
+        /// AddKeyFrame
+        /// </summary>
+        /// <param name="fram"></param>
+        /// <returns></returns>
         public virtual TOwner AddKeyFrame(IKeyFrame fram)
         {
             if (fram != null)

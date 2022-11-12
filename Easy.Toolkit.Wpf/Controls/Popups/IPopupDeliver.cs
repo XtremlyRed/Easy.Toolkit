@@ -127,14 +127,14 @@ namespace Easy.Toolkit
                 viewModelAware.OnPopupOpened(popupParameters);
             };
 
-            requestCloseHandler = (s, re) =>
+            requestCloseHandler = (sender, result) =>
             {
-                popupView.RequestClose -= requestCloseHandler;
+                popupView.RequestClosePopup -= requestCloseHandler;
                 popupView.Loaded -= loadedHandler;
-                viewModelAware.OnPopupClosed();
+                viewModelAware.OnPopupClosed(result);
             };
 
-            popupView.RequestClose += requestCloseHandler;
+            popupView.RequestClosePopup += requestCloseHandler;
             popupView.Loaded += loadedHandler;
 
         }

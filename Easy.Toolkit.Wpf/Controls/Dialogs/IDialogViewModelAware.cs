@@ -16,7 +16,7 @@ namespace Easy.Toolkit
         /// <summary>
         /// called when the dialog is closed.
         /// </summary>
-        void OnDialogClosed();
+        void OnDialogClosed(DialogResultEventArgs dialogResult);
 
         /// <summary>
         /// called when the dialog is opened.
@@ -30,8 +30,8 @@ namespace Easy.Toolkit
         string Title { get; }
 
         /// <summary>
-        /// the event <see cref="RequestClose"/> to close the dialog.
+        /// the event <see cref="DialogRequestClose"/> to close the dialog.
         /// </summary>
-        event Action<DialogResult> RequestClose;
+        event EventHandler<DialogResultEventArgs> DialogRequestClose;
     }
 }

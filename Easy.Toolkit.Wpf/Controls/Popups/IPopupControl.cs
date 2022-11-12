@@ -55,7 +55,7 @@ namespace Easy.Toolkit
         private Grid showPanel;
 
         /// <summary>
-        /// 
+        /// will mark a popup host control as a unique key
         /// </summary> 
         public static DependencyProperty IdentityProperty = PropertyAssist.PropertyRegister<PopupControl, string>(i => i.Identity, null, (s, e) =>
         {
@@ -81,17 +81,22 @@ namespace Easy.Toolkit
         [Bindable(true)]
         [Category("Identity")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
-      
+
         public string Identity
         {
             get => base.GetValue(IdentityProperty) as string;
             set => base.SetValue(IdentityProperty, value);
         }
 
-
+        /// <summary>
+        /// MaskBrushProperty
+        /// </summary>
         public static DependencyProperty MaskBrushProperty = PropertyAssist.PropertyRegister<PopupControl, Brush>(i => i.MaskBrush, Brushes.Transparent);
 
 
+        /// <summary>
+        /// MaskBrush
+        /// </summary>
         [Bindable(true)]
         [Category("Brush")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -101,9 +106,14 @@ namespace Easy.Toolkit
             set => base.SetValue(MaskBrushProperty, value);
         }
 
-
+        /// <summary>
+        /// CornerRadiusProperty
+        /// </summary>
         public static DependencyProperty CornerRadiusProperty = PropertyAssist.PropertyRegister<PopupControl, CornerRadius>(i => i.CornerRadius, new CornerRadius(0));
 
+        /// <summary>
+        /// CornerRadius
+        /// </summary>
         [Bindable(true)]
         [Category("Brush")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -113,9 +123,14 @@ namespace Easy.Toolkit
             set => base.SetValue(CornerRadiusProperty, value);
         }
 
-
+        /// <summary>
+        /// HorizontalPopupAlignmentProperty
+        /// </summary>
         public static DependencyProperty HorizontalPopupAlignmentProperty = PropertyAssist.PropertyRegister<PopupControl, HorizontalAlignment>(i => i.HorizontalPopupAlignment, HorizontalAlignment.Center);
 
+        /// <summary>
+        /// HorizontalPopupAlignment
+        /// </summary>
         [Bindable(true)]
         [Category("PopupAlignment")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -125,8 +140,15 @@ namespace Easy.Toolkit
             set => base.SetValue(HorizontalPopupAlignmentProperty, value);
         }
 
+        /// <summary>
+        /// VerticalPopupAlignmentProperty
+        /// </summary>
         public static DependencyProperty VerticalPopupAlignmentProperty = PropertyAssist.PropertyRegister<PopupControl, VerticalAlignment>(i => i.VerticalPopupAlignment, VerticalAlignment.Center);
 
+
+        /// <summary>
+        /// VerticalPopupAlignment
+        /// </summary>
         [Bindable(true)]
         [Category("PopupAlignment")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -137,9 +159,16 @@ namespace Easy.Toolkit
         }
 
 
+        /// <summary>
+        /// PopupContentProperty
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal static DependencyProperty PopupContentProperty = PropertyAssist.PropertyRegister<PopupControl, IPopupView>(i => i.PopupContent, null);
 
+
+        /// <summary>
+        /// PopupContent
+        /// </summary>
         [Bindable(true)]
         [Category("PopupContent")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -150,8 +179,14 @@ namespace Easy.Toolkit
             set => base.SetValue(PopupContentProperty, value);
         }
 
+        /// <summary>
+        /// MessagePopupViewProperty
+        /// </summary>
         public static DependencyProperty MessagePopupViewProperty = PropertyAssist.PropertyRegister<PopupControl, IMessagePopupView>(i => i.MessagePopupView, null);
 
+        /// <summary>
+        /// MessagePopupView
+        /// </summary>
         [Bindable(true)]
         [Category("MessagePopupView")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]

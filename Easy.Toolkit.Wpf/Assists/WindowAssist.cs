@@ -5,7 +5,9 @@ using System.Windows.Interop;
 
 namespace Easy.Toolkit
 {
-
+    /// <summary>
+    /// window assist
+    /// </summary>
     public static class WindowAssist
     {
 
@@ -27,11 +29,21 @@ namespace Easy.Toolkit
         private static extern bool FlashWindow(IntPtr hWnd, bool bInvert);
         #endregion
 
+        /// <summary>
+        /// get window handle
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
         public static IntPtr GetHandle(this Window @this)
         {
             return new WindowInteropHelper(@this).Handle;
         }
 
+        /// <summary>
+        /// activate window
+        /// </summary>
+        /// <param name="thisWindow"></param>
+        /// <returns></returns>
         public static bool ActivateWindow(this Window thisWindow)
         {
             if (thisWindow is null)
@@ -62,7 +74,10 @@ namespace Easy.Toolkit
 
 
         }
-
+        /// <summary>
+        /// show and activate
+        /// </summary>
+        /// <param name="window"></param>
         public static void ShowAndActivate(this Window window)
         {
 

@@ -8,22 +8,64 @@ using System.Windows.Threading;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// TransitionMode
+    /// </summary>
     public enum TransitionMode : byte
     {
+        /// <summary>
+        /// None
+        /// </summary>
         None = 0,
+        /// <summary>
+        /// RightToLeft
+        /// </summary>
         RightToLeft = 1,
+        /// <summary>
+        /// LeftToRight
+        /// </summary>
         LeftToRight = 2,
+        /// <summary>
+        /// BottomToTop
+        /// </summary>
         BottomToTop = 3,
+        /// <summary>
+        /// TopToBottom
+        /// </summary>
         TopToBottom = 4,
+        /// <summary>
+        /// RightToLeftWithFade
+        /// </summary>
         RightToLeftWithFade = 5,
+        /// <summary>
+        /// LeftToRightWithFade
+        /// </summary>
         LeftToRightWithFade = 6,
+        /// <summary>
+        /// BottomToTopWithFade
+        /// </summary>
         BottomToTopWithFade = 7,
+        /// <summary>
+        /// TopToBottomWithFade
+        /// </summary>
         TopToBottomWithFade = 8,
+        /// <summary>
+        /// Fade
+        /// </summary>
         Fade = 9,
+        /// <summary>
+        /// Random
+        /// </summary>
         Random = 254,
+        /// <summary>
+        /// Custom
+        /// </summary>
         Custom = 255
     }
 
+    /// <summary>
+    /// TransitioningControl
+    /// </summary>
     [ContentProperty("Content")]
     [DefaultProperty("Content")]
     [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -37,37 +79,56 @@ namespace Easy.Toolkit
         {
             PropertyAssist.DefaultStyle<TransitioningControl>(DefaultStyleKeyProperty);
         }
+        /// <summary>
+        /// TransitioningControl
+        /// </summary>
         public TransitioningControl()
         {
             Loaded += (s, e) => RunTransition();
 
         }
 
-
+        /// <summary>
+        /// TransitionModeProperty
+        /// </summary>
         public static readonly DependencyProperty TransitionModeProperty =
             PropertyAssist.PropertyRegister<TransitioningControl, TransitionMode>(i => i.TransitionMode, TransitionMode.Random,
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits,
                (s, e) => s.RunTransition());
 
 
-
+        /// <summary>
+        /// TransitionMode
+        /// </summary>
         public TransitionMode TransitionMode
         {
             get => (TransitionMode)GetValue(TransitionModeProperty);
             set => SetValue(TransitionModeProperty, value);
         }
 
+        /// <summary>
+        /// TransitionStoryboardProperty
+        /// </summary>
         public static readonly DependencyProperty TransitionStoryboardProperty = DependencyProperty.Register(
             "TransitionStoryboard", typeof(Storyboard), typeof(TransitioningControl), new PropertyMetadata(default(Storyboard)));
 
+        /// <summary>
+        /// TransitionStoryboard
+        /// </summary>
         public Storyboard TransitionStoryboard
         {
             get => (Storyboard)GetValue(TransitionStoryboardProperty);
             set => SetValue(TransitionStoryboardProperty, value);
         }
 
+        /// <summary>
+        /// CornerRadiusProperty
+        /// </summary>
         public static DependencyProperty CornerRadiusProperty = PropertyAssist.PropertyRegister<TransitioningControl, CornerRadius>(i => i.CornerRadius, new CornerRadius(0));
 
+        /// <summary>
+        /// CornerRadius
+        /// </summary>
         [Bindable(true)]
         [Category("Border")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -77,6 +138,9 @@ namespace Easy.Toolkit
             set => base.SetValue(CornerRadiusProperty, value);
         }
 
+        /// <summary>
+        /// Content
+        /// </summary>
         [Bindable(true)]
         public new object Content
         {
@@ -155,7 +219,7 @@ namespace Easy.Toolkit
             }
         }
         /// <summary>
-        /// 
+        /// IdentityProperty
         /// </summary>
         public static DependencyProperty IdentityProperty = PropertyAssist.PropertyRegister<TransitioningControl, string>(i => i.Identity, null, (s, e) =>
         {
@@ -174,6 +238,9 @@ namespace Easy.Toolkit
             deliver.Navigation = s;
         });
 
+        /// <summary>
+        /// Identity
+        /// </summary>
         [Bindable(true)]
         [Category("Identity")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
@@ -187,7 +254,7 @@ namespace Easy.Toolkit
 
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly Stack<object> activitedView = new Stack<object>();
-
+ 
         async Task INavigationControl.NavigateToAsync(object view, INavigationParameters parameters = null)
         {
 
@@ -195,6 +262,7 @@ namespace Easy.Toolkit
             {
                 if (Content == view)
                 {
+
                     return;
                 }
 

@@ -5,21 +5,44 @@ using System.Globalization;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// TargetTypeConverter
+    /// </summary>
+    /// <typeparam name="TargetType"></typeparam>
+    /// <typeparam name="ParamType"></typeparam>
     public class TargetTypeConverter<TargetType, ParamType> : TypeConverter
     {
         private static readonly char[] ConnectChar = new char[] { '‘', '’', '。', '（', '）', '(', ')', '<', '>', '《', '》', '{', '}', '[', ']', ',', '，', '`', '~', '*', '^', '`', '·', ';', '；', ':', '：', ' ' };
 
+        /// <summary>
+        /// CanConvertFrom
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="sourceType"></param>
+        /// <returns></returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
+        /// <summary>
+        /// CanConvertTo
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="destinationType"></param>
+        /// <returns></returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return destinationType == typeof(InstanceDescriptor) || base.CanConvertTo(context, destinationType);
         }
 
-
+        /// <summary>
+        /// ConvertFrom
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="culture"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             if (value is not string stringValue)
@@ -48,22 +71,44 @@ namespace Easy.Toolkit
         }
     }
 
-
+    /// <summary>
+    /// TargetTypeArrayConverter
+    /// </summary>
+    /// <typeparam name="TargetType"></typeparam>
+    /// <typeparam name="ParamType"></typeparam>
     public class TargetTypeArrayConverter<TargetType, ParamType> : TypeConverter
     {
         private static readonly char[] ConnectChar = new char[] { '‘', '’', '。', '（', '）', '(', ')', '<', '>', '《', '》', '{', '}', '[', ']', ',', '，', '`', '~', '*', '^', '`', '·', ';', '；', ':', '：', ' ' };
 
+        /// <summary>
+        /// CanConvertFrom
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="sourceType"></param>
+        /// <returns></returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
+        /// <summary>
+        /// CanConvertTo
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="destinationType"></param>
+        /// <returns></returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return destinationType == typeof(InstanceDescriptor) || base.CanConvertTo(context, destinationType);
         }
 
-
+        /// <summary>
+        /// ConvertFrom
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="culture"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             if (value is not string stringValue)

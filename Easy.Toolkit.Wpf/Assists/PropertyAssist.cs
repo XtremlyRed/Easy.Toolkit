@@ -8,10 +8,21 @@ namespace Easy.Toolkit
 {
 
 
+    /// <summary>
+    /// dependency property assist
+    /// </summary>
     public static class PropertyAssist
     {
         #region  binding
 
+        /// <summary>
+        /// dependency property register
+        /// </summary>
+        /// <typeparam name="TDependencyObject"></typeparam>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyNameSelector"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
         public static DependencyProperty PropertyRegister<TDependencyObject, TPropertyType>(Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector, Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null) where TDependencyObject : DependencyObject
         {
             string propertyName = Ref.GetPropertyName(propertyNameSelector);
@@ -30,6 +41,15 @@ namespace Easy.Toolkit
             return property;
         }
 
+        /// <summary>
+        /// dependency property register
+        /// </summary>
+        /// <typeparam name="TDependencyObject"></typeparam>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyNameSelector"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
         public static DependencyProperty PropertyRegister<TDependencyObject, TPropertyType>(Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector, TPropertyType defaultValue, Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null) where TDependencyObject : DependencyObject
         {
             string propertyName = Ref.GetPropertyName(propertyNameSelector);
@@ -49,6 +69,16 @@ namespace Easy.Toolkit
         }
 
 
+        /// <summary>
+        /// dependency property register
+        /// </summary>
+        /// <typeparam name="TDependencyObject"></typeparam>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyNameSelector"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="updateSourceTrigger"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
         public static DependencyProperty PropertyRegister<TDependencyObject, TPropertyType>(Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector, TPropertyType defaultValue, UpdateSourceTrigger updateSourceTrigger, Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null) where TDependencyObject : DependencyObject
         {
             string propertyName = Ref.GetPropertyName(propertyNameSelector);
@@ -68,6 +98,17 @@ namespace Easy.Toolkit
             return property;
         }
 
+        /// <summary>
+        /// dependency property register
+        /// </summary>
+        /// <typeparam name="TDependencyObject"></typeparam>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyNameSelector"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="flags"></param>
+        /// <param name="updateSourceTrigger"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
         public static DependencyProperty PropertyRegister<TDependencyObject, TPropertyType>(Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector, TPropertyType defaultValue, FrameworkPropertyMetadataOptions flags, UpdateSourceTrigger updateSourceTrigger, Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null) where TDependencyObject : DependencyObject
         {
             string propertyName = Ref.GetPropertyName(propertyNameSelector);
@@ -86,6 +127,16 @@ namespace Easy.Toolkit
             return property;
         }
 
+        /// <summary>
+        /// dependency property register
+        /// </summary>
+        /// <typeparam name="TDependencyObject"></typeparam>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyNameSelector"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="flags"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
         public static DependencyProperty PropertyRegister<TDependencyObject, TPropertyType>(Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector, TPropertyType defaultValue, FrameworkPropertyMetadataOptions flags, Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null) where TDependencyObject : DependencyObject
         {
             string propertyName = Ref.GetPropertyName(propertyNameSelector);
@@ -105,7 +156,15 @@ namespace Easy.Toolkit
             return property;
         }
 
-
+        /// <summary> 
+        /// dependency property register
+        /// </summary>
+        /// <typeparam name="TDependencyObject"></typeparam>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyNameSelector"></param>
+        /// <param name="flags"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
         public static DependencyProperty PropertyRegister<TDependencyObject, TPropertyType>(Expression<Func<TDependencyObject, TPropertyType>> propertyNameSelector, FrameworkPropertyMetadataOptions flags, Action<TDependencyObject, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null) where TDependencyObject : DependencyObject
         {
             string propertyName = Ref.GetPropertyName(propertyNameSelector);
@@ -130,6 +189,15 @@ namespace Easy.Toolkit
 
         #region
 
+        /// <summary>
+        /// dependency property attached
+        /// </summary>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyName"></param>
+        /// <param name="ownerType"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static DependencyProperty PropertyAttached<TPropertyType>(string propertyName, Type ownerType, Action<object, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null)
         {
             if (string.IsNullOrEmpty(propertyName) || string.IsNullOrWhiteSpace(propertyName))
@@ -157,7 +225,16 @@ namespace Easy.Toolkit
             return property;
         }
 
-
+        /// <summary>
+        ///  dependency property attached
+        /// </summary>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyName"></param>
+        /// <param name="ownerType"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static DependencyProperty PropertyAttached<TPropertyType>(string propertyName, Type ownerType, TPropertyType defaultValue, Action<object, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null)
         {
             if (string.IsNullOrEmpty(propertyName) || string.IsNullOrWhiteSpace(propertyName))
@@ -189,6 +266,17 @@ namespace Easy.Toolkit
             return property;
         }
 
+        /// <summary>
+        ///  dependency property attached
+        /// </summary>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyName"></param>
+        /// <param name="ownerType"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="flags"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static DependencyProperty PropertyAttached<TPropertyType>(string propertyName, Type ownerType, TPropertyType defaultValue, FrameworkPropertyMetadataOptions flags, Action<object, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null)
         {
             if (string.IsNullOrEmpty(propertyName) || string.IsNullOrWhiteSpace(propertyName))
@@ -216,7 +304,18 @@ namespace Easy.Toolkit
             return property;
         }
 
-
+        /// <summary> 
+        ///  dependency property attached
+        /// </summary>
+        /// <typeparam name="TPropertyType"></typeparam>
+        /// <param name="propertyName"></param>
+        /// <param name="ownerType"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="flags"></param>
+        /// <param name="updateSourceTrigger"></param>
+        /// <param name="propertyChangedCallback"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static DependencyProperty PropertyAttached<TPropertyType>(string propertyName, Type ownerType, TPropertyType defaultValue, FrameworkPropertyMetadataOptions flags, UpdateSourceTrigger updateSourceTrigger, Action<object, PropertyChangedEventArgs<TPropertyType>> propertyChangedCallback = null)
         {
             if (string.IsNullOrEmpty(propertyName) || string.IsNullOrWhiteSpace(propertyName))
@@ -263,7 +362,7 @@ namespace Easy.Toolkit
 
 
         /// <summary>
-        /// PropertyAssist.DefaultStyle<thisType>(DefaultStyleKeyProperty); 
+        ///  <see cref="DefaultStyle{thisType}(DependencyProperty)"/>
         /// </summary>
         /// <typeparam name="thisType">this</typeparam>
         /// <param name="dp">DefaultStyleKeyProperty</param>
@@ -277,7 +376,10 @@ namespace Easy.Toolkit
 
 
 
-
+        /// <summary>
+        /// property changed event args
+        /// </summary>
+        /// <typeparam name="TargetType"></typeparam>
         [DebuggerDisplay("property:{Property.Name}  new value:{NewValue}  old value:{OldValue}")]
         public class PropertyChangedEventArgs<TargetType> : EventArgs
         {
@@ -288,9 +390,17 @@ namespace Easy.Toolkit
                 NewValue = Invoker.CastTo<TargetType>(newValue);
             }
 
-
+            /// <summary>
+            /// property
+            /// </summary>
             public DependencyProperty Property { get; }
+            /// <summary>
+            /// old value
+            /// </summary>
             public TargetType OldValue { get; }
+            /// <summary>
+            /// new value
+            /// </summary>
             public TargetType NewValue { get; }
         }
     }

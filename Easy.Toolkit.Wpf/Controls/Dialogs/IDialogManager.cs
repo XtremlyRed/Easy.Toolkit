@@ -128,10 +128,10 @@ namespace Easy.Toolkit
         /// <para> <c>explain:</c></para> 
         /// <para> use the method <see cref="ViewRegisterExtensions.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register view. </para>
         /// <para> the parameter <paramref name="viewName"/> is the viewName here</para> 
-        /// </summary>
-        /// <param name="navigationIdentity"></param>
+        /// </summary> 
         /// <param name="viewName"></param>
-        /// <param name="navigationParameters"></param>
+        /// <param name="parameters"></param>
+        /// <param name="callback"></param> 
         /// <returns></returns>
         public void Show(string viewName, IDialogParameters parameters, Action<DialogResult> callback)
         {
@@ -142,10 +142,10 @@ namespace Easy.Toolkit
         /// <para> <c>explain:</c></para> 
         /// <para> use the method <see cref="ViewRegisterExtensions.RegisterView{TView}(IContainerRegistry, string, bool, bool)"/> to register view. </para>
         /// <para> the parameter <paramref name="viewName"/> is the viewName here</para> 
-        /// </summary>
-        /// <param name="navigationIdentity"></param>
+        /// </summary> 
         /// <param name="viewName"></param>
-        /// <param name="navigationParameters"></param>
+        /// <param name="parameters"></param>
+        /// <param name="callback"></param> 
         /// <returns></returns>
         public void ShowDialog(string viewName, IDialogParameters parameters, Action<DialogResult> callback)
         {
@@ -209,12 +209,13 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="dialogWindow">The dialog window.</param>
         /// <param name="callback">The action invoked when the dialog is closed.</param>
+        /// <param name="openCallback"></param>
         private void ConfigureEvents(IDialogWindow dialogWindow, Action<DialogResult> callback, Action openCallback)
         {
-            Action<DialogResult> requestCloseHandler = null;
-            requestCloseHandler = (re) =>
+            EventHandler<DialogResultEventArgs> requestCloseHandler = null;
+            requestCloseHandler = (s,  re) =>
             {
-                dialogWindow.Result = re;
+                dialogWindow.Result = re.DialogResult;
                 dialogWindow.Close();
             };
 
@@ -224,7 +225,7 @@ namespace Easy.Toolkit
                 dialogWindow.Loaded -= loadedHandler;
                 if (dialogWindow.DataContext is IDialogViewModelAware viewModelAware)
                 {
-                    viewModelAware.RequestClose += requestCloseHandler;
+                    viewModelAware.DialogRequestClose += requestCloseHandler;
                 }
                 openCallback?.Invoke();
             };
@@ -248,8 +249,8 @@ namespace Easy.Toolkit
 
                 if (dialogWindow.DataContext is IDialogViewModelAware viewModelAware)
                 {
-                    viewModelAware.RequestClose -= requestCloseHandler;
-                    viewModelAware.OnDialogClosed();
+                    viewModelAware.DialogRequestClose -= requestCloseHandler;
+                    viewModelAware.OnDialogClosed(dialogWindow.Result);
                 }
 
                 dialogWindow.DataContext = null;

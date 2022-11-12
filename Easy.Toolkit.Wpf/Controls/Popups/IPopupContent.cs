@@ -8,10 +8,14 @@ namespace Easy.Toolkit
     public interface IPopupView
     {
         /// <summary>
+        /// data context
+        /// </summary>
+        object DataContext { get; }
+
+        /// <summary>
         /// called when view request close
         /// </summary>
-        event EventHandler<PopupResultEventArgs> RequestClose;
-        
+        event EventHandler<PopupResultEventArgs> RequestClosePopup;
 
         /// <summary>
         /// called when view loaded
@@ -23,7 +27,8 @@ namespace Easy.Toolkit
     /// message view 
     /// </summary>
     public interface IMessagePopupView : IPopupView
-    { 
+    {
+
         /// <summary>
         /// display message
         /// </summary>
@@ -32,7 +37,7 @@ namespace Easy.Toolkit
         /// <summary>
         /// hide cancel button
         /// </summary>
-        bool HideCancel {   set; } 
+        bool HideCancel { set; }
     }
 
     /// <summary>
@@ -71,5 +76,5 @@ namespace Easy.Toolkit
         {
             return popupResultEventArgs.PopupResult;
         }
-    };
+    }
 }

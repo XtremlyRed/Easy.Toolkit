@@ -2,6 +2,9 @@
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// resource assist
+    /// </summary>
     public static class ResourceAssist
     {
 

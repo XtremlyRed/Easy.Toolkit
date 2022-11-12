@@ -5,9 +5,17 @@ using System.Windows.Controls;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// FileNameSelectionChanged
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="fileName"></param>
     public delegate void FileNameSelectionChanged(object sender, string fileName);
 
 
+    /// <summary>
+    /// FileNameSelector
+    /// </summary>
     public class FileNameSelector : ContentControl
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -23,7 +31,9 @@ namespace Easy.Toolkit
             PropertyAssist.DefaultStyle<FileNameSelector>(DefaultStyleKeyProperty);
         }
 
-
+        /// <summary>
+        /// FileNameSelector
+        /// </summary>
         public FileNameSelector()
         {
             bool canPopup = false;
@@ -54,11 +64,20 @@ namespace Easy.Toolkit
             };
         }
 
+        /// <summary>
+        /// FileNameSelectionChanged
+        /// </summary>
         public event FileNameSelectionChanged FileNameSelectionChanged;
 
+        /// <summary>
+        /// FileNameSelectionChangedCommandProperty
+        /// </summary>
         public static readonly DependencyProperty FileNameSelectionChangedCommandProperty =
                  PropertyAssist.PropertyRegister<FileNameSelector, IRelayCommand<string>>(i => i.FileNameSelectionChangedCommand, null, FrameworkPropertyMetadataOptions.Inherits, (s, e) => { });
 
+        /// <summary>
+        /// FileNameSelectionChangedCommand
+        /// </summary>
         [Bindable(true), Category("ICommand")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public IRelayCommand<string> FileNameSelectionChangedCommand
@@ -70,13 +89,18 @@ namespace Easy.Toolkit
 
 
 
-
+        /// <summary>
+        /// TitleProperty
+        /// </summary>
         public static readonly DependencyProperty TitleProperty =
             PropertyAssist.PropertyRegister<FileNameSelector, string>(i => i.Title, "", defaultOptions, (s, e) =>
             {
                 s.saveFileDialog.Title = e.NewValue;
             });
 
+        /// <summary>
+        /// Title
+        /// </summary>
         [Bindable(true), Category("Title")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public string Title
@@ -85,13 +109,18 @@ namespace Easy.Toolkit
             set => SetValue(TitleProperty, value);
         }
 
-
+        /// <summary>
+        /// FileNameProperty
+        /// </summary>
         public static readonly DependencyProperty FileNameProperty =
           PropertyAssist.PropertyRegister<FileNameSelector, string>(i => i.FileName, "", defaultOptions, (s, e) =>
           {
               s.saveFileDialog.FileName = e.NewValue;
           });
 
+        /// <summary>
+        /// FileName
+        /// </summary>
         [Bindable(true), Category("FileName")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public string FileName
@@ -101,10 +130,15 @@ namespace Easy.Toolkit
         }
 
 
-
+        /// <summary>
+        /// FileNamesProperty
+        /// </summary>
         public static readonly DependencyProperty FileNamesProperty =
         PropertyAssist.PropertyRegister<FileNameSelector, string[]>(i => i.FileNames, null, defaultOptions, (s, e) => { });
 
+        /// <summary>
+        /// FileNames
+        /// </summary>
         [Bindable(true), Category("FileNames")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public string[] FileNames
@@ -114,14 +148,18 @@ namespace Easy.Toolkit
         }
 
 
-
+        /// <summary>
+        /// DefaultExtProperty
+        /// </summary>
         public static readonly DependencyProperty DefaultExtProperty =
           PropertyAssist.PropertyRegister<FileNameSelector, string>(i => i.DefaultExt, "", defaultOptions, (s, e) =>
           {
               s.saveFileDialog.DefaultExt = e.NewValue;
           });
 
-
+        /// <summary>
+        /// DefaultExt
+        /// </summary>
         [Bindable(true), Category("DefaultExt")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public string DefaultExt
@@ -129,13 +167,17 @@ namespace Easy.Toolkit
             get => (string)GetValue(DefaultExtProperty);
             set => SetValue(DefaultExtProperty, value);
         }
-
+        /// <summary>
+        /// FilterProperty
+        /// </summary>
         public static readonly DependencyProperty FilterProperty =
           PropertyAssist.PropertyRegister<FileNameSelector, string>(i => i.Filter, "", defaultOptions, (s, e) =>
           {
               s.saveFileDialog.Filter = e.NewValue;
           });
-
+        /// <summary>
+        /// Filter
+        /// </summary>
         [Bindable(true), Category("Filter")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public string Filter
@@ -144,13 +186,18 @@ namespace Easy.Toolkit
             set => SetValue(FilterProperty, value);
         }
 
-
+        /// <summary>
+        /// InitialDirectoryProperty
+        /// </summary>
         public static readonly DependencyProperty InitialDirectoryProperty =
           PropertyAssist.PropertyRegister<FileNameSelector, string>(i => i.InitialDirectory, null, defaultOptions, (s, e) =>
           {
               s.saveFileDialog.InitialDirectory = e.NewValue;
           });
 
+        /// <summary>
+        /// InitialDirectory
+        /// </summary>
         [Bindable(true), Category("InitialDirectory")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public string InitialDirectory
@@ -159,13 +206,18 @@ namespace Easy.Toolkit
             set => SetValue(InitialDirectoryProperty, value);
         }
 
-
+        /// <summary>
+        /// FilterIndexProperty
+        /// </summary>
         public static readonly DependencyProperty FilterIndexProperty =
           PropertyAssist.PropertyRegister<FileNameSelector, int>(i => i.FilterIndex, default, defaultOptions, (s, e) =>
           {
               s.saveFileDialog.FilterIndex = e.NewValue;
           });
 
+        /// <summary>
+        /// FilterIndex
+        /// </summary>
         [Bindable(true), Category("FilterIndex")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public int FilterIndex
@@ -175,10 +227,14 @@ namespace Easy.Toolkit
         }
 
 
-
-
+        /// <summary>
+        /// CornerRadiusProperty
+        /// </summary> 
         public static readonly DependencyProperty CornerRadiusProperty = PropertyAssist.PropertyRegister<FileNameSelector, CornerRadius>(i => i.CornerRadius, new CornerRadius(0));
 
+        /// <summary>
+        /// CornerRadius
+        /// </summary>
         [Bindable(true), Category("CornerRadius")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public CornerRadius CornerRadius

@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-using Easy.Toolkit.Popups; 
+using Easy.Toolkit.Popups;
 
 namespace Easy.Toolkit
 {
@@ -67,7 +67,7 @@ namespace Easy.Toolkit
         }
 
         /// <summary>
-        /// popup view control
+        /// popup popupView control
         /// </summary>
         /// <typeparam name="TView"></typeparam>
         /// <param name="viewCreator"></param>
@@ -116,18 +116,30 @@ namespace Easy.Toolkit
                 {
                     while (popupViewAwares.TryDequeue(out PopupAware popupInfo))
                     {
-                        IPopupView view = popupInfo.ViewCreator() as IPopupView;
+                        IPopupView popupView = popupInfo.ViewCreator() as IPopupView;
 
-                        if (view is null)
+                        if (popupView is not FrameworkElement element)
                         {
-                            continue;
+                            throw new Exception($"popup content must be a FrameworkElement");
                         }
 
-                        view.RequestClose += popupInfo.RequestClose;
-                        popupInfo.OnClose = () => view.RequestClose -= popupInfo.RequestClose;
+                        if (element.DataContext is not IPopupViewModelAware viewModelAware)
+                        {
+                            throw new Exception($"popup data context must implement the {typeof(IPopupViewModelAware)}");
+                        }
 
-                        PopupContent = view;
+                        viewModelAware.PopupRequestClose += popupInfo.RequestClose;
+                        popupView.RequestClosePopup += popupInfo.RequestClose;
+                        popupInfo.OnClose = (s, e) =>
+                        {
+                            popupView.RequestClosePopup -= popupInfo.RequestClose;
+                            viewModelAware.PopupRequestClose -= popupInfo.RequestClose;
+                            viewModelAware.OnPopupClosed(e);
+                        };
+
+                        PopupContent = popupView;
                         await popupInfo.DisplayAsync();
+                        PopupContent = null;
                     }
 
                 }
@@ -171,9 +183,21 @@ namespace Easy.Toolkit
                         IMessagePopupView messageView = MessagePopupView ??= new DefaultMessagePopupView();
                         messageView.Message = popupInfo.Message;
                         messageView.HideCancel = popupInfo.Mode == PopupMode.Show;
-                        messageView.RequestClose += popupInfo.RequestClose;
-
-                        popupInfo.OnClose = () => messageView.RequestClose -= popupInfo.RequestClose;
+                        messageView.RequestClosePopup += popupInfo.RequestClose;
+                        var viewModelAware = messageView.DataContext as IPopupViewModelAware;
+                        if(viewModelAware != null)
+                        {
+                            viewModelAware.PopupRequestClose += popupInfo.RequestClose;
+                        }
+                        popupInfo.OnClose = (s, e) => 
+                        {
+                            messageView.RequestClosePopup -= popupInfo.RequestClose;
+                            if (viewModelAware != null)
+                            {
+                                viewModelAware.PopupRequestClose -= popupInfo.RequestClose;
+                                viewModelAware.OnPopupClosed(e);
+                            }
+                        };
 
                         await popupInfo.DisplayAsync();
                     }
@@ -205,13 +229,13 @@ namespace Easy.Toolkit
 
             public string Message { get; set; }
 
-            public Action OnClose { get; set; }
+            public EventHandler<PopupResultEventArgs> OnClose { get; set; }
 
             public Func<object> ViewCreator { get; set; }
 
             public void RequestClose(object sender, PopupResultEventArgs e)
             {
-                OnClose?.Invoke();
+                OnClose?.Invoke(sender, e);
                 popupResult = e.PopupResult;
                 semaphoreSlim.Release(semaphoreCounter);
                 semaphoreCounter = 0;
@@ -219,7 +243,7 @@ namespace Easy.Toolkit
 
             public async Task<object> DisplayAsync()
             {
-                Interlocked.Increment(ref semaphoreCounter); 
+                Interlocked.Increment(ref semaphoreCounter);
                 await semaphoreSlim.WaitAsync();
                 return popupResult;
             }

@@ -14,16 +14,16 @@ namespace Easy.Toolkit
         [DebuggerBrowsable(DebuggerBrowsableState.Never)] private int writeOffset = 0;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)] private int readOffset = 0;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly int capacity = 0;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int SByteSize = sizeof(sbyte);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int ByteSize = sizeof(byte);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int UShortSize = sizeof(ushort);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int ShortSize = sizeof(short);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int UIntSize = sizeof(uint);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int IntSize = sizeof(int);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int ULongSize = sizeof(ulong);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int LongSize = sizeof(long);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int FloatSize = sizeof(float);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] public const int DoubleSize = sizeof(double);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int SByteSize = sizeof(sbyte);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int ByteSize = sizeof(byte);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int UShortSize = sizeof(ushort);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int ShortSize = sizeof(short);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int UIntSize = sizeof(uint);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int IntSize = sizeof(int);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int ULongSize = sizeof(ulong);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int LongSize = sizeof(long);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int FloatSize = sizeof(float);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private const int DoubleSize = sizeof(double);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly byte[] ushortArray = new byte[UShortSize];
         [DebuggerBrowsable(DebuggerBrowsableState.Never)] private readonly byte[] shortArray = new byte[ShortSize];

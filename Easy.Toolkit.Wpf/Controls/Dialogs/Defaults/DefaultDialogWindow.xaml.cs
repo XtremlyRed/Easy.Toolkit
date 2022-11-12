@@ -4,10 +4,13 @@ using System.Windows.Input;
 namespace Easy.Toolkit.Dialogs.Defaults
 {
     /// <summary>
-    /// DefaultDialogWindow.xaml 的交互逻辑
+    /// DefaultDialogWindow.xaml  
     /// </summary>
     public partial class DefaultDialogWindow : Window, IDialogWindow
     {
+        /// <summary>
+        /// DefaultDialogWindow
+        /// </summary>
         public DefaultDialogWindow()
         {
             InitializeComponent();
@@ -22,6 +25,9 @@ namespace Easy.Toolkit.Dialogs.Defaults
             };
         }
 
+        /// <summary>
+        /// dialog result
+        /// </summary>
         public DialogResult Result { get; set; }
 
         object IDialogWindow.Content

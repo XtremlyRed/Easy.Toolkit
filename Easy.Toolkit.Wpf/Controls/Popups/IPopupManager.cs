@@ -50,6 +50,9 @@ namespace Easy.Toolkit
 
 
 
+    /// <summary>
+    /// <see cref="PopupManager"/>
+    /// </summary>
     public class PopupManager : IPopupManager
     {
         /// <summary>

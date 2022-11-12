@@ -45,10 +45,15 @@ namespace Easy.Toolkit
     /// <summary>
     /// navigation parameters
     /// </summary>
-    public class NavigationParameters: INavigationParameters
+   [DebuggerDisplay("{KVs}")] public class NavigationParameters: INavigationParameters
     {
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly Dictionary<string, object> dictionary = new Dictionary<string, object>();
+
+        /// <summary>
+        /// key value map
+        /// </summary>
+        public IReadOnlyDictionary<string, object> KVs => dictionary.ToReadOnlyDictionary();
 
         /// <summary>
         /// try get parameter value by <paramref name="parameterKey"/>

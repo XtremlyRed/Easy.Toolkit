@@ -6,6 +6,9 @@ using System.Windows.Controls;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// binding assist
+    /// </summary>
     public static class BindAssist
     {
 
@@ -14,16 +17,29 @@ namespace Easy.Toolkit
         [EditorBrowsable(EditorBrowsableState.Never)]
         private static readonly ConcurrentDictionary<object, bool> bindingAssistCached = new();
 
+        /// <summary>
+        /// password
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static string GetPassword(DependencyObject obj)
         {
             return (string)obj.GetValue(PasswordProperty);
         }
 
+        /// <summary>
+        /// password
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="value"></param>
         public static void SetPassword(DependencyObject obj, string value)
         {
             obj.SetValue(PasswordProperty, value);
         }
 
+        /// <summary>
+        /// password
+        /// </summary>
         public static readonly DependencyProperty PasswordProperty =
             DependencyProperty.RegisterAttached("Password", typeof(string),
             typeof(BindAssist),

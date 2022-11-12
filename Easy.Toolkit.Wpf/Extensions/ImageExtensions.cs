@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// bitmap converter
+    /// </summary>
     public static class ImageExtensions
     {
         private static readonly BitmapPalette bitmapPalette;
@@ -19,7 +22,11 @@ namespace Easy.Toolkit
             bitmapPalette = bitmapImage.Palette;
         }
 
-
+        /// <summary>
+        /// change bitmap type used <see cref="BitmapImage.StreamSource"/>
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
         public static BitmapImage ToBitmapSource1(this Bitmap bitmap)
         {
             using MemoryStream stream = new MemoryStream();
@@ -35,6 +42,11 @@ namespace Easy.Toolkit
 
         [DllImport("gdi32")]
         private static extern int DeleteObject(IntPtr o);
+        /// <summary>
+        /// change bitmap type used <see cref="Imaging.CreateBitmapSourceFromHBitmap(IntPtr, IntPtr, Int32Rect, BitmapSizeOptions)"/>
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
         public static BitmapSource ToBitmapSource2(this Bitmap bitmap)
         {
             IntPtr ptr = bitmap.GetHbitmap(); //obtain the Hbitmap
@@ -43,7 +55,11 @@ namespace Easy.Toolkit
             return bitmapSource;
         }
 
-
+        /// <summary>
+        /// change bitmap type used <see cref="BitmapSource.Create(int, int, double, double, System.Windows.Media.PixelFormat, BitmapPalette, IntPtr, int, int)"/>
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
         public static BitmapSource ToBitmapSource3(this Bitmap bitmap)
         {
 
@@ -54,7 +70,13 @@ namespace Easy.Toolkit
         }
 
 
-
+        /// <summary>
+        /// change bitmap type used <see cref="Graphics.DrawImage(Image, Rectangle, Rectangle, GraphicsUnit)"/>
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="action"></param>
+        /// <param name="action1"></param>
+        /// <returns></returns>
         public static WriteableBitmap ToWriteableBitmap1(this Bitmap bitmap, Action<Graphics> action = null, Action<WriteableBitmap> action1 = null)
         {
             WriteableBitmap writeableBitmap = new WriteableBitmap(bitmap.Width, bitmap.Height, 96.0, 96.0, PixelFormats.Pbgra32, null);
@@ -79,7 +101,13 @@ namespace Easy.Toolkit
             return writeableBitmap;
         }
 
-
+        /// <summary>
+        /// change bitmap type used <see cref="Graphics.DrawImage(Image, Rectangle, Rectangle, GraphicsUnit)"/>
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="action"></param>
+        /// <param name="action1"></param>
+        /// <returns></returns>
         public static WriteableBitmap ToWriteableBitmap2(this Bitmap bitmap, Action<Graphics> action = null, Action<Bitmap> action1 = null)
         {
             WriteableBitmap writeableBitmap = new WriteableBitmap(bitmap.Width, bitmap.Height, 96.0, 96.0, PixelFormats.Pbgra32, null);

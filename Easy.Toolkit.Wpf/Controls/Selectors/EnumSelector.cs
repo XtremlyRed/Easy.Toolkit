@@ -26,12 +26,21 @@ namespace Easy.Toolkit
             DefaultStyleKeyProperty.OverrideMetadata(typeof(EnumSelector),
                 new FrameworkPropertyMetadata(typeof(ComboBox)));
         }
+        /// <summary>
+        /// IsEditable
+        /// </summary>
         public new bool IsEditable { get => false; set => base.IsEditable = false; }
 
         #region Type property
 
+        /// <summary>
+        /// CornerRadiusProperty
+        /// </summary>
         public static readonly DependencyProperty CornerRadiusProperty = PropertyAssist.PropertyRegister<EnumSelector, CornerRadius>(i => i.CornerRadius, new CornerRadius(0));
 
+        /// <summary>
+        /// CornerRadius
+        /// </summary>
         [Bindable(true), Category("CornerRadius")]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public CornerRadius CornerRadius
@@ -40,11 +49,17 @@ namespace Easy.Toolkit
             set => SetValue(CornerRadiusProperty, value);
         }
 
+        /// <summary>
+        /// IgnoreItemsProperty
+        /// </summary>
         public static DependencyProperty IgnoreItemsProperty = PropertyAssist.PropertyRegister<EnumSelector, IEnumerable>(i => i.IgnoreItems, (s, e) =>
         {
             s.SetType(s.EnumType, e.NewValue);
         });
 
+        /// <summary>
+        /// IgnoreItems
+        /// </summary>
         [Bindable(true)]
         [Category("EnumMode")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -55,26 +70,38 @@ namespace Easy.Toolkit
             set => SetValue(IgnoreItemsProperty, value);
         }
 
-        public static DependencyProperty TypeProperty = PropertyAssist.PropertyRegister<EnumSelector, Type>(i => i.EnumType, (s, e) =>
+        /// <summary>
+        /// EnumTypeProperty
+        /// </summary>
+        public static DependencyProperty EnumTypeProperty = PropertyAssist.PropertyRegister<EnumSelector, Type>(i => i.EnumType, (s, e) =>
         {
             s.SetType(e.NewValue);
         });
 
+        /// <summary>
+        /// EnumType
+        /// </summary>
         [Bindable(true)]
         [Category("EnumMode")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Localizability(LocalizationCategory.NeverLocalize)]
         public Type EnumType
         {
-            get => (Type)GetValue(TypeProperty);
-            set => SetValue(TypeProperty, value);
+            get => (Type)GetValue(EnumTypeProperty);
+            set => SetValue(EnumTypeProperty, value);
         }
 
+        /// <summary>
+        /// EnumValueProperty
+        /// </summary>
         public static DependencyProperty EnumValueProperty = PropertyAssist.PropertyRegister<EnumSelector, object>(i => i.EnumValue, default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits, System.Windows.Data.UpdateSourceTrigger.PropertyChanged, (s, e) =>
         {
             s.SetEnumValue(e.NewValue);
         });
 
+        /// <summary>
+        /// EnumValue
+        /// </summary>
         [Bindable(true)]
         [Category("EnumMode")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -188,6 +215,10 @@ namespace Easy.Toolkit
             }
         }
 
+        /// <summary>
+        /// OnSelectionChanged
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
             base.OnSelectionChanged(e);
