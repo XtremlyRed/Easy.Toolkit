@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// RelayCommand
+    /// </summary>
     public class RelayCommand : ICommand, IRelayCommandAsync
     {
 
@@ -35,6 +38,11 @@ namespace Easy.Toolkit
         [EditorBrowsable(EditorBrowsableState.Never)]
         private bool isExecuting;
 
+        /// <summary>
+        /// create a new command  
+        /// </summary>
+        /// <param name="executeFuncCallback"></param>
+        /// <param name="canExecuteCallback"></param>
         public RelayCommand(Func<Task> executeFuncCallback, Func<bool> canExecuteCallback = null)
         {
             executeAsync = true;
@@ -42,7 +50,11 @@ namespace Easy.Toolkit
             this.canExecuteCallback = canExecuteCallback;
         }
 
-
+        /// <summary>
+        /// create a new command  
+        /// </summary>
+        /// <param name="executeCallback"></param>
+        /// <param name="canExecuteCallback"></param>
         public RelayCommand(Action executeCallback, Func<bool> canExecuteCallback = null)
         {
             this.executeCallback = executeCallback;

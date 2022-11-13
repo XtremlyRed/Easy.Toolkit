@@ -2,7 +2,7 @@
 
 namespace Easy.Toolkit
 {
-    internal class ContainerRegistry : IContainerRegistry
+    internal sealed class ContainerRegistry : IContainerRegistry
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -66,7 +66,7 @@ namespace Easy.Toolkit
     }
 
 
-    internal class ContainerProvider : IContainerProvider
+    internal sealed class ContainerProvider : IContainerProvider
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [EditorBrowsable(EditorBrowsableState.Never)]

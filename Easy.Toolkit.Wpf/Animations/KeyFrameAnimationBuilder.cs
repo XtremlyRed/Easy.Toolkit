@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
-namespace Easy.Toolkit
+namespace Easy.Toolkit.Animations
 {
     /// <summary>
     /// ObjectKeyFrameAnimationBuilder

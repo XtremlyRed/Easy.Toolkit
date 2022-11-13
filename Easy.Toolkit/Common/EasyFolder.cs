@@ -1,882 +1,2658 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
 namespace Easy.Toolkit
 {
+    /// <summary>
+    /// <see cref="EasyFolder"/>
+    /// </summary>
     public static class EasyFolder
     {
-        public static readonly CurrentFolder Current = new();
+        /// <summary>
+        /// <see cref="DesktopFolder"/>
+        /// </summary>
         public static readonly DesktopFolder Desktop = new();
+
+        /// <summary>
+        /// <see cref="ProgramsFolder"/>
+        /// </summary>
         public static readonly ProgramsFolder Programs = new();
+
+        /// <summary>
+        /// <see cref="MyDocumentsFolder"/>
+        /// </summary>
         public static readonly MyDocumentsFolder MyDocuments = new();
+
+        /// <summary>
+        /// <see cref="PersonalFolder"/>
+        /// </summary>
         public static readonly PersonalFolder Personal = new();
+
+        /// <summary>
+        /// <see cref="FavoritesFolder"/>
+        /// </summary>
         public static readonly FavoritesFolder Favorites = new();
+
+        /// <summary>
+        /// <see cref="StartupFolder"/>
+        /// </summary>
         public static readonly StartupFolder Startup = new();
+
+        /// <summary>
+        /// <see cref="RecentFolder"/>
+        /// </summary>
         public static readonly RecentFolder Recent = new();
+
+        /// <summary>
+        /// <see cref="SendToFolder"/>
+        /// </summary>
         public static readonly SendToFolder SendTo = new();
+
+        /// <summary>
+        /// <see cref="StartMenuFolder"/>
+        /// </summary>
         public static readonly StartMenuFolder StartMenu = new();
+
+        /// <summary>
+        /// <see cref="MyMusicFolder"/>
+        /// </summary>
         public static readonly MyMusicFolder MyMusic = new();
+
+        /// <summary>
+        /// <see cref="MyVideosFolder"/>
+        /// </summary>
         public static readonly MyVideosFolder MyVideos = new();
+
+        /// <summary>
+        /// <see cref="DesktopDirectoryFolder"/>
+        /// </summary>
         public static readonly DesktopDirectoryFolder DesktopDirectory = new();
+
+        /// <summary>
+        /// <see cref="MyComputerFolder"/>
+        /// </summary>
         public static readonly MyComputerFolder MyComputer = new();
+
+        /// <summary>
+        /// <see cref="NetworkShortcutsFolder"/>
+        /// </summary>
         public static readonly NetworkShortcutsFolder NetworkShortcuts = new();
+
+        /// <summary>
+        /// <see cref="FontsFolder"/>
+        /// </summary>
         public static readonly FontsFolder Fonts = new();
+
+        /// <summary>
+        /// <see cref="TemplatesFolder"/>
+        /// </summary>
         public static readonly TemplatesFolder Templates = new();
+
+        /// <summary>
+        /// <see cref="CommonStartMenuFolder"/>
+        /// </summary>
         public static readonly CommonStartMenuFolder CommonStartMenu = new();
+
+        /// <summary>
+        /// <see cref="CommonProgramsFolder"/>
+        /// </summary>
         public static readonly CommonProgramsFolder CommonPrograms = new();
+
+        /// <summary>
+        /// <see cref="CommonStartupFolder"/>
+        /// </summary>
         public static readonly CommonStartupFolder CommonStartup = new();
+
+        /// <summary>
+        /// <see cref="CommonDesktopDirectoryFolder"/>
+        /// </summary>
         public static readonly CommonDesktopDirectoryFolder CommonDesktopDirectory = new();
+
+        /// <summary>
+        /// <see cref="ApplicationDataFolder"/>
+        /// </summary>
         public static readonly ApplicationDataFolder ApplicationData = new();
+
+        /// <summary>
+        /// <see cref="PrinterShortcutsFolder"/>
+        /// </summary>
         public static readonly PrinterShortcutsFolder PrinterShortcuts = new();
+
+        /// <summary>
+        /// <see cref="LocalApplicationDataFolder"/>
+        /// </summary>
         public static readonly LocalApplicationDataFolder LocalApplicationData = new();
+
+        /// <summary>
+        /// <see cref="InternetCacheFolder"/>
+        /// </summary>
         public static readonly InternetCacheFolder InternetCache = new();
+
+        /// <summary>
+        /// <see cref="CookiesFolder"/>
+        /// </summary>
         public static readonly CookiesFolder Cookies = new();
+
+        /// <summary>
+        /// <see cref="HistoryFolder"/>
+        /// </summary>
         public static readonly HistoryFolder History = new();
+
+        /// <summary>
+        /// <see cref="CommonApplicationDataFolder"/>
+        /// </summary>
         public static readonly CommonApplicationDataFolder CommonApplicationData = new();
+
+        /// <summary>
+        /// <see cref="WindowsFolder"/>
+        /// </summary>
         public static readonly WindowsFolder Windows = new();
+
+        /// <summary>
+        /// <see cref="SystemFolder"/>
+        /// </summary>
         public static readonly SystemFolder System = new();
+
+        /// <summary>
+        /// <see cref="ProgramFilesFolder"/>
+        /// </summary>
         public static readonly ProgramFilesFolder ProgramFiles = new();
+
+        /// <summary>
+        /// <see cref="MyPicturesFolder"/>
+        /// </summary>
         public static readonly MyPicturesFolder MyPictures = new();
+
+        /// <summary>
+        /// <see cref="UserProfileFolder"/>
+        /// </summary>
         public static readonly UserProfileFolder UserProfile = new();
+
+        /// <summary>
+        /// <see cref="SystemX86Folder"/>
+        /// </summary>
         public static readonly SystemX86Folder SystemX86 = new();
+
+        /// <summary>
+        /// <see cref="ProgramFilesX86Folder"/>
+        /// </summary>
         public static readonly ProgramFilesX86Folder ProgramFilesX86 = new();
+
+        /// <summary>
+        /// <see cref="CommonProgramFilesFolder"/>
+        /// </summary>
         public static readonly CommonProgramFilesFolder CommonProgramFiles = new();
+
+        /// <summary>
+        /// <see cref="CommonProgramFilesX86Folder"/>
+        /// </summary>
         public static readonly CommonProgramFilesX86Folder CommonProgramFilesX86 = new();
+
+        /// <summary>
+        /// <see cref="CommonTemplatesFolder"/>
+        /// </summary>
         public static readonly CommonTemplatesFolder CommonTemplates = new();
+
+        /// <summary>
+        /// <see cref="CommonDocumentsFolder"/>
+        /// </summary>
         public static readonly CommonDocumentsFolder CommonDocuments = new();
+
+        /// <summary>
+        /// <see cref="CommonAdminToolsFolder"/>
+        /// </summary>
         public static readonly CommonAdminToolsFolder CommonAdminTools = new();
+
+        /// <summary>
+        /// <see cref="AdminToolsFolder"/>
+        /// </summary>
         public static readonly AdminToolsFolder AdminTools = new();
+
+        /// <summary>
+        /// <see cref="CommonMusicFolder"/>
+        /// </summary>
         public static readonly CommonMusicFolder CommonMusic = new();
+
+        /// <summary>
+        /// <see cref="CommonPicturesFolder"/>
+        /// </summary>
         public static readonly CommonPicturesFolder CommonPictures = new();
+
+        /// <summary>
+        /// <see cref="CommonVideosFolder"/>
+        /// </summary>
         public static readonly CommonVideosFolder CommonVideos = new();
+
+        /// <summary>
+        /// <see cref="ResourcesFolder"/>
+        /// </summary>
         public static readonly ResourcesFolder Resources = new();
+
+        /// <summary>
+        /// <see cref="LocalizedResourcesFolder"/>
+        /// </summary>
         public static readonly LocalizedResourcesFolder LocalizedResources = new();
+
+        /// <summary>
+        /// <see cref="CommonOemLinksFolder"/>
+        /// </summary>
         public static readonly CommonOemLinksFolder CommonOemLinks = new();
+
+        /// <summary>
+        /// <see cref="CDBurningFolder"/>
+        /// </summary>
         public static readonly CDBurningFolder CDBurning = new();
 
+        /// <summary>
+        /// <see cref="CurrentFolder"/>
+        /// </summary>
+        public static readonly CurrentFolder Current = new();
 
     }
-    public readonly struct CurrentFolder
+    /// <summary>
+    /// represents a Desktop folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct DesktopFolder
     {
-        public override string ToString()
-        {
-            return Environment.CurrentDirectory;
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CurrentFolder currentFolder)
-        {
-            return currentFolder.ToString();
-        }
+        /// <summary>
+        /// share a new Desktop folder
+        /// </summary>
+        public DesktopFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)) { }
+        private DesktopFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public DesktopFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public DesktopFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="desktopFolder"/>
+        /// </summary>
+        /// <param name="desktopFolder"></param>
+        public static implicit operator string(DesktopFolder desktopFolder) { return desktopFolder.folder; }
+        /// <summary>
+        /// get <see cref="DesktopFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is DesktopFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct DesktopFolder
+
+    /// <summary>
+    /// represents a Programs folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct ProgramsFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(DesktopFolder desktopFolder)
-        {
-            return desktopFolder.ToString();
-        }
+        /// <summary>
+        /// share a new Programs folder
+        /// </summary>
+        public ProgramsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Programs)) { }
+        private ProgramsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public ProgramsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public ProgramsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="programsFolder"/>
+        /// </summary>
+        /// <param name="programsFolder"></param>
+        public static implicit operator string(ProgramsFolder programsFolder) { return programsFolder.folder; }
+        /// <summary>
+        /// get <see cref="ProgramsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is ProgramsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct ProgramsFolder
+
+    /// <summary>
+    /// represents a MyDocuments folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct MyDocumentsFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Programs);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray()); 
-        }
-
-        public static explicit operator string(ProgramsFolder programsFolder)
-        {
-            return programsFolder.ToString();
-        }
+        /// <summary>
+        /// share a new MyDocuments folder
+        /// </summary>
+        public MyDocumentsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)) { }
+        private MyDocumentsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public MyDocumentsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyDocumentsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public MyDocumentsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="myDocumentsFolder"/>
+        /// </summary>
+        /// <param name="myDocumentsFolder"></param>
+        public static implicit operator string(MyDocumentsFolder myDocumentsFolder) { return myDocumentsFolder.folder; }
+        /// <summary>
+        /// get <see cref="MyDocumentsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is MyDocumentsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct MyDocumentsFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        }
 
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(MyDocumentsFolder myDocumentsFolder)
-        {
-            return myDocumentsFolder.ToString();
-        }
-    }
-    public readonly struct PersonalFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(PersonalFolder personalFolder)
-        {
-            return personalFolder.ToString();
-        }
-    }
-    public readonly struct FavoritesFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Favorites);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(FavoritesFolder favoritesFolder)
-        {
-            return favoritesFolder.ToString();
-        }
-    }
-    public readonly struct StartupFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(StartupFolder startupFolder)
-        {
-            return startupFolder.ToString();
-        }
-    }
-    public readonly struct RecentFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Recent);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(RecentFolder recentFolder)
-        {
-            return recentFolder.ToString();
-        }
-    }
-    public readonly struct SendToFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.SendTo);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(SendToFolder sendToFolder)
-        {
-            return sendToFolder.ToString();
-        }
-    }
-    public readonly struct StartMenuFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(StartMenuFolder startMenuFolder)
-        {
-            return startMenuFolder.ToString();
-        }
-    }
-    public readonly struct MyMusicFolder
+    /// <summary>
+    /// represents a Personal folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct PersonalFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(MyMusicFolder myMusicFolder)
-        {
-            return myMusicFolder.ToString();
-        }
+        /// <summary>
+        /// share a new Personal folder
+        /// </summary>
+        public PersonalFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Personal)) { }
+        private PersonalFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public PersonalFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PersonalFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public PersonalFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="personalFolder"/>
+        /// </summary>
+        /// <param name="personalFolder"></param>
+        public static implicit operator string(PersonalFolder personalFolder) { return personalFolder.folder; }
+        /// <summary>
+        /// get <see cref="PersonalFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is PersonalFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct MyVideosFolder
+
+    /// <summary>
+    /// represents a Favorites folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct FavoritesFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(MyVideosFolder myVideosFolder)
-        {
-            return myVideosFolder.ToString();
-        }
+        /// <summary>
+        /// share a new Favorites folder
+        /// </summary>
+        public FavoritesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Favorites)) { }
+        private FavoritesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public FavoritesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FavoritesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public FavoritesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="favoritesFolder"/>
+        /// </summary>
+        /// <param name="favoritesFolder"></param>
+        public static implicit operator string(FavoritesFolder favoritesFolder) { return favoritesFolder.folder; }
+        /// <summary>
+        /// get <see cref="FavoritesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is FavoritesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct DesktopDirectoryFolder
+
+    /// <summary>
+    /// represents a Startup folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct StartupFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(DesktopDirectoryFolder desktopDirectoryFolder)
-        {
-            return desktopDirectoryFolder.ToString();
-        }
+        /// <summary>
+        /// share a new Startup folder
+        /// </summary>
+        public StartupFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Startup)) { }
+        private StartupFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public StartupFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartupFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public StartupFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="startupFolder"/>
+        /// </summary>
+        /// <param name="startupFolder"></param>
+        public static implicit operator string(StartupFolder startupFolder) { return startupFolder.folder; }
+        /// <summary>
+        /// get <see cref="StartupFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is StartupFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct MyComputerFolder
+
+    /// <summary>
+    /// represents a Recent folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct RecentFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(MyComputerFolder myComputerFolder)
-        {
-            return myComputerFolder.ToString();
-        }
+        /// <summary>
+        /// share a new Recent folder
+        /// </summary>
+        public RecentFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Recent)) { }
+        private RecentFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public RecentFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new RecentFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public RecentFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="recentFolder"/>
+        /// </summary>
+        /// <param name="recentFolder"></param>
+        public static implicit operator string(RecentFolder recentFolder) { return recentFolder.folder; }
+        /// <summary>
+        /// get <see cref="RecentFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is RecentFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct NetworkShortcutsFolder
+
+    /// <summary>
+    /// represents a SendTo folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct SendToFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.NetworkShortcuts);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(NetworkShortcutsFolder networkShortcutsFolder)
-        {
-            return networkShortcutsFolder.ToString();
-        }
+        /// <summary>
+        /// share a new SendTo folder
+        /// </summary>
+        public SendToFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.SendTo)) { }
+        private SendToFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public SendToFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SendToFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public SendToFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="sendToFolder"/>
+        /// </summary>
+        /// <param name="sendToFolder"></param>
+        public static implicit operator string(SendToFolder sendToFolder) { return sendToFolder.folder; }
+        /// <summary>
+        /// get <see cref="SendToFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is SendToFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct FontsFolder
+
+    /// <summary>
+    /// represents a StartMenu folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct StartMenuFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Fonts);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray()); 
-        }
-
-        public static explicit operator string(FontsFolder fontsFolder)
-        {
-            return fontsFolder.ToString();
-        }
+        /// <summary>
+        /// share a new StartMenu folder
+        /// </summary>
+        public StartMenuFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)) { }
+        private StartMenuFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public StartMenuFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartMenuFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public StartMenuFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="startMenuFolder"/>
+        /// </summary>
+        /// <param name="startMenuFolder"></param>
+        public static implicit operator string(StartMenuFolder startMenuFolder) { return startMenuFolder.folder; }
+        /// <summary>
+        /// get <see cref="StartMenuFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is StartMenuFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct TemplatesFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Templates);
-        }
 
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(TemplatesFolder templatesFolder)
-        {
-            return templatesFolder.ToString();
-        }
-    }
-    public readonly struct CommonStartMenuFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonStartMenuFolder commonStartMenuFolder)
-        {
-            return commonStartMenuFolder.ToString();
-        }
-    }
-    public readonly struct CommonProgramsFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonProgramsFolder commonProgramsFolder)
-        {
-            return commonProgramsFolder.ToString();
-        }
-    }
-    public readonly struct CommonStartupFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonStartupFolder commonStartupFolder)
-        {
-            return commonStartupFolder.ToString();
-        }
-    }
-    public readonly struct CommonDesktopDirectoryFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonDesktopDirectory);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonDesktopDirectoryFolder commonDesktopDirectoryFolder)
-        {
-            return commonDesktopDirectoryFolder.ToString();
-        }
-    }
-    public readonly struct ApplicationDataFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(ApplicationDataFolder applicationDataFolder)
-        {
-            return applicationDataFolder.ToString();
-        }
-    }
-    public readonly struct PrinterShortcutsFolder
+    /// <summary>
+    /// represents a MyMusic folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct MyMusicFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.PrinterShortcuts);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-
-           
-        }
-
-        public static explicit operator string(PrinterShortcutsFolder printerShortcutsFolder)
-        {
-            return printerShortcutsFolder.ToString();
-        }
+        /// <summary>
+        /// share a new MyMusic folder
+        /// </summary>
+        public MyMusicFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)) { }
+        private MyMusicFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public MyMusicFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyMusicFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public MyMusicFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="myMusicFolder"/>
+        /// </summary>
+        /// <param name="myMusicFolder"></param>
+        public static implicit operator string(MyMusicFolder myMusicFolder) { return myMusicFolder.folder; }
+        /// <summary>
+        /// get <see cref="MyMusicFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is MyMusicFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct LocalApplicationDataFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        }
 
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(LocalApplicationDataFolder localApplicationDataFolder)
-        {
-            return localApplicationDataFolder.ToString();
-        }
-    }
-    public readonly struct InternetCacheFolder
+    /// <summary>
+    /// represents a MyVideos folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct MyVideosFolder
     {
-         
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.InternetCache);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(InternetCacheFolder internetCacheFolder)
-        {
-            return internetCacheFolder.ToString();
-        }
+        /// <summary>
+        /// share a new MyVideos folder
+        /// </summary>
+        public MyVideosFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)) { }
+        private MyVideosFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public MyVideosFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyVideosFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public MyVideosFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="myVideosFolder"/>
+        /// </summary>
+        /// <param name="myVideosFolder"></param>
+        public static implicit operator string(MyVideosFolder myVideosFolder) { return myVideosFolder.folder; }
+        /// <summary>
+        /// get <see cref="MyVideosFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is MyVideosFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CookiesFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Cookies);
-        }
 
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CookiesFolder cookiesFolder)
-        {
-            return cookiesFolder.ToString();
-        }
-    }
-    public readonly struct HistoryFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.History);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(HistoryFolder historyFolder)
-        {
-            return historyFolder.ToString();
-        }
-    }
-    public readonly struct CommonApplicationDataFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonApplicationDataFolder commonApplicationDataFolder)
-        {
-            return commonApplicationDataFolder.ToString();
-        }
-    }
-    public readonly struct WindowsFolder
+    /// <summary>
+    /// represents a DesktopDirectory folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct DesktopDirectoryFolder
     {
-         
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Windows);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(WindowsFolder windowsFolder)
-        {
-            return windowsFolder.ToString();
-        }
+        /// <summary>
+        /// share a new DesktopDirectory folder
+        /// </summary>
+        public DesktopDirectoryFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)) { }
+        private DesktopDirectoryFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public DesktopDirectoryFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopDirectoryFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public DesktopDirectoryFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="desktopDirectoryFolder"/>
+        /// </summary>
+        /// <param name="desktopDirectoryFolder"></param>
+        public static implicit operator string(DesktopDirectoryFolder desktopDirectoryFolder) { return desktopDirectoryFolder.folder; }
+        /// <summary>
+        /// get <see cref="DesktopDirectoryFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is DesktopDirectoryFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct SystemFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.System);
-        }
 
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(SystemFolder systemFolder)
-        {
-            return systemFolder.ToString();
-        }
-    }
-    public readonly struct ProgramFilesFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(ProgramFilesFolder programFilesFolder)
-        {
-            return programFilesFolder.ToString();
-        }
-    }
-    public readonly struct MyPicturesFolder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(MyPicturesFolder myPicturesFolder)
-        {
-            return myPicturesFolder.ToString();
-        }
-    }
-    public readonly struct UserProfileFolder
+    /// <summary>
+    /// represents a MyComputer folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct MyComputerFolder
     {
-         
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(UserProfileFolder userProfileFolder)
-        {
-            return userProfileFolder.ToString();
-        }
+        /// <summary>
+        /// share a new MyComputer folder
+        /// </summary>
+        public MyComputerFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyComputer)) { }
+        private MyComputerFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public MyComputerFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyComputerFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public MyComputerFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="myComputerFolder"/>
+        /// </summary>
+        /// <param name="myComputerFolder"></param>
+        public static implicit operator string(MyComputerFolder myComputerFolder) { return myComputerFolder.folder; }
+        /// <summary>
+        /// get <see cref="MyComputerFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is MyComputerFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct SystemX86Folder
+
+    /// <summary>
+    /// represents a NetworkShortcuts folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct NetworkShortcutsFolder
     {
-         
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.SystemX86);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(SystemX86Folder systemX86Folder)
-        {
-            return systemX86Folder.ToString();
-        }
+        /// <summary>
+        /// share a new NetworkShortcuts folder
+        /// </summary>
+        public NetworkShortcutsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.NetworkShortcuts)) { }
+        private NetworkShortcutsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public NetworkShortcutsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new NetworkShortcutsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public NetworkShortcutsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="networkShortcutsFolder"/>
+        /// </summary>
+        /// <param name="networkShortcutsFolder"></param>
+        public static implicit operator string(NetworkShortcutsFolder networkShortcutsFolder) { return networkShortcutsFolder.folder; }
+        /// <summary>
+        /// get <see cref="NetworkShortcutsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is NetworkShortcutsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct ProgramFilesX86Folder
-    { 
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-        }
 
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(ProgramFilesX86Folder programFilesX86Folder)
-        {
-            return programFilesX86Folder.ToString();
-        }
-    }
-    public readonly struct CommonProgramFilesFolder
+    /// <summary>
+    /// represents a Fonts folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct FontsFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonProgramFilesFolder commonProgramFilesFolder)
-        {
-            return commonProgramFilesFolder.ToString();
-        }
+        /// <summary>
+        /// share a new Fonts folder
+        /// </summary>
+        public FontsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Fonts)) { }
+        private FontsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public FontsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FontsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public FontsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="fontsFolder"/>
+        /// </summary>
+        /// <param name="fontsFolder"></param>
+        public static implicit operator string(FontsFolder fontsFolder) { return fontsFolder.folder; }
+        /// <summary>
+        /// get <see cref="FontsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is FontsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CommonProgramFilesX86Folder
+
+    /// <summary>
+    /// represents a Templates folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct TemplatesFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonProgramFilesX86Folder commonProgramFilesX86Folder)
-        {
-            return commonProgramFilesX86Folder.ToString();
-        }
+        /// <summary>
+        /// share a new Templates folder
+        /// </summary>
+        public TemplatesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Templates)) { }
+        private TemplatesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public TemplatesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new TemplatesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public TemplatesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="templatesFolder"/>
+        /// </summary>
+        /// <param name="templatesFolder"></param>
+        public static implicit operator string(TemplatesFolder templatesFolder) { return templatesFolder.folder; }
+        /// <summary>
+        /// get <see cref="TemplatesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is TemplatesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CommonTemplatesFolder
+
+    /// <summary>
+    /// represents a CommonStartMenu folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonStartMenuFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonTemplates);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonTemplatesFolder commonTemplatesFolder)
-        {
-            return commonTemplatesFolder.ToString();
-        }
+        /// <summary>
+        /// share a new CommonStartMenu folder
+        /// </summary>
+        public CommonStartMenuFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu)) { }
+        private CommonStartMenuFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonStartMenuFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartMenuFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonStartMenuFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonStartMenuFolder"/>
+        /// </summary>
+        /// <param name="commonStartMenuFolder"></param>
+        public static implicit operator string(CommonStartMenuFolder commonStartMenuFolder) { return commonStartMenuFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonStartMenuFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonStartMenuFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CommonDocumentsFolder
+
+    /// <summary>
+    /// represents a CommonPrograms folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonProgramsFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonDocumentsFolder commonDocumentsFolder)
-        {
-            return commonDocumentsFolder.ToString();
-        }
+        /// <summary>
+        /// share a new CommonPrograms folder
+        /// </summary>
+        public CommonProgramsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms)) { }
+        private CommonProgramsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonProgramsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonProgramsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonProgramsFolder"/>
+        /// </summary>
+        /// <param name="commonProgramsFolder"></param>
+        public static implicit operator string(CommonProgramsFolder commonProgramsFolder) { return commonProgramsFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonProgramsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonProgramsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CommonAdminToolsFolder
+
+    /// <summary>
+    /// represents a CommonStartup folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonStartupFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonAdminTools);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonAdminToolsFolder commonAdminToolsFolder)
-        {
-            return commonAdminToolsFolder.ToString();
-        }
+        /// <summary>
+        /// share a new CommonStartup folder
+        /// </summary>
+        public CommonStartupFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup)) { }
+        private CommonStartupFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonStartupFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartupFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonStartupFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonStartupFolder"/>
+        /// </summary>
+        /// <param name="commonStartupFolder"></param>
+        public static implicit operator string(CommonStartupFolder commonStartupFolder) { return commonStartupFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonStartupFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonStartupFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct AdminToolsFolder
+
+    /// <summary>
+    /// represents a CommonDesktopDirectory folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonDesktopDirectoryFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.AdminTools);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(AdminToolsFolder adminToolsFolder)
-        {
-            return adminToolsFolder.ToString();
-        }
+        /// <summary>
+        /// share a new CommonDesktopDirectory folder
+        /// </summary>
+        public CommonDesktopDirectoryFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonDesktopDirectory)) { }
+        private CommonDesktopDirectoryFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonDesktopDirectoryFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDesktopDirectoryFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonDesktopDirectoryFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonDesktopDirectoryFolder"/>
+        /// </summary>
+        /// <param name="commonDesktopDirectoryFolder"></param>
+        public static implicit operator string(CommonDesktopDirectoryFolder commonDesktopDirectoryFolder) { return commonDesktopDirectoryFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonDesktopDirectoryFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonDesktopDirectoryFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CommonMusicFolder
+
+    /// <summary>
+    /// represents a ApplicationData folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct ApplicationDataFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonMusicFolder commonMusicFolder)
-        {
-            return commonMusicFolder.ToString();
-        }
+        /// <summary>
+        /// share a new ApplicationData folder
+        /// </summary>
+        public ApplicationDataFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) { }
+        private ApplicationDataFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public ApplicationDataFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ApplicationDataFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public ApplicationDataFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="applicationDataFolder"/>
+        /// </summary>
+        /// <param name="applicationDataFolder"></param>
+        public static implicit operator string(ApplicationDataFolder applicationDataFolder) { return applicationDataFolder.folder; }
+        /// <summary>
+        /// get <see cref="ApplicationDataFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is ApplicationDataFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CommonPicturesFolder
+
+    /// <summary>
+    /// represents a PrinterShortcuts folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct PrinterShortcutsFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonPictures);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonPicturesFolder commonPicturesFolder)
-        {
-            return commonPicturesFolder.ToString();
-        }
+        /// <summary>
+        /// share a new PrinterShortcuts folder
+        /// </summary>
+        public PrinterShortcutsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.PrinterShortcuts)) { }
+        private PrinterShortcutsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public PrinterShortcutsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PrinterShortcutsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public PrinterShortcutsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="printerShortcutsFolder"/>
+        /// </summary>
+        /// <param name="printerShortcutsFolder"></param>
+        public static implicit operator string(PrinterShortcutsFolder printerShortcutsFolder) { return printerShortcutsFolder.folder; }
+        /// <summary>
+        /// get <see cref="PrinterShortcutsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is PrinterShortcutsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CommonVideosFolder
+
+    /// <summary>
+    /// represents a LocalApplicationData folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct LocalApplicationDataFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonVideos);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonVideosFolder commonVideosFolder)
-        {
-            return commonVideosFolder.ToString();
-        }
+        /// <summary>
+        /// share a new LocalApplicationData folder
+        /// </summary>
+        public LocalApplicationDataFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)) { }
+        private LocalApplicationDataFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public LocalApplicationDataFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalApplicationDataFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public LocalApplicationDataFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="localApplicationDataFolder"/>
+        /// </summary>
+        /// <param name="localApplicationDataFolder"></param>
+        public static implicit operator string(LocalApplicationDataFolder localApplicationDataFolder) { return localApplicationDataFolder.folder; }
+        /// <summary>
+        /// get <see cref="LocalApplicationDataFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is LocalApplicationDataFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct ResourcesFolder
+
+    /// <summary>
+    /// represents a InternetCache folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct InternetCacheFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Resources);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(ResourcesFolder resourcesFolder)
-        {
-            return resourcesFolder.ToString();
-        }
+        /// <summary>
+        /// share a new InternetCache folder
+        /// </summary>
+        public InternetCacheFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache)) { }
+        private InternetCacheFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public InternetCacheFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new InternetCacheFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public InternetCacheFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="internetCacheFolder"/>
+        /// </summary>
+        /// <param name="internetCacheFolder"></param>
+        public static implicit operator string(InternetCacheFolder internetCacheFolder) { return internetCacheFolder.folder; }
+        /// <summary>
+        /// get <see cref="InternetCacheFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is InternetCacheFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct LocalizedResourcesFolder
+
+    /// <summary>
+    /// represents a Cookies folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CookiesFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.LocalizedResources);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(LocalizedResourcesFolder localizedResourcesFolder)
-        {
-            return localizedResourcesFolder.ToString();
-        }
+        /// <summary>
+        /// share a new Cookies folder
+        /// </summary>
+        public CookiesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Cookies)) { }
+        private CookiesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CookiesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CookiesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CookiesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="cookiesFolder"/>
+        /// </summary>
+        /// <param name="cookiesFolder"></param>
+        public static implicit operator string(CookiesFolder cookiesFolder) { return cookiesFolder.folder; }
+        /// <summary>
+        /// get <see cref="CookiesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CookiesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CommonOemLinksFolder
+
+    /// <summary>
+    /// represents a History folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct HistoryFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CommonOemLinks);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CommonOemLinksFolder commonOemLinksFolder)
-        {
-            return commonOemLinksFolder.ToString();
-        }
+        /// <summary>
+        /// share a new History folder
+        /// </summary>
+        public HistoryFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.History)) { }
+        private HistoryFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public HistoryFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new HistoryFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public HistoryFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="historyFolder"/>
+        /// </summary>
+        /// <param name="historyFolder"></param>
+        public static implicit operator string(HistoryFolder historyFolder) { return historyFolder.folder; }
+        /// <summary>
+        /// get <see cref="HistoryFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is HistoryFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
-    public readonly struct CDBurningFolder
+
+    /// <summary>
+    /// represents a CommonApplicationData folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonApplicationDataFolder
     {
-        public override string ToString()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.CDBurning);
-        }
-
-        public string Combine(params string[] paths)
-        {
-            return Path.Combine(new[] { ToString() }.Concat(paths).ToArray());
-        }
-
-        public static explicit operator string(CDBurningFolder cDBurningFolder)
-        {
-            return cDBurningFolder.ToString();
-        }
+        /// <summary>
+        /// share a new CommonApplicationData folder
+        /// </summary>
+        public CommonApplicationDataFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)) { }
+        private CommonApplicationDataFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonApplicationDataFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonApplicationDataFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonApplicationDataFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonApplicationDataFolder"/>
+        /// </summary>
+        /// <param name="commonApplicationDataFolder"></param>
+        public static implicit operator string(CommonApplicationDataFolder commonApplicationDataFolder) { return commonApplicationDataFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonApplicationDataFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonApplicationDataFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
     }
+
+    /// <summary>
+    /// represents a Windows folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct WindowsFolder
+    {
+        /// <summary>
+        /// share a new Windows folder
+        /// </summary>
+        public WindowsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Windows)) { }
+        private WindowsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public WindowsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new WindowsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public WindowsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="windowsFolder"/>
+        /// </summary>
+        /// <param name="windowsFolder"></param>
+        public static implicit operator string(WindowsFolder windowsFolder) { return windowsFolder.folder; }
+        /// <summary>
+        /// get <see cref="WindowsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is WindowsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a System folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct SystemFolder
+    {
+        /// <summary>
+        /// share a new System folder
+        /// </summary>
+        public SystemFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.System)) { }
+        private SystemFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public SystemFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public SystemFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="systemFolder"/>
+        /// </summary>
+        /// <param name="systemFolder"></param>
+        public static implicit operator string(SystemFolder systemFolder) { return systemFolder.folder; }
+        /// <summary>
+        /// get <see cref="SystemFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is SystemFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a ProgramFiles folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct ProgramFilesFolder
+    {
+        /// <summary>
+        /// share a new ProgramFiles folder
+        /// </summary>
+        public ProgramFilesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)) { }
+        private ProgramFilesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public ProgramFilesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public ProgramFilesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="programFilesFolder"/>
+        /// </summary>
+        /// <param name="programFilesFolder"></param>
+        public static implicit operator string(ProgramFilesFolder programFilesFolder) { return programFilesFolder.folder; }
+        /// <summary>
+        /// get <see cref="ProgramFilesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is ProgramFilesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a MyPictures folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct MyPicturesFolder
+    {
+        /// <summary>
+        /// share a new MyPictures folder
+        /// </summary>
+        public MyPicturesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)) { }
+        private MyPicturesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public MyPicturesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyPicturesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public MyPicturesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="myPicturesFolder"/>
+        /// </summary>
+        /// <param name="myPicturesFolder"></param>
+        public static implicit operator string(MyPicturesFolder myPicturesFolder) { return myPicturesFolder.folder; }
+        /// <summary>
+        /// get <see cref="MyPicturesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is MyPicturesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a UserProfile folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct UserProfileFolder
+    {
+        /// <summary>
+        /// share a new UserProfile folder
+        /// </summary>
+        public UserProfileFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) { }
+        private UserProfileFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public UserProfileFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new UserProfileFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public UserProfileFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="userProfileFolder"/>
+        /// </summary>
+        /// <param name="userProfileFolder"></param>
+        public static implicit operator string(UserProfileFolder userProfileFolder) { return userProfileFolder.folder; }
+        /// <summary>
+        /// get <see cref="UserProfileFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is UserProfileFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a SystemX86 folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct SystemX86Folder
+    {
+        /// <summary>
+        /// share a new SystemX86 folder
+        /// </summary>
+        public SystemX86Folder() : this(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86)) { }
+        private SystemX86Folder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public SystemX86Folder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemX86Folder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public SystemX86Folder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="systemX86Folder"/>
+        /// </summary>
+        /// <param name="systemX86Folder"></param>
+        public static implicit operator string(SystemX86Folder systemX86Folder) { return systemX86Folder.folder; }
+        /// <summary>
+        /// get <see cref="SystemX86Folder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is SystemX86Folder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a ProgramFilesX86 folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct ProgramFilesX86Folder
+    {
+        /// <summary>
+        /// share a new ProgramFilesX86 folder
+        /// </summary>
+        public ProgramFilesX86Folder() : this(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)) { }
+        private ProgramFilesX86Folder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public ProgramFilesX86Folder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesX86Folder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public ProgramFilesX86Folder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="programFilesX86Folder"/>
+        /// </summary>
+        /// <param name="programFilesX86Folder"></param>
+        public static implicit operator string(ProgramFilesX86Folder programFilesX86Folder) { return programFilesX86Folder.folder; }
+        /// <summary>
+        /// get <see cref="ProgramFilesX86Folder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is ProgramFilesX86Folder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CommonProgramFiles folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonProgramFilesFolder
+    {
+        /// <summary>
+        /// share a new CommonProgramFiles folder
+        /// </summary>
+        public CommonProgramFilesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles)) { }
+        private CommonProgramFilesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonProgramFilesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonProgramFilesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonProgramFilesFolder"/>
+        /// </summary>
+        /// <param name="commonProgramFilesFolder"></param>
+        public static implicit operator string(CommonProgramFilesFolder commonProgramFilesFolder) { return commonProgramFilesFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonProgramFilesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonProgramFilesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CommonProgramFilesX86 folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonProgramFilesX86Folder
+    {
+        /// <summary>
+        /// share a new CommonProgramFilesX86 folder
+        /// </summary>
+        public CommonProgramFilesX86Folder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86)) { }
+        private CommonProgramFilesX86Folder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonProgramFilesX86Folder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesX86Folder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonProgramFilesX86Folder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonProgramFilesX86Folder"/>
+        /// </summary>
+        /// <param name="commonProgramFilesX86Folder"></param>
+        public static implicit operator string(CommonProgramFilesX86Folder commonProgramFilesX86Folder) { return commonProgramFilesX86Folder.folder; }
+        /// <summary>
+        /// get <see cref="CommonProgramFilesX86Folder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonProgramFilesX86Folder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CommonTemplates folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonTemplatesFolder
+    {
+        /// <summary>
+        /// share a new CommonTemplates folder
+        /// </summary>
+        public CommonTemplatesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonTemplates)) { }
+        private CommonTemplatesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonTemplatesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonTemplatesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonTemplatesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonTemplatesFolder"/>
+        /// </summary>
+        /// <param name="commonTemplatesFolder"></param>
+        public static implicit operator string(CommonTemplatesFolder commonTemplatesFolder) { return commonTemplatesFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonTemplatesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonTemplatesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CommonDocuments folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonDocumentsFolder
+    {
+        /// <summary>
+        /// share a new CommonDocuments folder
+        /// </summary>
+        public CommonDocumentsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments)) { }
+        private CommonDocumentsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonDocumentsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDocumentsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonDocumentsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonDocumentsFolder"/>
+        /// </summary>
+        /// <param name="commonDocumentsFolder"></param>
+        public static implicit operator string(CommonDocumentsFolder commonDocumentsFolder) { return commonDocumentsFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonDocumentsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonDocumentsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CommonAdminTools folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonAdminToolsFolder
+    {
+        /// <summary>
+        /// share a new CommonAdminTools folder
+        /// </summary>
+        public CommonAdminToolsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonAdminTools)) { }
+        private CommonAdminToolsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonAdminToolsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonAdminToolsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonAdminToolsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonAdminToolsFolder"/>
+        /// </summary>
+        /// <param name="commonAdminToolsFolder"></param>
+        public static implicit operator string(CommonAdminToolsFolder commonAdminToolsFolder) { return commonAdminToolsFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonAdminToolsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonAdminToolsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a AdminTools folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct AdminToolsFolder
+    {
+        /// <summary>
+        /// share a new AdminTools folder
+        /// </summary>
+        public AdminToolsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.AdminTools)) { }
+        private AdminToolsFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public AdminToolsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new AdminToolsFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public AdminToolsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="adminToolsFolder"/>
+        /// </summary>
+        /// <param name="adminToolsFolder"></param>
+        public static implicit operator string(AdminToolsFolder adminToolsFolder) { return adminToolsFolder.folder; }
+        /// <summary>
+        /// get <see cref="AdminToolsFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is AdminToolsFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CommonMusic folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonMusicFolder
+    {
+        /// <summary>
+        /// share a new CommonMusic folder
+        /// </summary>
+        public CommonMusicFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic)) { }
+        private CommonMusicFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonMusicFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonMusicFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonMusicFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonMusicFolder"/>
+        /// </summary>
+        /// <param name="commonMusicFolder"></param>
+        public static implicit operator string(CommonMusicFolder commonMusicFolder) { return commonMusicFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonMusicFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonMusicFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CommonPictures folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonPicturesFolder
+    {
+        /// <summary>
+        /// share a new CommonPictures folder
+        /// </summary>
+        public CommonPicturesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonPictures)) { }
+        private CommonPicturesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonPicturesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonPicturesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonPicturesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonPicturesFolder"/>
+        /// </summary>
+        /// <param name="commonPicturesFolder"></param>
+        public static implicit operator string(CommonPicturesFolder commonPicturesFolder) { return commonPicturesFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonPicturesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonPicturesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CommonVideos folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonVideosFolder
+    {
+        /// <summary>
+        /// share a new CommonVideos folder
+        /// </summary>
+        public CommonVideosFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonVideos)) { }
+        private CommonVideosFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonVideosFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonVideosFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonVideosFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonVideosFolder"/>
+        /// </summary>
+        /// <param name="commonVideosFolder"></param>
+        public static implicit operator string(CommonVideosFolder commonVideosFolder) { return commonVideosFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonVideosFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonVideosFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a Resources folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct ResourcesFolder
+    {
+        /// <summary>
+        /// share a new Resources folder
+        /// </summary>
+        public ResourcesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Resources)) { }
+        private ResourcesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public ResourcesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ResourcesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public ResourcesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="resourcesFolder"/>
+        /// </summary>
+        /// <param name="resourcesFolder"></param>
+        public static implicit operator string(ResourcesFolder resourcesFolder) { return resourcesFolder.folder; }
+        /// <summary>
+        /// get <see cref="ResourcesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is ResourcesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a LocalizedResources folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct LocalizedResourcesFolder
+    {
+        /// <summary>
+        /// share a new LocalizedResources folder
+        /// </summary>
+        public LocalizedResourcesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.LocalizedResources)) { }
+        private LocalizedResourcesFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public LocalizedResourcesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalizedResourcesFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public LocalizedResourcesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="localizedResourcesFolder"/>
+        /// </summary>
+        /// <param name="localizedResourcesFolder"></param>
+        public static implicit operator string(LocalizedResourcesFolder localizedResourcesFolder) { return localizedResourcesFolder.folder; }
+        /// <summary>
+        /// get <see cref="LocalizedResourcesFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is LocalizedResourcesFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CommonOemLinks folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CommonOemLinksFolder
+    {
+        /// <summary>
+        /// share a new CommonOemLinks folder
+        /// </summary>
+        public CommonOemLinksFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonOemLinks)) { }
+        private CommonOemLinksFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CommonOemLinksFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonOemLinksFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CommonOemLinksFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="commonOemLinksFolder"/>
+        /// </summary>
+        /// <param name="commonOemLinksFolder"></param>
+        public static implicit operator string(CommonOemLinksFolder commonOemLinksFolder) { return commonOemLinksFolder.folder; }
+        /// <summary>
+        /// get <see cref="CommonOemLinksFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CommonOemLinksFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CDBurning folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CDBurningFolder
+    {
+        /// <summary>
+        /// share a new CDBurning folder
+        /// </summary>
+        public CDBurningFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CDBurning)) { }
+        private CDBurningFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CDBurningFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CDBurningFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CDBurningFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="cDBurningFolder"/>
+        /// </summary>
+        /// <param name="cDBurningFolder"></param>
+        public static implicit operator string(CDBurningFolder cDBurningFolder) { return cDBurningFolder.folder; }
+        /// <summary>
+        /// get <see cref="CDBurningFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CDBurningFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+    /// <summary>
+    /// represents a CurrentDirectory folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct CurrentFolder
+    {
+        /// <summary>
+        /// share a new CurrentDirectory folder
+        /// </summary>
+        public CurrentFolder() : this(Environment.CurrentDirectory) { }
+        private CurrentFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public CurrentFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CurrentFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public CurrentFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="currentFolder"/>
+        /// </summary>
+        /// <param name="currentFolder"></param>
+        public static implicit operator string(CurrentFolder currentFolder) { return currentFolder.folder; }
+        /// <summary>
+        /// get <see cref="CurrentFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CurrentFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+
+
+    /// <summary>
+    /// represents a input path folder
+    /// </summary>
+    [DebuggerDisplay("{folder}")]
+    public struct AnyFolder
+    {
+        /// <summary>
+        /// share a new AnyFolder folder
+        /// </summary> 
+        public AnyFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public AnyFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new AnyFolder(folderCombine); }
+        /// <summary>
+        /// create folder is not exist
+        /// </summary>
+        /// <returns></returns>
+        public AnyFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        /// <summary>
+        /// get folder string from <paramref name="anyFolder"/>
+        /// </summary>
+        /// <param name="anyFolder"></param>
+        public static implicit operator string(AnyFolder anyFolder) { return anyFolder.folder; }
+        /// <summary>
+        /// get <see cref="AnyFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CurrentFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+    }
+
+
 }

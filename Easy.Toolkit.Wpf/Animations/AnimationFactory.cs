@@ -1,5 +1,5 @@
 ﻿using System.Windows.Media.Animation;
-namespace Easy.Toolkit
+namespace Easy.Toolkit.Animations
 {
     /// <summary>
     /// animation factory

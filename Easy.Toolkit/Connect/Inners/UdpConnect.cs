@@ -50,7 +50,7 @@ namespace Easy.Toolkit.Connect
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">if localEndPoint is null</exception>
-        /// <exception cref="ArgumentOutOfRangeException">if connectConfiguration.bufferSize <= 0</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if connectConfiguration.bufferSize less than or equal to 0</exception>
         public IMessageTransfer RunAsync()
         {
             if (connectConfiguration.localEndPoint is null)

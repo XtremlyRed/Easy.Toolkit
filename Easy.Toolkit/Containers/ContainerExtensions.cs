@@ -36,10 +36,10 @@ namespace Easy.Toolkit
 
         /// <summary>
         /// Registers an implementation implementationType for the specified interface
-        /// </summary>
-        /// <typeparam name="TInterface">Interface to register</typeparam>
-        /// <typeparam name="TImplementation">Implementing implementationType</typeparam>
+        /// </summary> 
         /// <param name="container">This container instance</param>
+        /// <param name="implementationType">implementationType</param>
+        /// <param name="serviceTypes">service types to register</param>
         /// <returns>IRegisteredType object</returns>
         public static IRegisteredType Register(this Container container, Type implementationType, Type[] serviceTypes)
         {
@@ -84,7 +84,7 @@ namespace Easy.Toolkit
         /// Registers a implementationType
         /// </summary>
         /// <param name="container">This container instance</param>
-        /// <typeparam name="T">Type to register</typeparam>
+        /// <param name="implementationType"></param> 
         /// <returns>IRegisteredType object</returns>
         public static IRegisteredType Register(this Container container, Type implementationType)
         {
@@ -105,9 +105,9 @@ namespace Easy.Toolkit
 
         /// <summary>
         /// Returns an implementation of the specified interface
-        /// </summary>
-        /// <typeparam name="T">Interface implementationType</typeparam>
+        /// </summary> 
         /// <param name="container">This container instance</param>
+        /// <param name="serviceType">service type</param>
         /// <returns>Object implementing the interface</returns>
         public static object Resolve(this Container container, Type serviceType)
         {

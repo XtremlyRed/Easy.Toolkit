@@ -161,7 +161,14 @@ namespace Easy.Toolkit
 
         }
 
-
+        /// <summary>
+        /// array copy
+        /// </summary>
+        /// <param name="sourceArray"></param>
+        /// <param name="sourceIndex"></param>
+        /// <param name="destinationArray"></param>
+        /// <param name="destinationIndex"></param>
+        /// <param name="length"></param>
         protected virtual void BufferCopy(ref Target[] sourceArray, int sourceIndex, ref Target[] destinationArray, int destinationIndex, int length)
         {
             Array.ConstrainedCopy(sourceArray, sourceIndex, destinationArray, destinationIndex, length);

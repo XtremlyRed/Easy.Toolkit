@@ -94,7 +94,7 @@ namespace Easy.Toolkit
         /// <summary>
         /// Returns the object registered for the given type, if registered
         /// </summary>
-        /// <param name="type">Type as registered with the container</param>
+        /// <typeparam name="T">Type as registered with the container</typeparam>
         /// <returns>Instance of the registered type, if registered; otherwise <see langword="null"/></returns>
         public T GetService<T>()
         {

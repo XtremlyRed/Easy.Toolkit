@@ -5,6 +5,7 @@ namespace Easy.Toolkit
     /// <summary>
     /// container locator
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public static class ContainerLocator
     {
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]

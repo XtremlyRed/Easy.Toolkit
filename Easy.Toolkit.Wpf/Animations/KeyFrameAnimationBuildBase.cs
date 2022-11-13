@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
 using System.Windows.Media.Animation;
-namespace Easy.Toolkit
+namespace Easy.Toolkit.Animations
 {
     /// <summary>
     /// AnimationBuildBase

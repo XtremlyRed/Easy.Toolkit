@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace Easy.Toolkit
+namespace Easy.Toolkit.Animations
 {
     /// <summary>
     /// Animation Build Base

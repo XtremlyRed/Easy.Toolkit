@@ -11,8 +11,8 @@
 
 
 	<PropertyGroup> 
-		<Version>2.7.5</Version>
-		<AssemblyVersion>2.7.5</AssemblyVersion>
+		<Version>2.7.7</Version>
+		<AssemblyVersion>2.7.7</AssemblyVersion>
 		<LangVersion>11.0</LangVersion>
 		<PackageProjectUrl>https://github.com/XtremlyRed/Easy.Toolkit</PackageProjectUrl>
 	</PropertyGroup>

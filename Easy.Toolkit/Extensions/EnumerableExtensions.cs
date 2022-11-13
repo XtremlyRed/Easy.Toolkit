@@ -107,7 +107,13 @@ namespace Easy.Toolkit
             }
         }
 
-
+        /// <summary>
+        /// to read only list
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IReadOnlyList<Target> ToReadOnlyList<Target>(this IEnumerable<Target> collection)
         {
             if (collection is null)
@@ -122,7 +128,14 @@ namespace Easy.Toolkit
             return c2;
         }
 
-
+        /// <summary>
+        /// to read dictionary
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
             if (collection is null)
@@ -136,7 +149,18 @@ namespace Easy.Toolkit
             return newList;
         }
 
-
+        /// <summary>
+        /// to read dictionary
+        /// </summary>
+        /// <typeparam name="TObject"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="keySelector"></param>
+        /// <param name="valueSelector"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exception"></exception>
         public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TObject, TKey, TValue>(this IEnumerable<TObject> collection, Func<TObject, TKey> keySelector, Func<TObject, TValue> valueSelector)
 
         {
