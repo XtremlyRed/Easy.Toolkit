@@ -9,7 +9,7 @@ namespace Easy.Toolkit
     /// <summary>
     /// <see cref="EasyFolder"/>
     /// </summary>
-    public static class EasyFolder
+    public class EasyFolder
     {
         /// <summary>
         /// <see cref="DesktopFolder"/>
@@ -251,11 +251,51 @@ namespace Easy.Toolkit
         /// </summary>
         public static readonly CurrentFolder Current = new();
 
+
+
+        /// <summary>
+        /// share a new <see cref="EasyFolder"/> folder
+        /// </summary> 
+        public EasyFolder(string folder) { this.folder = folder; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private readonly string folder;
+        /// <summary>
+        /// to string
+        /// </summary>
+        /// <returns>folder path</returns>
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        /// <summary>
+        /// combines four strings into a path. 
+        /// </summary>
+        /// <param name="paths">an array of parts of the path.</param>
+        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
+        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <returns>The combined paths.</returns>
+        public EasyFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new EasyFolder(folderCombine); }
+        /// <summary>
+        /// get folder string from <paramref name="easyFolder"/>
+        /// </summary>
+        /// <param name="easyFolder"></param>
+        public static implicit operator string(EasyFolder easyFolder) { string dir = Path.GetDirectoryName(easyFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return easyFolder.folder; }
+        /// <summary>
+        /// get <see cref="EasyFolder"/> hash code
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode() { return folder.GetHashCode(); }
+        /// <summary>
+        /// compare two objects for equality
+        /// </summary>
+        /// <param name="obj">compare object</param>
+        /// <returns>compare result</returns>
+        public override bool Equals(object obj) { return obj is CurrentFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
+
+
+
+
     }
     /// <summary>
     /// represents a Desktop folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct DesktopFolder
     {
         /// <summary>
@@ -264,12 +304,12 @@ namespace Easy.Toolkit
         public DesktopFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)) { }
         private DesktopFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -277,12 +317,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public DesktopFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopFolder(folderCombine); }
+        public DesktopFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="desktopFolder"/>
         /// </summary>
         /// <param name="desktopFolder"></param>
-        public static implicit operator string(DesktopFolder desktopFolder) { var dir = Path.GetDirectoryName(desktopFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return desktopFolder.folder; }
+        public static implicit operator string(DesktopFolder desktopFolder) { string dir = Path.GetDirectoryName(desktopFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return desktopFolder.folder; }
         /// <summary>
         /// get <see cref="DesktopFolder"/> hash code
         /// </summary>
@@ -299,7 +339,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Programs folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct ProgramsFolder
     {
         /// <summary>
@@ -308,12 +347,12 @@ namespace Easy.Toolkit
         public ProgramsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Programs)) { }
         private ProgramsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -321,12 +360,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public ProgramsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramsFolder(folderCombine); }
+        public ProgramsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="programsFolder"/>
         /// </summary>
         /// <param name="programsFolder"></param>
-        public static implicit operator string(ProgramsFolder programsFolder) { var dir = Path.GetDirectoryName(programsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return programsFolder.folder; }
+        public static implicit operator string(ProgramsFolder programsFolder) { string dir = Path.GetDirectoryName(programsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return programsFolder.folder; }
         /// <summary>
         /// get <see cref="ProgramsFolder"/> hash code
         /// </summary>
@@ -343,7 +382,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a MyDocuments folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct MyDocumentsFolder
     {
         /// <summary>
@@ -352,12 +390,12 @@ namespace Easy.Toolkit
         public MyDocumentsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)) { }
         private MyDocumentsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -365,12 +403,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public MyDocumentsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyDocumentsFolder(folderCombine); }
+        public MyDocumentsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyDocumentsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="myDocumentsFolder"/>
         /// </summary>
         /// <param name="myDocumentsFolder"></param>
-        public static implicit operator string(MyDocumentsFolder myDocumentsFolder) { var dir = Path.GetDirectoryName(myDocumentsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myDocumentsFolder.folder; }
+        public static implicit operator string(MyDocumentsFolder myDocumentsFolder) { string dir = Path.GetDirectoryName(myDocumentsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myDocumentsFolder.folder; }
         /// <summary>
         /// get <see cref="MyDocumentsFolder"/> hash code
         /// </summary>
@@ -387,7 +425,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Personal folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct PersonalFolder
     {
         /// <summary>
@@ -396,12 +433,12 @@ namespace Easy.Toolkit
         public PersonalFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Personal)) { }
         private PersonalFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -409,12 +446,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public PersonalFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PersonalFolder(folderCombine); }
+        public PersonalFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PersonalFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="personalFolder"/>
         /// </summary>
         /// <param name="personalFolder"></param>
-        public static implicit operator string(PersonalFolder personalFolder) { var dir = Path.GetDirectoryName(personalFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return personalFolder.folder; }
+        public static implicit operator string(PersonalFolder personalFolder) { string dir = Path.GetDirectoryName(personalFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return personalFolder.folder; }
         /// <summary>
         /// get <see cref="PersonalFolder"/> hash code
         /// </summary>
@@ -431,7 +468,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Favorites folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct FavoritesFolder
     {
         /// <summary>
@@ -440,12 +476,12 @@ namespace Easy.Toolkit
         public FavoritesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Favorites)) { }
         private FavoritesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -453,12 +489,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public FavoritesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FavoritesFolder(folderCombine); }
+        public FavoritesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FavoritesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="favoritesFolder"/>
         /// </summary>
         /// <param name="favoritesFolder"></param>
-        public static implicit operator string(FavoritesFolder favoritesFolder) { var dir = Path.GetDirectoryName(favoritesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return favoritesFolder.folder; }
+        public static implicit operator string(FavoritesFolder favoritesFolder) { string dir = Path.GetDirectoryName(favoritesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return favoritesFolder.folder; }
         /// <summary>
         /// get <see cref="FavoritesFolder"/> hash code
         /// </summary>
@@ -475,7 +511,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Startup folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct StartupFolder
     {
         /// <summary>
@@ -484,12 +519,12 @@ namespace Easy.Toolkit
         public StartupFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Startup)) { }
         private StartupFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -497,12 +532,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public StartupFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartupFolder(folderCombine); }
+        public StartupFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartupFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="startupFolder"/>
         /// </summary>
         /// <param name="startupFolder"></param>
-        public static implicit operator string(StartupFolder startupFolder) { var dir = Path.GetDirectoryName(startupFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return startupFolder.folder; }
+        public static implicit operator string(StartupFolder startupFolder) { string dir = Path.GetDirectoryName(startupFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return startupFolder.folder; }
         /// <summary>
         /// get <see cref="StartupFolder"/> hash code
         /// </summary>
@@ -519,7 +554,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Recent folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct RecentFolder
     {
         /// <summary>
@@ -528,12 +562,12 @@ namespace Easy.Toolkit
         public RecentFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Recent)) { }
         private RecentFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -541,12 +575,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public RecentFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new RecentFolder(folderCombine); }
+        public RecentFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new RecentFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="recentFolder"/>
         /// </summary>
         /// <param name="recentFolder"></param>
-        public static implicit operator string(RecentFolder recentFolder) { var dir = Path.GetDirectoryName(recentFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return recentFolder.folder; }
+        public static implicit operator string(RecentFolder recentFolder) { string dir = Path.GetDirectoryName(recentFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return recentFolder.folder; }
         /// <summary>
         /// get <see cref="RecentFolder"/> hash code
         /// </summary>
@@ -563,7 +597,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a SendTo folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct SendToFolder
     {
         /// <summary>
@@ -572,12 +605,12 @@ namespace Easy.Toolkit
         public SendToFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.SendTo)) { }
         private SendToFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -585,12 +618,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public SendToFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SendToFolder(folderCombine); }
+        public SendToFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SendToFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="sendToFolder"/>
         /// </summary>
         /// <param name="sendToFolder"></param>
-        public static implicit operator string(SendToFolder sendToFolder) { var dir = Path.GetDirectoryName(sendToFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return sendToFolder.folder; }
+        public static implicit operator string(SendToFolder sendToFolder) { string dir = Path.GetDirectoryName(sendToFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return sendToFolder.folder; }
         /// <summary>
         /// get <see cref="SendToFolder"/> hash code
         /// </summary>
@@ -607,7 +640,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a StartMenu folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct StartMenuFolder
     {
         /// <summary>
@@ -616,12 +648,12 @@ namespace Easy.Toolkit
         public StartMenuFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu)) { }
         private StartMenuFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -629,12 +661,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public StartMenuFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartMenuFolder(folderCombine); }
+        public StartMenuFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartMenuFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="startMenuFolder"/>
         /// </summary>
         /// <param name="startMenuFolder"></param>
-        public static implicit operator string(StartMenuFolder startMenuFolder) { var dir = Path.GetDirectoryName(startMenuFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return startMenuFolder.folder; }
+        public static implicit operator string(StartMenuFolder startMenuFolder) { string dir = Path.GetDirectoryName(startMenuFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return startMenuFolder.folder; }
         /// <summary>
         /// get <see cref="StartMenuFolder"/> hash code
         /// </summary>
@@ -651,7 +683,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a MyMusic folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct MyMusicFolder
     {
         /// <summary>
@@ -660,12 +691,12 @@ namespace Easy.Toolkit
         public MyMusicFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)) { }
         private MyMusicFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -673,12 +704,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public MyMusicFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyMusicFolder(folderCombine); }
+        public MyMusicFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyMusicFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="myMusicFolder"/>
         /// </summary>
         /// <param name="myMusicFolder"></param>
-        public static implicit operator string(MyMusicFolder myMusicFolder) { var dir = Path.GetDirectoryName(myMusicFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myMusicFolder.folder; }
+        public static implicit operator string(MyMusicFolder myMusicFolder) { string dir = Path.GetDirectoryName(myMusicFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myMusicFolder.folder; }
         /// <summary>
         /// get <see cref="MyMusicFolder"/> hash code
         /// </summary>
@@ -695,7 +726,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a MyVideos folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct MyVideosFolder
     {
         /// <summary>
@@ -704,12 +734,12 @@ namespace Easy.Toolkit
         public MyVideosFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)) { }
         private MyVideosFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -717,12 +747,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public MyVideosFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyVideosFolder(folderCombine); }
+        public MyVideosFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyVideosFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="myVideosFolder"/>
         /// </summary>
         /// <param name="myVideosFolder"></param>
-        public static implicit operator string(MyVideosFolder myVideosFolder) { var dir = Path.GetDirectoryName(myVideosFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myVideosFolder.folder; }
+        public static implicit operator string(MyVideosFolder myVideosFolder) { string dir = Path.GetDirectoryName(myVideosFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myVideosFolder.folder; }
         /// <summary>
         /// get <see cref="MyVideosFolder"/> hash code
         /// </summary>
@@ -739,7 +769,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a DesktopDirectory folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct DesktopDirectoryFolder
     {
         /// <summary>
@@ -748,12 +777,12 @@ namespace Easy.Toolkit
         public DesktopDirectoryFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)) { }
         private DesktopDirectoryFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -761,12 +790,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public DesktopDirectoryFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopDirectoryFolder(folderCombine); }
+        public DesktopDirectoryFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopDirectoryFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="desktopDirectoryFolder"/>
         /// </summary>
         /// <param name="desktopDirectoryFolder"></param>
-        public static implicit operator string(DesktopDirectoryFolder desktopDirectoryFolder) { var dir = Path.GetDirectoryName(desktopDirectoryFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return desktopDirectoryFolder.folder; }
+        public static implicit operator string(DesktopDirectoryFolder desktopDirectoryFolder) { string dir = Path.GetDirectoryName(desktopDirectoryFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return desktopDirectoryFolder.folder; }
         /// <summary>
         /// get <see cref="DesktopDirectoryFolder"/> hash code
         /// </summary>
@@ -783,7 +812,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a MyComputer folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct MyComputerFolder
     {
         /// <summary>
@@ -792,12 +820,12 @@ namespace Easy.Toolkit
         public MyComputerFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyComputer)) { }
         private MyComputerFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -805,12 +833,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public MyComputerFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyComputerFolder(folderCombine); }
+        public MyComputerFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyComputerFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="myComputerFolder"/>
         /// </summary>
         /// <param name="myComputerFolder"></param>
-        public static implicit operator string(MyComputerFolder myComputerFolder) { var dir = Path.GetDirectoryName(myComputerFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myComputerFolder.folder; }
+        public static implicit operator string(MyComputerFolder myComputerFolder) { string dir = Path.GetDirectoryName(myComputerFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myComputerFolder.folder; }
         /// <summary>
         /// get <see cref="MyComputerFolder"/> hash code
         /// </summary>
@@ -827,7 +855,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a NetworkShortcuts folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct NetworkShortcutsFolder
     {
         /// <summary>
@@ -836,12 +863,12 @@ namespace Easy.Toolkit
         public NetworkShortcutsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.NetworkShortcuts)) { }
         private NetworkShortcutsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -849,12 +876,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public NetworkShortcutsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new NetworkShortcutsFolder(folderCombine); }
+        public NetworkShortcutsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new NetworkShortcutsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="networkShortcutsFolder"/>
         /// </summary>
         /// <param name="networkShortcutsFolder"></param>
-        public static implicit operator string(NetworkShortcutsFolder networkShortcutsFolder) { var dir = Path.GetDirectoryName(networkShortcutsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return networkShortcutsFolder.folder; }
+        public static implicit operator string(NetworkShortcutsFolder networkShortcutsFolder) { string dir = Path.GetDirectoryName(networkShortcutsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return networkShortcutsFolder.folder; }
         /// <summary>
         /// get <see cref="NetworkShortcutsFolder"/> hash code
         /// </summary>
@@ -871,7 +898,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Fonts folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct FontsFolder
     {
         /// <summary>
@@ -880,12 +906,12 @@ namespace Easy.Toolkit
         public FontsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Fonts)) { }
         private FontsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -893,12 +919,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public FontsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FontsFolder(folderCombine); }
+        public FontsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FontsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="fontsFolder"/>
         /// </summary>
         /// <param name="fontsFolder"></param>
-        public static implicit operator string(FontsFolder fontsFolder) { var dir = Path.GetDirectoryName(fontsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return fontsFolder.folder; }
+        public static implicit operator string(FontsFolder fontsFolder) { string dir = Path.GetDirectoryName(fontsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return fontsFolder.folder; }
         /// <summary>
         /// get <see cref="FontsFolder"/> hash code
         /// </summary>
@@ -915,7 +941,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Templates folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct TemplatesFolder
     {
         /// <summary>
@@ -924,12 +949,12 @@ namespace Easy.Toolkit
         public TemplatesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Templates)) { }
         private TemplatesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -937,12 +962,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public TemplatesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new TemplatesFolder(folderCombine); }
+        public TemplatesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new TemplatesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="templatesFolder"/>
         /// </summary>
         /// <param name="templatesFolder"></param>
-        public static implicit operator string(TemplatesFolder templatesFolder) { var dir = Path.GetDirectoryName(templatesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return templatesFolder.folder; }
+        public static implicit operator string(TemplatesFolder templatesFolder) { string dir = Path.GetDirectoryName(templatesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return templatesFolder.folder; }
         /// <summary>
         /// get <see cref="TemplatesFolder"/> hash code
         /// </summary>
@@ -959,7 +984,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonStartMenu folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonStartMenuFolder
     {
         /// <summary>
@@ -968,12 +992,12 @@ namespace Easy.Toolkit
         public CommonStartMenuFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu)) { }
         private CommonStartMenuFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -981,12 +1005,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonStartMenuFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartMenuFolder(folderCombine); }
+        public CommonStartMenuFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartMenuFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonStartMenuFolder"/>
         /// </summary>
         /// <param name="commonStartMenuFolder"></param>
-        public static implicit operator string(CommonStartMenuFolder commonStartMenuFolder) { var dir = Path.GetDirectoryName(commonStartMenuFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonStartMenuFolder.folder; }
+        public static implicit operator string(CommonStartMenuFolder commonStartMenuFolder) { string dir = Path.GetDirectoryName(commonStartMenuFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonStartMenuFolder.folder; }
         /// <summary>
         /// get <see cref="CommonStartMenuFolder"/> hash code
         /// </summary>
@@ -1003,7 +1027,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonPrograms folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonProgramsFolder
     {
         /// <summary>
@@ -1012,12 +1035,12 @@ namespace Easy.Toolkit
         public CommonProgramsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms)) { }
         private CommonProgramsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1025,12 +1048,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonProgramsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramsFolder(folderCombine); }
+        public CommonProgramsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonProgramsFolder"/>
         /// </summary>
         /// <param name="commonProgramsFolder"></param>
-        public static implicit operator string(CommonProgramsFolder commonProgramsFolder) { var dir = Path.GetDirectoryName(commonProgramsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonProgramsFolder.folder; }
+        public static implicit operator string(CommonProgramsFolder commonProgramsFolder) { string dir = Path.GetDirectoryName(commonProgramsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonProgramsFolder.folder; }
         /// <summary>
         /// get <see cref="CommonProgramsFolder"/> hash code
         /// </summary>
@@ -1047,7 +1070,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonStartup folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonStartupFolder
     {
         /// <summary>
@@ -1056,12 +1078,12 @@ namespace Easy.Toolkit
         public CommonStartupFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup)) { }
         private CommonStartupFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1069,12 +1091,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonStartupFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartupFolder(folderCombine); }
+        public CommonStartupFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartupFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonStartupFolder"/>
         /// </summary>
         /// <param name="commonStartupFolder"></param>
-        public static implicit operator string(CommonStartupFolder commonStartupFolder) { var dir = Path.GetDirectoryName(commonStartupFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonStartupFolder.folder; }
+        public static implicit operator string(CommonStartupFolder commonStartupFolder) { string dir = Path.GetDirectoryName(commonStartupFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonStartupFolder.folder; }
         /// <summary>
         /// get <see cref="CommonStartupFolder"/> hash code
         /// </summary>
@@ -1091,7 +1113,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonDesktopDirectory folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonDesktopDirectoryFolder
     {
         /// <summary>
@@ -1100,12 +1121,12 @@ namespace Easy.Toolkit
         public CommonDesktopDirectoryFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonDesktopDirectory)) { }
         private CommonDesktopDirectoryFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1113,12 +1134,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonDesktopDirectoryFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDesktopDirectoryFolder(folderCombine); }
+        public CommonDesktopDirectoryFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDesktopDirectoryFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonDesktopDirectoryFolder"/>
         /// </summary>
         /// <param name="commonDesktopDirectoryFolder"></param>
-        public static implicit operator string(CommonDesktopDirectoryFolder commonDesktopDirectoryFolder) { var dir = Path.GetDirectoryName(commonDesktopDirectoryFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonDesktopDirectoryFolder.folder; }
+        public static implicit operator string(CommonDesktopDirectoryFolder commonDesktopDirectoryFolder) { string dir = Path.GetDirectoryName(commonDesktopDirectoryFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonDesktopDirectoryFolder.folder; }
         /// <summary>
         /// get <see cref="CommonDesktopDirectoryFolder"/> hash code
         /// </summary>
@@ -1135,7 +1156,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a ApplicationData folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct ApplicationDataFolder
     {
         /// <summary>
@@ -1144,12 +1164,12 @@ namespace Easy.Toolkit
         public ApplicationDataFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) { }
         private ApplicationDataFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1157,12 +1177,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public ApplicationDataFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ApplicationDataFolder(folderCombine); }
+        public ApplicationDataFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ApplicationDataFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="applicationDataFolder"/>
         /// </summary>
         /// <param name="applicationDataFolder"></param>
-        public static implicit operator string(ApplicationDataFolder applicationDataFolder) { var dir = Path.GetDirectoryName(applicationDataFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return applicationDataFolder.folder; }
+        public static implicit operator string(ApplicationDataFolder applicationDataFolder) { string dir = Path.GetDirectoryName(applicationDataFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return applicationDataFolder.folder; }
         /// <summary>
         /// get <see cref="ApplicationDataFolder"/> hash code
         /// </summary>
@@ -1179,7 +1199,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a PrinterShortcuts folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct PrinterShortcutsFolder
     {
         /// <summary>
@@ -1188,12 +1207,12 @@ namespace Easy.Toolkit
         public PrinterShortcutsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.PrinterShortcuts)) { }
         private PrinterShortcutsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1201,12 +1220,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public PrinterShortcutsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PrinterShortcutsFolder(folderCombine); }
+        public PrinterShortcutsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PrinterShortcutsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="printerShortcutsFolder"/>
         /// </summary>
         /// <param name="printerShortcutsFolder"></param>
-        public static implicit operator string(PrinterShortcutsFolder printerShortcutsFolder) { var dir = Path.GetDirectoryName(printerShortcutsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return printerShortcutsFolder.folder; }
+        public static implicit operator string(PrinterShortcutsFolder printerShortcutsFolder) { string dir = Path.GetDirectoryName(printerShortcutsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return printerShortcutsFolder.folder; }
         /// <summary>
         /// get <see cref="PrinterShortcutsFolder"/> hash code
         /// </summary>
@@ -1223,7 +1242,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a LocalApplicationData folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct LocalApplicationDataFolder
     {
         /// <summary>
@@ -1232,12 +1250,12 @@ namespace Easy.Toolkit
         public LocalApplicationDataFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)) { }
         private LocalApplicationDataFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1245,12 +1263,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public LocalApplicationDataFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalApplicationDataFolder(folderCombine); }
+        public LocalApplicationDataFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalApplicationDataFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="localApplicationDataFolder"/>
         /// </summary>
         /// <param name="localApplicationDataFolder"></param>
-        public static implicit operator string(LocalApplicationDataFolder localApplicationDataFolder) { var dir = Path.GetDirectoryName(localApplicationDataFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return localApplicationDataFolder.folder; }
+        public static implicit operator string(LocalApplicationDataFolder localApplicationDataFolder) { string dir = Path.GetDirectoryName(localApplicationDataFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return localApplicationDataFolder.folder; }
         /// <summary>
         /// get <see cref="LocalApplicationDataFolder"/> hash code
         /// </summary>
@@ -1267,7 +1285,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a InternetCache folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct InternetCacheFolder
     {
         /// <summary>
@@ -1276,12 +1293,12 @@ namespace Easy.Toolkit
         public InternetCacheFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache)) { }
         private InternetCacheFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1289,12 +1306,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public InternetCacheFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new InternetCacheFolder(folderCombine); }
+        public InternetCacheFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new InternetCacheFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="internetCacheFolder"/>
         /// </summary>
         /// <param name="internetCacheFolder"></param>
-        public static implicit operator string(InternetCacheFolder internetCacheFolder) { var dir = Path.GetDirectoryName(internetCacheFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return internetCacheFolder.folder; }
+        public static implicit operator string(InternetCacheFolder internetCacheFolder) { string dir = Path.GetDirectoryName(internetCacheFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return internetCacheFolder.folder; }
         /// <summary>
         /// get <see cref="InternetCacheFolder"/> hash code
         /// </summary>
@@ -1311,7 +1328,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Cookies folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CookiesFolder
     {
         /// <summary>
@@ -1320,12 +1336,12 @@ namespace Easy.Toolkit
         public CookiesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Cookies)) { }
         private CookiesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1333,12 +1349,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CookiesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CookiesFolder(folderCombine); }
+        public CookiesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CookiesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="cookiesFolder"/>
         /// </summary>
         /// <param name="cookiesFolder"></param>
-        public static implicit operator string(CookiesFolder cookiesFolder) { var dir = Path.GetDirectoryName(cookiesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return cookiesFolder.folder; }
+        public static implicit operator string(CookiesFolder cookiesFolder) { string dir = Path.GetDirectoryName(cookiesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return cookiesFolder.folder; }
         /// <summary>
         /// get <see cref="CookiesFolder"/> hash code
         /// </summary>
@@ -1355,7 +1371,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a History folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct HistoryFolder
     {
         /// <summary>
@@ -1364,12 +1379,12 @@ namespace Easy.Toolkit
         public HistoryFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.History)) { }
         private HistoryFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1377,12 +1392,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public HistoryFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new HistoryFolder(folderCombine); }
+        public HistoryFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new HistoryFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="historyFolder"/>
         /// </summary>
         /// <param name="historyFolder"></param>
-        public static implicit operator string(HistoryFolder historyFolder) { var dir = Path.GetDirectoryName(historyFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return historyFolder.folder; }
+        public static implicit operator string(HistoryFolder historyFolder) { string dir = Path.GetDirectoryName(historyFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return historyFolder.folder; }
         /// <summary>
         /// get <see cref="HistoryFolder"/> hash code
         /// </summary>
@@ -1399,7 +1414,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonApplicationData folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonApplicationDataFolder
     {
         /// <summary>
@@ -1408,12 +1422,12 @@ namespace Easy.Toolkit
         public CommonApplicationDataFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)) { }
         private CommonApplicationDataFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1421,12 +1435,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonApplicationDataFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonApplicationDataFolder(folderCombine); }
+        public CommonApplicationDataFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonApplicationDataFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonApplicationDataFolder"/>
         /// </summary>
         /// <param name="commonApplicationDataFolder"></param>
-        public static implicit operator string(CommonApplicationDataFolder commonApplicationDataFolder) { var dir = Path.GetDirectoryName(commonApplicationDataFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonApplicationDataFolder.folder; }
+        public static implicit operator string(CommonApplicationDataFolder commonApplicationDataFolder) { string dir = Path.GetDirectoryName(commonApplicationDataFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonApplicationDataFolder.folder; }
         /// <summary>
         /// get <see cref="CommonApplicationDataFolder"/> hash code
         /// </summary>
@@ -1443,7 +1457,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Windows folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct WindowsFolder
     {
         /// <summary>
@@ -1452,12 +1465,12 @@ namespace Easy.Toolkit
         public WindowsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Windows)) { }
         private WindowsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1465,12 +1478,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public WindowsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new WindowsFolder(folderCombine); }
+        public WindowsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new WindowsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="windowsFolder"/>
         /// </summary>
         /// <param name="windowsFolder"></param>
-        public static implicit operator string(WindowsFolder windowsFolder) { var dir = Path.GetDirectoryName(windowsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return windowsFolder.folder; }
+        public static implicit operator string(WindowsFolder windowsFolder) { string dir = Path.GetDirectoryName(windowsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return windowsFolder.folder; }
         /// <summary>
         /// get <see cref="WindowsFolder"/> hash code
         /// </summary>
@@ -1487,7 +1500,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a System folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct SystemFolder
     {
         /// <summary>
@@ -1496,12 +1508,12 @@ namespace Easy.Toolkit
         public SystemFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.System)) { }
         private SystemFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1509,12 +1521,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public SystemFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemFolder(folderCombine); }
+        public SystemFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="systemFolder"/>
         /// </summary>
         /// <param name="systemFolder"></param>
-        public static implicit operator string(SystemFolder systemFolder) { var dir = Path.GetDirectoryName(systemFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return systemFolder.folder; }
+        public static implicit operator string(SystemFolder systemFolder) { string dir = Path.GetDirectoryName(systemFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return systemFolder.folder; }
         /// <summary>
         /// get <see cref="SystemFolder"/> hash code
         /// </summary>
@@ -1531,7 +1543,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a ProgramFiles folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct ProgramFilesFolder
     {
         /// <summary>
@@ -1540,12 +1551,12 @@ namespace Easy.Toolkit
         public ProgramFilesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)) { }
         private ProgramFilesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1553,12 +1564,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public ProgramFilesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesFolder(folderCombine); }
+        public ProgramFilesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="programFilesFolder"/>
         /// </summary>
         /// <param name="programFilesFolder"></param>
-        public static implicit operator string(ProgramFilesFolder programFilesFolder) { var dir = Path.GetDirectoryName(programFilesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return programFilesFolder.folder; }
+        public static implicit operator string(ProgramFilesFolder programFilesFolder) { string dir = Path.GetDirectoryName(programFilesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return programFilesFolder.folder; }
         /// <summary>
         /// get <see cref="ProgramFilesFolder"/> hash code
         /// </summary>
@@ -1575,7 +1586,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a MyPictures folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct MyPicturesFolder
     {
         /// <summary>
@@ -1584,12 +1594,12 @@ namespace Easy.Toolkit
         public MyPicturesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)) { }
         private MyPicturesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1597,12 +1607,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public MyPicturesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyPicturesFolder(folderCombine); }
+        public MyPicturesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyPicturesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="myPicturesFolder"/>
         /// </summary>
         /// <param name="myPicturesFolder"></param>
-        public static implicit operator string(MyPicturesFolder myPicturesFolder) { var dir = Path.GetDirectoryName(myPicturesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myPicturesFolder.folder; }
+        public static implicit operator string(MyPicturesFolder myPicturesFolder) { string dir = Path.GetDirectoryName(myPicturesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myPicturesFolder.folder; }
         /// <summary>
         /// get <see cref="MyPicturesFolder"/> hash code
         /// </summary>
@@ -1619,7 +1629,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a UserProfile folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct UserProfileFolder
     {
         /// <summary>
@@ -1628,12 +1637,12 @@ namespace Easy.Toolkit
         public UserProfileFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) { }
         private UserProfileFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1641,12 +1650,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public UserProfileFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new UserProfileFolder(folderCombine); }
+        public UserProfileFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new UserProfileFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="userProfileFolder"/>
         /// </summary>
         /// <param name="userProfileFolder"></param>
-        public static implicit operator string(UserProfileFolder userProfileFolder) { var dir = Path.GetDirectoryName(userProfileFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return userProfileFolder.folder; }
+        public static implicit operator string(UserProfileFolder userProfileFolder) { string dir = Path.GetDirectoryName(userProfileFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return userProfileFolder.folder; }
         /// <summary>
         /// get <see cref="UserProfileFolder"/> hash code
         /// </summary>
@@ -1663,7 +1672,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a SystemX86 folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct SystemX86Folder
     {
         /// <summary>
@@ -1672,12 +1680,12 @@ namespace Easy.Toolkit
         public SystemX86Folder() : this(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86)) { }
         private SystemX86Folder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1685,12 +1693,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public SystemX86Folder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemX86Folder(folderCombine); }
+        public SystemX86Folder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemX86Folder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="systemX86Folder"/>
         /// </summary>
         /// <param name="systemX86Folder"></param>
-        public static implicit operator string(SystemX86Folder systemX86Folder) { var dir = Path.GetDirectoryName(systemX86Folder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return systemX86Folder.folder; }
+        public static implicit operator string(SystemX86Folder systemX86Folder) { string dir = Path.GetDirectoryName(systemX86Folder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return systemX86Folder.folder; }
         /// <summary>
         /// get <see cref="SystemX86Folder"/> hash code
         /// </summary>
@@ -1707,7 +1715,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a ProgramFilesX86 folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct ProgramFilesX86Folder
     {
         /// <summary>
@@ -1716,12 +1723,12 @@ namespace Easy.Toolkit
         public ProgramFilesX86Folder() : this(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)) { }
         private ProgramFilesX86Folder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1729,12 +1736,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public ProgramFilesX86Folder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesX86Folder(folderCombine); }
+        public ProgramFilesX86Folder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesX86Folder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="programFilesX86Folder"/>
         /// </summary>
         /// <param name="programFilesX86Folder"></param>
-        public static implicit operator string(ProgramFilesX86Folder programFilesX86Folder) { var dir = Path.GetDirectoryName(programFilesX86Folder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return programFilesX86Folder.folder; }
+        public static implicit operator string(ProgramFilesX86Folder programFilesX86Folder) { string dir = Path.GetDirectoryName(programFilesX86Folder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return programFilesX86Folder.folder; }
         /// <summary>
         /// get <see cref="ProgramFilesX86Folder"/> hash code
         /// </summary>
@@ -1751,7 +1758,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonProgramFiles folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonProgramFilesFolder
     {
         /// <summary>
@@ -1760,12 +1766,12 @@ namespace Easy.Toolkit
         public CommonProgramFilesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles)) { }
         private CommonProgramFilesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1773,12 +1779,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonProgramFilesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesFolder(folderCombine); }
+        public CommonProgramFilesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonProgramFilesFolder"/>
         /// </summary>
         /// <param name="commonProgramFilesFolder"></param>
-        public static implicit operator string(CommonProgramFilesFolder commonProgramFilesFolder) { var dir = Path.GetDirectoryName(commonProgramFilesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonProgramFilesFolder.folder; }
+        public static implicit operator string(CommonProgramFilesFolder commonProgramFilesFolder) { string dir = Path.GetDirectoryName(commonProgramFilesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonProgramFilesFolder.folder; }
         /// <summary>
         /// get <see cref="CommonProgramFilesFolder"/> hash code
         /// </summary>
@@ -1795,7 +1801,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonProgramFilesX86 folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonProgramFilesX86Folder
     {
         /// <summary>
@@ -1804,12 +1809,12 @@ namespace Easy.Toolkit
         public CommonProgramFilesX86Folder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86)) { }
         private CommonProgramFilesX86Folder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1817,12 +1822,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonProgramFilesX86Folder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesX86Folder(folderCombine); }
+        public CommonProgramFilesX86Folder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesX86Folder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonProgramFilesX86Folder"/>
         /// </summary>
         /// <param name="commonProgramFilesX86Folder"></param>
-        public static implicit operator string(CommonProgramFilesX86Folder commonProgramFilesX86Folder) { var dir = Path.GetDirectoryName(commonProgramFilesX86Folder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonProgramFilesX86Folder.folder; }
+        public static implicit operator string(CommonProgramFilesX86Folder commonProgramFilesX86Folder) { string dir = Path.GetDirectoryName(commonProgramFilesX86Folder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonProgramFilesX86Folder.folder; }
         /// <summary>
         /// get <see cref="CommonProgramFilesX86Folder"/> hash code
         /// </summary>
@@ -1839,7 +1844,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonTemplates folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonTemplatesFolder
     {
         /// <summary>
@@ -1848,12 +1852,12 @@ namespace Easy.Toolkit
         public CommonTemplatesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonTemplates)) { }
         private CommonTemplatesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1861,12 +1865,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonTemplatesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonTemplatesFolder(folderCombine); }
+        public CommonTemplatesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonTemplatesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonTemplatesFolder"/>
         /// </summary>
         /// <param name="commonTemplatesFolder"></param>
-        public static implicit operator string(CommonTemplatesFolder commonTemplatesFolder) { var dir = Path.GetDirectoryName(commonTemplatesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonTemplatesFolder.folder; }
+        public static implicit operator string(CommonTemplatesFolder commonTemplatesFolder) { string dir = Path.GetDirectoryName(commonTemplatesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonTemplatesFolder.folder; }
         /// <summary>
         /// get <see cref="CommonTemplatesFolder"/> hash code
         /// </summary>
@@ -1883,7 +1887,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonDocuments folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonDocumentsFolder
     {
         /// <summary>
@@ -1892,12 +1895,12 @@ namespace Easy.Toolkit
         public CommonDocumentsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments)) { }
         private CommonDocumentsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1905,12 +1908,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonDocumentsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDocumentsFolder(folderCombine); }
+        public CommonDocumentsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDocumentsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonDocumentsFolder"/>
         /// </summary>
         /// <param name="commonDocumentsFolder"></param>
-        public static implicit operator string(CommonDocumentsFolder commonDocumentsFolder) { var dir = Path.GetDirectoryName(commonDocumentsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonDocumentsFolder.folder; }
+        public static implicit operator string(CommonDocumentsFolder commonDocumentsFolder) { string dir = Path.GetDirectoryName(commonDocumentsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonDocumentsFolder.folder; }
         /// <summary>
         /// get <see cref="CommonDocumentsFolder"/> hash code
         /// </summary>
@@ -1927,7 +1930,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonAdminTools folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonAdminToolsFolder
     {
         /// <summary>
@@ -1936,12 +1938,12 @@ namespace Easy.Toolkit
         public CommonAdminToolsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonAdminTools)) { }
         private CommonAdminToolsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1949,12 +1951,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonAdminToolsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonAdminToolsFolder(folderCombine); }
+        public CommonAdminToolsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonAdminToolsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonAdminToolsFolder"/>
         /// </summary>
         /// <param name="commonAdminToolsFolder"></param>
-        public static implicit operator string(CommonAdminToolsFolder commonAdminToolsFolder) { var dir = Path.GetDirectoryName(commonAdminToolsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonAdminToolsFolder.folder; }
+        public static implicit operator string(CommonAdminToolsFolder commonAdminToolsFolder) { string dir = Path.GetDirectoryName(commonAdminToolsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonAdminToolsFolder.folder; }
         /// <summary>
         /// get <see cref="CommonAdminToolsFolder"/> hash code
         /// </summary>
@@ -1971,7 +1973,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a AdminTools folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct AdminToolsFolder
     {
         /// <summary>
@@ -1980,12 +1981,12 @@ namespace Easy.Toolkit
         public AdminToolsFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.AdminTools)) { }
         private AdminToolsFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -1993,12 +1994,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public AdminToolsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new AdminToolsFolder(folderCombine); }
+        public AdminToolsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new AdminToolsFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="adminToolsFolder"/>
         /// </summary>
         /// <param name="adminToolsFolder"></param>
-        public static implicit operator string(AdminToolsFolder adminToolsFolder) { var dir = Path.GetDirectoryName(adminToolsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return adminToolsFolder.folder; }
+        public static implicit operator string(AdminToolsFolder adminToolsFolder) { string dir = Path.GetDirectoryName(adminToolsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return adminToolsFolder.folder; }
         /// <summary>
         /// get <see cref="AdminToolsFolder"/> hash code
         /// </summary>
@@ -2015,7 +2016,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonMusic folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonMusicFolder
     {
         /// <summary>
@@ -2024,12 +2024,12 @@ namespace Easy.Toolkit
         public CommonMusicFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic)) { }
         private CommonMusicFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -2037,12 +2037,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonMusicFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonMusicFolder(folderCombine); }
+        public CommonMusicFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonMusicFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonMusicFolder"/>
         /// </summary>
         /// <param name="commonMusicFolder"></param>
-        public static implicit operator string(CommonMusicFolder commonMusicFolder) { var dir = Path.GetDirectoryName(commonMusicFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonMusicFolder.folder; }
+        public static implicit operator string(CommonMusicFolder commonMusicFolder) { string dir = Path.GetDirectoryName(commonMusicFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonMusicFolder.folder; }
         /// <summary>
         /// get <see cref="CommonMusicFolder"/> hash code
         /// </summary>
@@ -2059,7 +2059,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonPictures folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonPicturesFolder
     {
         /// <summary>
@@ -2068,12 +2067,12 @@ namespace Easy.Toolkit
         public CommonPicturesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonPictures)) { }
         private CommonPicturesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -2081,12 +2080,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonPicturesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonPicturesFolder(folderCombine); }
+        public CommonPicturesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonPicturesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonPicturesFolder"/>
         /// </summary>
         /// <param name="commonPicturesFolder"></param>
-        public static implicit operator string(CommonPicturesFolder commonPicturesFolder) { var dir = Path.GetDirectoryName(commonPicturesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonPicturesFolder.folder; }
+        public static implicit operator string(CommonPicturesFolder commonPicturesFolder) { string dir = Path.GetDirectoryName(commonPicturesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonPicturesFolder.folder; }
         /// <summary>
         /// get <see cref="CommonPicturesFolder"/> hash code
         /// </summary>
@@ -2103,7 +2102,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonVideos folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonVideosFolder
     {
         /// <summary>
@@ -2112,12 +2110,12 @@ namespace Easy.Toolkit
         public CommonVideosFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonVideos)) { }
         private CommonVideosFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -2125,12 +2123,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonVideosFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonVideosFolder(folderCombine); }
+        public CommonVideosFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonVideosFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonVideosFolder"/>
         /// </summary>
         /// <param name="commonVideosFolder"></param>
-        public static implicit operator string(CommonVideosFolder commonVideosFolder) { var dir = Path.GetDirectoryName(commonVideosFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonVideosFolder.folder; }
+        public static implicit operator string(CommonVideosFolder commonVideosFolder) { string dir = Path.GetDirectoryName(commonVideosFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonVideosFolder.folder; }
         /// <summary>
         /// get <see cref="CommonVideosFolder"/> hash code
         /// </summary>
@@ -2147,7 +2145,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Resources folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct ResourcesFolder
     {
         /// <summary>
@@ -2156,12 +2153,12 @@ namespace Easy.Toolkit
         public ResourcesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.Resources)) { }
         private ResourcesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -2169,12 +2166,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public ResourcesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ResourcesFolder(folderCombine); }
+        public ResourcesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ResourcesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="resourcesFolder"/>
         /// </summary>
         /// <param name="resourcesFolder"></param>
-        public static implicit operator string(ResourcesFolder resourcesFolder) { var dir = Path.GetDirectoryName(resourcesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return resourcesFolder.folder; }
+        public static implicit operator string(ResourcesFolder resourcesFolder) { string dir = Path.GetDirectoryName(resourcesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return resourcesFolder.folder; }
         /// <summary>
         /// get <see cref="ResourcesFolder"/> hash code
         /// </summary>
@@ -2191,7 +2188,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a LocalizedResources folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct LocalizedResourcesFolder
     {
         /// <summary>
@@ -2200,12 +2196,12 @@ namespace Easy.Toolkit
         public LocalizedResourcesFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.LocalizedResources)) { }
         private LocalizedResourcesFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -2213,12 +2209,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public LocalizedResourcesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalizedResourcesFolder(folderCombine); }
+        public LocalizedResourcesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalizedResourcesFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="localizedResourcesFolder"/>
         /// </summary>
         /// <param name="localizedResourcesFolder"></param>
-        public static implicit operator string(LocalizedResourcesFolder localizedResourcesFolder) { var dir = Path.GetDirectoryName(localizedResourcesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return localizedResourcesFolder.folder; }
+        public static implicit operator string(LocalizedResourcesFolder localizedResourcesFolder) { string dir = Path.GetDirectoryName(localizedResourcesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return localizedResourcesFolder.folder; }
         /// <summary>
         /// get <see cref="LocalizedResourcesFolder"/> hash code
         /// </summary>
@@ -2235,7 +2231,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CommonOemLinks folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CommonOemLinksFolder
     {
         /// <summary>
@@ -2244,12 +2239,12 @@ namespace Easy.Toolkit
         public CommonOemLinksFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CommonOemLinks)) { }
         private CommonOemLinksFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -2257,12 +2252,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CommonOemLinksFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonOemLinksFolder(folderCombine); }
+        public CommonOemLinksFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonOemLinksFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="commonOemLinksFolder"/>
         /// </summary>
         /// <param name="commonOemLinksFolder"></param>
-        public static implicit operator string(CommonOemLinksFolder commonOemLinksFolder) { var dir = Path.GetDirectoryName(commonOemLinksFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonOemLinksFolder.folder; }
+        public static implicit operator string(CommonOemLinksFolder commonOemLinksFolder) { string dir = Path.GetDirectoryName(commonOemLinksFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonOemLinksFolder.folder; }
         /// <summary>
         /// get <see cref="CommonOemLinksFolder"/> hash code
         /// </summary>
@@ -2279,7 +2274,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a CDBurning folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CDBurningFolder
     {
         /// <summary>
@@ -2288,12 +2282,12 @@ namespace Easy.Toolkit
         public CDBurningFolder() : this(Environment.GetFolderPath(Environment.SpecialFolder.CDBurning)) { }
         private CDBurningFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -2301,12 +2295,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CDBurningFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CDBurningFolder(folderCombine); }
+        public CDBurningFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CDBurningFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="cDBurningFolder"/>
         /// </summary>
         /// <param name="cDBurningFolder"></param>
-        public static implicit operator string(CDBurningFolder cDBurningFolder) { var dir = Path.GetDirectoryName(cDBurningFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return cDBurningFolder.folder; }
+        public static implicit operator string(CDBurningFolder cDBurningFolder) { string dir = Path.GetDirectoryName(cDBurningFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return cDBurningFolder.folder; }
         /// <summary>
         /// get <see cref="CDBurningFolder"/> hash code
         /// </summary>
@@ -2323,7 +2317,6 @@ namespace Easy.Toolkit
     /// <summary>
     /// represents a Current folder
     /// </summary>
-    [DebuggerDisplay("{folder}")]
     public struct CurrentFolder
     {
         /// <summary>
@@ -2332,12 +2325,12 @@ namespace Easy.Toolkit
         public CurrentFolder() : this(Environment.CurrentDirectory) { }
         private CurrentFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -2345,12 +2338,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public CurrentFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CurrentFolder(folderCombine); }
+        public CurrentFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CurrentFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="currentFolder"/>
         /// </summary>
         /// <param name="currentFolder"></param>
-        public static implicit operator string(CurrentFolder currentFolder) { var dir = Path.GetDirectoryName(currentFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return currentFolder.folder; }
+        public static implicit operator string(CurrentFolder currentFolder) { string dir = Path.GetDirectoryName(currentFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return currentFolder.folder; }
         /// <summary>
         /// get <see cref="CurrentFolder"/> hash code
         /// </summary>
@@ -2365,51 +2358,6 @@ namespace Easy.Toolkit
     }
 
 
-
-
-
-    /// <summary>
-    /// represents a input path folder
-    /// </summary>
-    [DebuggerDisplay("{folder}")]
-    public struct AnyFolder
-    {
-        /// <summary>
-        /// share a new AnyFolder folder
-        /// </summary> 
-        public AnyFolder(string folder) { this.folder = folder; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private readonly string folder;
-        /// <summary>
-        /// to string
-        /// </summary>
-        /// <returns>folder path</returns>
-        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
-        /// <summary>
-        /// combines four strings into a path. 
-        /// </summary>
-        /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
-        /// <returns>The combined paths.</returns>
-        public AnyFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new AnyFolder(folderCombine); }
-        /// <summary>
-        /// get folder string from <paramref name="anyFolder"/>
-        /// </summary>
-        /// <param name="anyFolder"></param>
-        public static implicit operator string(AnyFolder anyFolder) { string dir = Path.GetDirectoryName(anyFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return anyFolder.folder; }
-        /// <summary>
-        /// get <see cref="AnyFolder"/> hash code
-        /// </summary>
-        /// <returns>hash code</returns>
-        public override int GetHashCode() { return folder.GetHashCode(); }
-        /// <summary>
-        /// compare two objects for equality
-        /// </summary>
-        /// <param name="obj">compare object</param>
-        /// <returns>compare result</returns>
-        public override bool Equals(object obj) { return obj is CurrentFolder folderInfo && folderInfo.GetHashCode() == GetHashCode(); }
-    }
 
 
 }
