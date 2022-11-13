@@ -269,9 +269,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -279,15 +279,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public DesktopFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public DesktopFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="desktopFolder"/>
         /// </summary>
         /// <param name="desktopFolder"></param>
-        public static implicit operator string(DesktopFolder desktopFolder) { return desktopFolder.folder; }
+        public static implicit operator string(DesktopFolder desktopFolder) { var dir = Path.GetDirectoryName(desktopFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return desktopFolder.folder; }
         /// <summary>
         /// get <see cref="DesktopFolder"/> hash code
         /// </summary>
@@ -318,9 +313,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -328,15 +323,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public ProgramsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public ProgramsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="programsFolder"/>
         /// </summary>
         /// <param name="programsFolder"></param>
-        public static implicit operator string(ProgramsFolder programsFolder) { return programsFolder.folder; }
+        public static implicit operator string(ProgramsFolder programsFolder) { var dir = Path.GetDirectoryName(programsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return programsFolder.folder; }
         /// <summary>
         /// get <see cref="ProgramsFolder"/> hash code
         /// </summary>
@@ -367,9 +357,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -377,15 +367,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public MyDocumentsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyDocumentsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public MyDocumentsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="myDocumentsFolder"/>
         /// </summary>
         /// <param name="myDocumentsFolder"></param>
-        public static implicit operator string(MyDocumentsFolder myDocumentsFolder) { return myDocumentsFolder.folder; }
+        public static implicit operator string(MyDocumentsFolder myDocumentsFolder) { var dir = Path.GetDirectoryName(myDocumentsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myDocumentsFolder.folder; }
         /// <summary>
         /// get <see cref="MyDocumentsFolder"/> hash code
         /// </summary>
@@ -416,9 +401,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -426,15 +411,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public PersonalFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PersonalFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public PersonalFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="personalFolder"/>
         /// </summary>
         /// <param name="personalFolder"></param>
-        public static implicit operator string(PersonalFolder personalFolder) { return personalFolder.folder; }
+        public static implicit operator string(PersonalFolder personalFolder) { var dir = Path.GetDirectoryName(personalFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return personalFolder.folder; }
         /// <summary>
         /// get <see cref="PersonalFolder"/> hash code
         /// </summary>
@@ -465,9 +445,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -475,15 +455,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public FavoritesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FavoritesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public FavoritesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="favoritesFolder"/>
         /// </summary>
         /// <param name="favoritesFolder"></param>
-        public static implicit operator string(FavoritesFolder favoritesFolder) { return favoritesFolder.folder; }
+        public static implicit operator string(FavoritesFolder favoritesFolder) { var dir = Path.GetDirectoryName(favoritesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return favoritesFolder.folder; }
         /// <summary>
         /// get <see cref="FavoritesFolder"/> hash code
         /// </summary>
@@ -514,9 +489,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -524,15 +499,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public StartupFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartupFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public StartupFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="startupFolder"/>
         /// </summary>
         /// <param name="startupFolder"></param>
-        public static implicit operator string(StartupFolder startupFolder) { return startupFolder.folder; }
+        public static implicit operator string(StartupFolder startupFolder) { var dir = Path.GetDirectoryName(startupFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return startupFolder.folder; }
         /// <summary>
         /// get <see cref="StartupFolder"/> hash code
         /// </summary>
@@ -563,9 +533,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -573,15 +543,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public RecentFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new RecentFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public RecentFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="recentFolder"/>
         /// </summary>
         /// <param name="recentFolder"></param>
-        public static implicit operator string(RecentFolder recentFolder) { return recentFolder.folder; }
+        public static implicit operator string(RecentFolder recentFolder) { var dir = Path.GetDirectoryName(recentFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return recentFolder.folder; }
         /// <summary>
         /// get <see cref="RecentFolder"/> hash code
         /// </summary>
@@ -612,9 +577,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -622,15 +587,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public SendToFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SendToFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public SendToFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="sendToFolder"/>
         /// </summary>
         /// <param name="sendToFolder"></param>
-        public static implicit operator string(SendToFolder sendToFolder) { return sendToFolder.folder; }
+        public static implicit operator string(SendToFolder sendToFolder) { var dir = Path.GetDirectoryName(sendToFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return sendToFolder.folder; }
         /// <summary>
         /// get <see cref="SendToFolder"/> hash code
         /// </summary>
@@ -661,9 +621,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -671,15 +631,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public StartMenuFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartMenuFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public StartMenuFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="startMenuFolder"/>
         /// </summary>
         /// <param name="startMenuFolder"></param>
-        public static implicit operator string(StartMenuFolder startMenuFolder) { return startMenuFolder.folder; }
+        public static implicit operator string(StartMenuFolder startMenuFolder) { var dir = Path.GetDirectoryName(startMenuFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return startMenuFolder.folder; }
         /// <summary>
         /// get <see cref="StartMenuFolder"/> hash code
         /// </summary>
@@ -710,9 +665,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -720,15 +675,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public MyMusicFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyMusicFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public MyMusicFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="myMusicFolder"/>
         /// </summary>
         /// <param name="myMusicFolder"></param>
-        public static implicit operator string(MyMusicFolder myMusicFolder) { return myMusicFolder.folder; }
+        public static implicit operator string(MyMusicFolder myMusicFolder) { var dir = Path.GetDirectoryName(myMusicFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myMusicFolder.folder; }
         /// <summary>
         /// get <see cref="MyMusicFolder"/> hash code
         /// </summary>
@@ -759,9 +709,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -769,15 +719,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public MyVideosFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyVideosFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public MyVideosFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="myVideosFolder"/>
         /// </summary>
         /// <param name="myVideosFolder"></param>
-        public static implicit operator string(MyVideosFolder myVideosFolder) { return myVideosFolder.folder; }
+        public static implicit operator string(MyVideosFolder myVideosFolder) { var dir = Path.GetDirectoryName(myVideosFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myVideosFolder.folder; }
         /// <summary>
         /// get <see cref="MyVideosFolder"/> hash code
         /// </summary>
@@ -808,9 +753,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -818,15 +763,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public DesktopDirectoryFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopDirectoryFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public DesktopDirectoryFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="desktopDirectoryFolder"/>
         /// </summary>
         /// <param name="desktopDirectoryFolder"></param>
-        public static implicit operator string(DesktopDirectoryFolder desktopDirectoryFolder) { return desktopDirectoryFolder.folder; }
+        public static implicit operator string(DesktopDirectoryFolder desktopDirectoryFolder) { var dir = Path.GetDirectoryName(desktopDirectoryFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return desktopDirectoryFolder.folder; }
         /// <summary>
         /// get <see cref="DesktopDirectoryFolder"/> hash code
         /// </summary>
@@ -857,9 +797,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -867,15 +807,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public MyComputerFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyComputerFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public MyComputerFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="myComputerFolder"/>
         /// </summary>
         /// <param name="myComputerFolder"></param>
-        public static implicit operator string(MyComputerFolder myComputerFolder) { return myComputerFolder.folder; }
+        public static implicit operator string(MyComputerFolder myComputerFolder) { var dir = Path.GetDirectoryName(myComputerFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myComputerFolder.folder; }
         /// <summary>
         /// get <see cref="MyComputerFolder"/> hash code
         /// </summary>
@@ -906,9 +841,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -916,15 +851,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public NetworkShortcutsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new NetworkShortcutsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public NetworkShortcutsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="networkShortcutsFolder"/>
         /// </summary>
         /// <param name="networkShortcutsFolder"></param>
-        public static implicit operator string(NetworkShortcutsFolder networkShortcutsFolder) { return networkShortcutsFolder.folder; }
+        public static implicit operator string(NetworkShortcutsFolder networkShortcutsFolder) { var dir = Path.GetDirectoryName(networkShortcutsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return networkShortcutsFolder.folder; }
         /// <summary>
         /// get <see cref="NetworkShortcutsFolder"/> hash code
         /// </summary>
@@ -955,9 +885,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -965,15 +895,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public FontsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FontsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public FontsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="fontsFolder"/>
         /// </summary>
         /// <param name="fontsFolder"></param>
-        public static implicit operator string(FontsFolder fontsFolder) { return fontsFolder.folder; }
+        public static implicit operator string(FontsFolder fontsFolder) { var dir = Path.GetDirectoryName(fontsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return fontsFolder.folder; }
         /// <summary>
         /// get <see cref="FontsFolder"/> hash code
         /// </summary>
@@ -1004,9 +929,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1014,15 +939,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public TemplatesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new TemplatesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public TemplatesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="templatesFolder"/>
         /// </summary>
         /// <param name="templatesFolder"></param>
-        public static implicit operator string(TemplatesFolder templatesFolder) { return templatesFolder.folder; }
+        public static implicit operator string(TemplatesFolder templatesFolder) { var dir = Path.GetDirectoryName(templatesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return templatesFolder.folder; }
         /// <summary>
         /// get <see cref="TemplatesFolder"/> hash code
         /// </summary>
@@ -1053,9 +973,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1063,15 +983,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonStartMenuFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartMenuFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonStartMenuFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonStartMenuFolder"/>
         /// </summary>
         /// <param name="commonStartMenuFolder"></param>
-        public static implicit operator string(CommonStartMenuFolder commonStartMenuFolder) { return commonStartMenuFolder.folder; }
+        public static implicit operator string(CommonStartMenuFolder commonStartMenuFolder) { var dir = Path.GetDirectoryName(commonStartMenuFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonStartMenuFolder.folder; }
         /// <summary>
         /// get <see cref="CommonStartMenuFolder"/> hash code
         /// </summary>
@@ -1102,9 +1017,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1112,15 +1027,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonProgramsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonProgramsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonProgramsFolder"/>
         /// </summary>
         /// <param name="commonProgramsFolder"></param>
-        public static implicit operator string(CommonProgramsFolder commonProgramsFolder) { return commonProgramsFolder.folder; }
+        public static implicit operator string(CommonProgramsFolder commonProgramsFolder) { var dir = Path.GetDirectoryName(commonProgramsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonProgramsFolder.folder; }
         /// <summary>
         /// get <see cref="CommonProgramsFolder"/> hash code
         /// </summary>
@@ -1151,9 +1061,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1161,15 +1071,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonStartupFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartupFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonStartupFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonStartupFolder"/>
         /// </summary>
         /// <param name="commonStartupFolder"></param>
-        public static implicit operator string(CommonStartupFolder commonStartupFolder) { return commonStartupFolder.folder; }
+        public static implicit operator string(CommonStartupFolder commonStartupFolder) { var dir = Path.GetDirectoryName(commonStartupFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonStartupFolder.folder; }
         /// <summary>
         /// get <see cref="CommonStartupFolder"/> hash code
         /// </summary>
@@ -1200,9 +1105,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1210,15 +1115,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonDesktopDirectoryFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDesktopDirectoryFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonDesktopDirectoryFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonDesktopDirectoryFolder"/>
         /// </summary>
         /// <param name="commonDesktopDirectoryFolder"></param>
-        public static implicit operator string(CommonDesktopDirectoryFolder commonDesktopDirectoryFolder) { return commonDesktopDirectoryFolder.folder; }
+        public static implicit operator string(CommonDesktopDirectoryFolder commonDesktopDirectoryFolder) { var dir = Path.GetDirectoryName(commonDesktopDirectoryFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonDesktopDirectoryFolder.folder; }
         /// <summary>
         /// get <see cref="CommonDesktopDirectoryFolder"/> hash code
         /// </summary>
@@ -1249,9 +1149,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1259,15 +1159,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public ApplicationDataFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ApplicationDataFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public ApplicationDataFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="applicationDataFolder"/>
         /// </summary>
         /// <param name="applicationDataFolder"></param>
-        public static implicit operator string(ApplicationDataFolder applicationDataFolder) { return applicationDataFolder.folder; }
+        public static implicit operator string(ApplicationDataFolder applicationDataFolder) { var dir = Path.GetDirectoryName(applicationDataFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return applicationDataFolder.folder; }
         /// <summary>
         /// get <see cref="ApplicationDataFolder"/> hash code
         /// </summary>
@@ -1298,9 +1193,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1308,15 +1203,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public PrinterShortcutsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PrinterShortcutsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public PrinterShortcutsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="printerShortcutsFolder"/>
         /// </summary>
         /// <param name="printerShortcutsFolder"></param>
-        public static implicit operator string(PrinterShortcutsFolder printerShortcutsFolder) { return printerShortcutsFolder.folder; }
+        public static implicit operator string(PrinterShortcutsFolder printerShortcutsFolder) { var dir = Path.GetDirectoryName(printerShortcutsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return printerShortcutsFolder.folder; }
         /// <summary>
         /// get <see cref="PrinterShortcutsFolder"/> hash code
         /// </summary>
@@ -1347,9 +1237,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1357,15 +1247,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public LocalApplicationDataFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalApplicationDataFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public LocalApplicationDataFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="localApplicationDataFolder"/>
         /// </summary>
         /// <param name="localApplicationDataFolder"></param>
-        public static implicit operator string(LocalApplicationDataFolder localApplicationDataFolder) { return localApplicationDataFolder.folder; }
+        public static implicit operator string(LocalApplicationDataFolder localApplicationDataFolder) { var dir = Path.GetDirectoryName(localApplicationDataFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return localApplicationDataFolder.folder; }
         /// <summary>
         /// get <see cref="LocalApplicationDataFolder"/> hash code
         /// </summary>
@@ -1396,9 +1281,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1406,15 +1291,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public InternetCacheFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new InternetCacheFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public InternetCacheFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="internetCacheFolder"/>
         /// </summary>
         /// <param name="internetCacheFolder"></param>
-        public static implicit operator string(InternetCacheFolder internetCacheFolder) { return internetCacheFolder.folder; }
+        public static implicit operator string(InternetCacheFolder internetCacheFolder) { var dir = Path.GetDirectoryName(internetCacheFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return internetCacheFolder.folder; }
         /// <summary>
         /// get <see cref="InternetCacheFolder"/> hash code
         /// </summary>
@@ -1445,9 +1325,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1455,15 +1335,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CookiesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CookiesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CookiesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="cookiesFolder"/>
         /// </summary>
         /// <param name="cookiesFolder"></param>
-        public static implicit operator string(CookiesFolder cookiesFolder) { return cookiesFolder.folder; }
+        public static implicit operator string(CookiesFolder cookiesFolder) { var dir = Path.GetDirectoryName(cookiesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return cookiesFolder.folder; }
         /// <summary>
         /// get <see cref="CookiesFolder"/> hash code
         /// </summary>
@@ -1494,9 +1369,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1504,15 +1379,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public HistoryFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new HistoryFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public HistoryFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="historyFolder"/>
         /// </summary>
         /// <param name="historyFolder"></param>
-        public static implicit operator string(HistoryFolder historyFolder) { return historyFolder.folder; }
+        public static implicit operator string(HistoryFolder historyFolder) { var dir = Path.GetDirectoryName(historyFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return historyFolder.folder; }
         /// <summary>
         /// get <see cref="HistoryFolder"/> hash code
         /// </summary>
@@ -1543,9 +1413,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1553,15 +1423,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonApplicationDataFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonApplicationDataFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonApplicationDataFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonApplicationDataFolder"/>
         /// </summary>
         /// <param name="commonApplicationDataFolder"></param>
-        public static implicit operator string(CommonApplicationDataFolder commonApplicationDataFolder) { return commonApplicationDataFolder.folder; }
+        public static implicit operator string(CommonApplicationDataFolder commonApplicationDataFolder) { var dir = Path.GetDirectoryName(commonApplicationDataFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonApplicationDataFolder.folder; }
         /// <summary>
         /// get <see cref="CommonApplicationDataFolder"/> hash code
         /// </summary>
@@ -1592,9 +1457,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1602,15 +1467,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public WindowsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new WindowsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public WindowsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="windowsFolder"/>
         /// </summary>
         /// <param name="windowsFolder"></param>
-        public static implicit operator string(WindowsFolder windowsFolder) { return windowsFolder.folder; }
+        public static implicit operator string(WindowsFolder windowsFolder) { var dir = Path.GetDirectoryName(windowsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return windowsFolder.folder; }
         /// <summary>
         /// get <see cref="WindowsFolder"/> hash code
         /// </summary>
@@ -1641,9 +1501,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1651,15 +1511,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public SystemFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public SystemFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="systemFolder"/>
         /// </summary>
         /// <param name="systemFolder"></param>
-        public static implicit operator string(SystemFolder systemFolder) { return systemFolder.folder; }
+        public static implicit operator string(SystemFolder systemFolder) { var dir = Path.GetDirectoryName(systemFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return systemFolder.folder; }
         /// <summary>
         /// get <see cref="SystemFolder"/> hash code
         /// </summary>
@@ -1690,9 +1545,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1700,15 +1555,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public ProgramFilesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public ProgramFilesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="programFilesFolder"/>
         /// </summary>
         /// <param name="programFilesFolder"></param>
-        public static implicit operator string(ProgramFilesFolder programFilesFolder) { return programFilesFolder.folder; }
+        public static implicit operator string(ProgramFilesFolder programFilesFolder) { var dir = Path.GetDirectoryName(programFilesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return programFilesFolder.folder; }
         /// <summary>
         /// get <see cref="ProgramFilesFolder"/> hash code
         /// </summary>
@@ -1739,9 +1589,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1749,15 +1599,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public MyPicturesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyPicturesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public MyPicturesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="myPicturesFolder"/>
         /// </summary>
         /// <param name="myPicturesFolder"></param>
-        public static implicit operator string(MyPicturesFolder myPicturesFolder) { return myPicturesFolder.folder; }
+        public static implicit operator string(MyPicturesFolder myPicturesFolder) { var dir = Path.GetDirectoryName(myPicturesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return myPicturesFolder.folder; }
         /// <summary>
         /// get <see cref="MyPicturesFolder"/> hash code
         /// </summary>
@@ -1788,9 +1633,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1798,15 +1643,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public UserProfileFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new UserProfileFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public UserProfileFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="userProfileFolder"/>
         /// </summary>
         /// <param name="userProfileFolder"></param>
-        public static implicit operator string(UserProfileFolder userProfileFolder) { return userProfileFolder.folder; }
+        public static implicit operator string(UserProfileFolder userProfileFolder) { var dir = Path.GetDirectoryName(userProfileFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return userProfileFolder.folder; }
         /// <summary>
         /// get <see cref="UserProfileFolder"/> hash code
         /// </summary>
@@ -1837,9 +1677,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1847,15 +1687,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public SystemX86Folder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemX86Folder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public SystemX86Folder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="systemX86Folder"/>
         /// </summary>
         /// <param name="systemX86Folder"></param>
-        public static implicit operator string(SystemX86Folder systemX86Folder) { return systemX86Folder.folder; }
+        public static implicit operator string(SystemX86Folder systemX86Folder) { var dir = Path.GetDirectoryName(systemX86Folder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return systemX86Folder.folder; }
         /// <summary>
         /// get <see cref="SystemX86Folder"/> hash code
         /// </summary>
@@ -1886,9 +1721,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1896,15 +1731,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public ProgramFilesX86Folder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesX86Folder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public ProgramFilesX86Folder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="programFilesX86Folder"/>
         /// </summary>
         /// <param name="programFilesX86Folder"></param>
-        public static implicit operator string(ProgramFilesX86Folder programFilesX86Folder) { return programFilesX86Folder.folder; }
+        public static implicit operator string(ProgramFilesX86Folder programFilesX86Folder) { var dir = Path.GetDirectoryName(programFilesX86Folder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return programFilesX86Folder.folder; }
         /// <summary>
         /// get <see cref="ProgramFilesX86Folder"/> hash code
         /// </summary>
@@ -1935,9 +1765,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1945,15 +1775,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonProgramFilesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonProgramFilesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonProgramFilesFolder"/>
         /// </summary>
         /// <param name="commonProgramFilesFolder"></param>
-        public static implicit operator string(CommonProgramFilesFolder commonProgramFilesFolder) { return commonProgramFilesFolder.folder; }
+        public static implicit operator string(CommonProgramFilesFolder commonProgramFilesFolder) { var dir = Path.GetDirectoryName(commonProgramFilesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonProgramFilesFolder.folder; }
         /// <summary>
         /// get <see cref="CommonProgramFilesFolder"/> hash code
         /// </summary>
@@ -1984,9 +1809,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -1994,15 +1819,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonProgramFilesX86Folder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesX86Folder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonProgramFilesX86Folder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonProgramFilesX86Folder"/>
         /// </summary>
         /// <param name="commonProgramFilesX86Folder"></param>
-        public static implicit operator string(CommonProgramFilesX86Folder commonProgramFilesX86Folder) { return commonProgramFilesX86Folder.folder; }
+        public static implicit operator string(CommonProgramFilesX86Folder commonProgramFilesX86Folder) { var dir = Path.GetDirectoryName(commonProgramFilesX86Folder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonProgramFilesX86Folder.folder; }
         /// <summary>
         /// get <see cref="CommonProgramFilesX86Folder"/> hash code
         /// </summary>
@@ -2033,9 +1853,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2043,15 +1863,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonTemplatesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonTemplatesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonTemplatesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonTemplatesFolder"/>
         /// </summary>
         /// <param name="commonTemplatesFolder"></param>
-        public static implicit operator string(CommonTemplatesFolder commonTemplatesFolder) { return commonTemplatesFolder.folder; }
+        public static implicit operator string(CommonTemplatesFolder commonTemplatesFolder) { var dir = Path.GetDirectoryName(commonTemplatesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonTemplatesFolder.folder; }
         /// <summary>
         /// get <see cref="CommonTemplatesFolder"/> hash code
         /// </summary>
@@ -2082,9 +1897,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2092,15 +1907,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonDocumentsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDocumentsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonDocumentsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonDocumentsFolder"/>
         /// </summary>
         /// <param name="commonDocumentsFolder"></param>
-        public static implicit operator string(CommonDocumentsFolder commonDocumentsFolder) { return commonDocumentsFolder.folder; }
+        public static implicit operator string(CommonDocumentsFolder commonDocumentsFolder) { var dir = Path.GetDirectoryName(commonDocumentsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonDocumentsFolder.folder; }
         /// <summary>
         /// get <see cref="CommonDocumentsFolder"/> hash code
         /// </summary>
@@ -2131,9 +1941,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2141,15 +1951,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonAdminToolsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonAdminToolsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonAdminToolsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonAdminToolsFolder"/>
         /// </summary>
         /// <param name="commonAdminToolsFolder"></param>
-        public static implicit operator string(CommonAdminToolsFolder commonAdminToolsFolder) { return commonAdminToolsFolder.folder; }
+        public static implicit operator string(CommonAdminToolsFolder commonAdminToolsFolder) { var dir = Path.GetDirectoryName(commonAdminToolsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonAdminToolsFolder.folder; }
         /// <summary>
         /// get <see cref="CommonAdminToolsFolder"/> hash code
         /// </summary>
@@ -2180,9 +1985,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2190,15 +1995,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public AdminToolsFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new AdminToolsFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public AdminToolsFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="adminToolsFolder"/>
         /// </summary>
         /// <param name="adminToolsFolder"></param>
-        public static implicit operator string(AdminToolsFolder adminToolsFolder) { return adminToolsFolder.folder; }
+        public static implicit operator string(AdminToolsFolder adminToolsFolder) { var dir = Path.GetDirectoryName(adminToolsFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return adminToolsFolder.folder; }
         /// <summary>
         /// get <see cref="AdminToolsFolder"/> hash code
         /// </summary>
@@ -2229,9 +2029,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2239,15 +2039,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonMusicFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonMusicFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonMusicFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonMusicFolder"/>
         /// </summary>
         /// <param name="commonMusicFolder"></param>
-        public static implicit operator string(CommonMusicFolder commonMusicFolder) { return commonMusicFolder.folder; }
+        public static implicit operator string(CommonMusicFolder commonMusicFolder) { var dir = Path.GetDirectoryName(commonMusicFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonMusicFolder.folder; }
         /// <summary>
         /// get <see cref="CommonMusicFolder"/> hash code
         /// </summary>
@@ -2278,9 +2073,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2288,15 +2083,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonPicturesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonPicturesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonPicturesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonPicturesFolder"/>
         /// </summary>
         /// <param name="commonPicturesFolder"></param>
-        public static implicit operator string(CommonPicturesFolder commonPicturesFolder) { return commonPicturesFolder.folder; }
+        public static implicit operator string(CommonPicturesFolder commonPicturesFolder) { var dir = Path.GetDirectoryName(commonPicturesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonPicturesFolder.folder; }
         /// <summary>
         /// get <see cref="CommonPicturesFolder"/> hash code
         /// </summary>
@@ -2327,9 +2117,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2337,15 +2127,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonVideosFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonVideosFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonVideosFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonVideosFolder"/>
         /// </summary>
         /// <param name="commonVideosFolder"></param>
-        public static implicit operator string(CommonVideosFolder commonVideosFolder) { return commonVideosFolder.folder; }
+        public static implicit operator string(CommonVideosFolder commonVideosFolder) { var dir = Path.GetDirectoryName(commonVideosFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonVideosFolder.folder; }
         /// <summary>
         /// get <see cref="CommonVideosFolder"/> hash code
         /// </summary>
@@ -2376,9 +2161,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2386,15 +2171,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public ResourcesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ResourcesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public ResourcesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="resourcesFolder"/>
         /// </summary>
         /// <param name="resourcesFolder"></param>
-        public static implicit operator string(ResourcesFolder resourcesFolder) { return resourcesFolder.folder; }
+        public static implicit operator string(ResourcesFolder resourcesFolder) { var dir = Path.GetDirectoryName(resourcesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return resourcesFolder.folder; }
         /// <summary>
         /// get <see cref="ResourcesFolder"/> hash code
         /// </summary>
@@ -2425,9 +2205,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2435,15 +2215,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public LocalizedResourcesFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalizedResourcesFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public LocalizedResourcesFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="localizedResourcesFolder"/>
         /// </summary>
         /// <param name="localizedResourcesFolder"></param>
-        public static implicit operator string(LocalizedResourcesFolder localizedResourcesFolder) { return localizedResourcesFolder.folder; }
+        public static implicit operator string(LocalizedResourcesFolder localizedResourcesFolder) { var dir = Path.GetDirectoryName(localizedResourcesFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return localizedResourcesFolder.folder; }
         /// <summary>
         /// get <see cref="LocalizedResourcesFolder"/> hash code
         /// </summary>
@@ -2474,9 +2249,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2484,15 +2259,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CommonOemLinksFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonOemLinksFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CommonOemLinksFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="commonOemLinksFolder"/>
         /// </summary>
         /// <param name="commonOemLinksFolder"></param>
-        public static implicit operator string(CommonOemLinksFolder commonOemLinksFolder) { return commonOemLinksFolder.folder; }
+        public static implicit operator string(CommonOemLinksFolder commonOemLinksFolder) { var dir = Path.GetDirectoryName(commonOemLinksFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return commonOemLinksFolder.folder; }
         /// <summary>
         /// get <see cref="CommonOemLinksFolder"/> hash code
         /// </summary>
@@ -2523,9 +2293,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2533,15 +2303,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CDBurningFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CDBurningFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CDBurningFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="cDBurningFolder"/>
         /// </summary>
         /// <param name="cDBurningFolder"></param>
-        public static implicit operator string(CDBurningFolder cDBurningFolder) { return cDBurningFolder.folder; }
+        public static implicit operator string(CDBurningFolder cDBurningFolder) { var dir = Path.GetDirectoryName(cDBurningFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return cDBurningFolder.folder; }
         /// <summary>
         /// get <see cref="CDBurningFolder"/> hash code
         /// </summary>
@@ -2556,13 +2321,13 @@ namespace Easy.Toolkit
     }
 
     /// <summary>
-    /// represents a CurrentDirectory folder
+    /// represents a Current folder
     /// </summary>
     [DebuggerDisplay("{folder}")]
     public struct CurrentFolder
     {
         /// <summary>
-        /// share a new CurrentDirectory folder
+        /// share a new Current folder
         /// </summary>
         public CurrentFolder() : this(Environment.CurrentDirectory) { }
         private CurrentFolder(string folder) { this.folder = folder; }
@@ -2572,9 +2337,9 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
-        /// combines four strings into a path. 
+        /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
@@ -2582,15 +2347,10 @@ namespace Easy.Toolkit
         /// <returns>The combined paths.</returns>
         public CurrentFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CurrentFolder(folderCombine); }
         /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public CurrentFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
-        /// <summary>
         /// get folder string from <paramref name="currentFolder"/>
         /// </summary>
         /// <param name="currentFolder"></param>
-        public static implicit operator string(CurrentFolder currentFolder) { return currentFolder.folder; }
+        public static implicit operator string(CurrentFolder currentFolder) { var dir = Path.GetDirectoryName(currentFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return currentFolder.folder; }
         /// <summary>
         /// get <see cref="CurrentFolder"/> hash code
         /// </summary>
@@ -2606,6 +2366,8 @@ namespace Easy.Toolkit
 
 
 
+
+
     /// <summary>
     /// represents a input path folder
     /// </summary>
@@ -2617,12 +2379,12 @@ namespace Easy.Toolkit
         /// </summary> 
         public AnyFolder(string folder) { this.folder = folder; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
-        private string folder;
+        private readonly string folder;
         /// <summary>
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { return folder; }
+        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
         /// <summary>
         /// combines four strings into a path. 
         /// </summary>
@@ -2630,17 +2392,12 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public AnyFolder Combine(params string[] paths) { var folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new AnyFolder(folderCombine); }
-        /// <summary>
-        /// create folder is not exist
-        /// </summary>
-        /// <returns></returns>
-        public AnyFolder CreateFolder() { var dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return this; }
+        public AnyFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new AnyFolder(folderCombine); }
         /// <summary>
         /// get folder string from <paramref name="anyFolder"/>
         /// </summary>
         /// <param name="anyFolder"></param>
-        public static implicit operator string(AnyFolder anyFolder) { return anyFolder.folder; }
+        public static implicit operator string(AnyFolder anyFolder) { string dir = Path.GetDirectoryName(anyFolder.folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return anyFolder.folder; }
         /// <summary>
         /// get <see cref="AnyFolder"/> hash code
         /// </summary>
