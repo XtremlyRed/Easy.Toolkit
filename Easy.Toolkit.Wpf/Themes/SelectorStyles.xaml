@@ -24,11 +24,11 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
-                        <ContentPresenter
+                        <ContentControl
                             Margin="{TemplateBinding Padding}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            ContentSource="Content"
+                            Content="{TemplateBinding Content}"
                             Focusable="False"
                             TextBlock.FontFamily="{TemplateBinding FontFamily}"
                             TextBlock.FontSize="{TemplateBinding FontSize}"
@@ -70,11 +70,11 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
-                        <ContentPresenter
+                        <ContentControl
                             Margin="{TemplateBinding Padding}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            ContentSource="Content"
+                            Content="{TemplateBinding Content}"
                             Focusable="False"
                             TextBlock.FontFamily="{TemplateBinding FontFamily}"
                             TextBlock.FontSize="{TemplateBinding FontSize}"
@@ -111,11 +111,11 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
-                        <ContentPresenter
+                        <ContentControl
                             Margin="{TemplateBinding Padding}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            ContentSource="Content"
+                            Content="{TemplateBinding Content}"
                             Focusable="False"
                             TextBlock.FontFamily="{TemplateBinding FontFamily}"
                             TextBlock.FontSize="{TemplateBinding FontSize}"

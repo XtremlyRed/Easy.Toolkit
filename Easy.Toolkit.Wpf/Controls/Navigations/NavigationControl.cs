@@ -12,6 +12,11 @@ namespace Easy.Toolkit
     public interface INavigationControl
     {
         /// <summary>
+        ///  content
+        /// </summary>
+        object Content { set; }
+
+        /// <summary>
         /// will mark a navigation host control as a unique key
         /// </summary>
         string Identity { get; }
@@ -118,7 +123,7 @@ namespace Easy.Toolkit
                       activitedView.Push(currentView);
                   }
 
-                  base.Content = currentView = view;
+                  Content = currentView = view;
 
               }, DispatcherPriority.Background, CancellationToken.None);
 
@@ -144,7 +149,7 @@ namespace Easy.Toolkit
 
                  ExecuteLink(newView, null, false);
 
-                 base.Content = currentView = newView;
+                 Content = currentView = newView;
 
              }, DispatcherPriority.Background, CancellationToken.None);
 

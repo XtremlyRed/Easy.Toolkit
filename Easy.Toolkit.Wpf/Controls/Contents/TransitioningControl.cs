@@ -151,12 +151,9 @@ namespace Easy.Toolkit
                 {
                     base.SetValue(ContentProperty, value);
                     return;
-                }
-
-                Visibility = Visibility.Collapsed;
+                } 
                 base.SetValue(ContentProperty, value);
-                RunTransition();
-                Visibility = Visibility.Visible;
+                RunTransition(); 
             }
         }
 
@@ -173,6 +170,7 @@ namespace Easy.Toolkit
             {
                 return;
             }
+
             if (mode == TransitionMode.Custom)
             {
                 TransitionStoryboard?.Begin(contentPresenter);
@@ -182,16 +180,24 @@ namespace Easy.Toolkit
             if (mode == TransitionMode.Random)
             {
                 byte value = (byte)Random.Next(1, 10);
-                Invoker.TryCast<TransitionMode>(value, out mode);
+                mode = (TransitionMode)value;
             }
             if (mode == TransitionMode.None)
             {
                 return;
             }
 
-            Storyboard storyboard = ResourceAssist.GetResource<Storyboard>($"{mode}Transition");
+            if (storyboardMapper.TryGetValue(mode, out Storyboard storyboard) == false)
+            {
+                storyboardMapper[mode] = storyboard = ResourceAssist.GetResource<Storyboard>($"{mode}Transition");
+            }
+
             storyboard?.Begin(contentPresenter);
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        private readonly Dictionary<TransitionMode, Storyboard> storyboardMapper = new Dictionary<TransitionMode, Storyboard>();
+
 
         /// <summary>
         /// <seealso cref="OnApplyTemplate"/>
@@ -254,7 +260,7 @@ namespace Easy.Toolkit
 
         [EditorBrowsable(EditorBrowsableState.Never), DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly Stack<object> activitedView = new Stack<object>();
- 
+
         async Task INavigationControl.NavigateToAsync(object view, INavigationParameters parameters = null)
         {
 
@@ -269,16 +275,12 @@ namespace Easy.Toolkit
                 NavigationControl.ExecuteLink(Content, null, false);
                 NavigationControl.ExecuteLink(view, parameters, true);
 
-
-                Visibility = Visibility.Collapsed;
-
                 if (Content != null)
                 {
                     activitedView.Push(Content);
                 }
 
-                base.Content = view;
-
+                Content = view;
 
             }, DispatcherPriority.Background);
 
@@ -300,8 +302,7 @@ namespace Easy.Toolkit
                 NavigationControl.ExecuteLink(Content, null, false);
                 NavigationControl.ExecuteLink(newView, null, false);
 
-                Visibility = Visibility.Collapsed;
-                base.Content = newView;
+                Content = newView;
 
             }, DispatcherPriority.Background);
 
