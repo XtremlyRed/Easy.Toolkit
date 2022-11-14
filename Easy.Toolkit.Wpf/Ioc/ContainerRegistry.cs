@@ -109,7 +109,7 @@ namespace Easy.Toolkit
 
             if (aware.ViewModelType is null)
             {
-                if (aware.NotExistViewModelThrowException == true)
+                if (aware.ThrowExceptionWhenViewModelNotExist == true)
                 {
                     throw new Exception("no valid view model type matched");
                 }

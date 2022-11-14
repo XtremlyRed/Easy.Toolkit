@@ -28,9 +28,9 @@ namespace Easy.Toolkit
         /// <param name="registry"></param>
         /// <param name="viewName"></param>
         /// <param name="autoWareViewModel"></param>
-        /// <param name="notExistViewModelThrowException"></param>
+        /// <param name="throwExceptionWhenViewModelNotExist"></param>
         /// <exception cref="Exception"></exception>
-        public static void RegisterView<TView>(this IContainerRegistry registry, string viewName = null, bool autoWareViewModel = true, bool notExistViewModelThrowException = false)
+        public static void RegisterView<TView>(this IContainerRegistry registry, string viewName = null, bool autoWareViewModel = true, bool throwExceptionWhenViewModelNotExist = false)
         {
             Type viewType = typeof(TView);
 
@@ -46,7 +46,7 @@ namespace Easy.Toolkit
             ViewViewModelAware aware = new ViewViewModelAware
             {
                 AutoWareViewModel = viewModelType is null && autoWareViewModel,
-                NotExistViewModelThrowException = notExistViewModelThrowException,
+                ThrowExceptionWhenViewModelNotExist = throwExceptionWhenViewModelNotExist,
                 ViewType = viewType,
                 ViewName = viewName,
                 ViewModelType = viewModelType
@@ -71,10 +71,24 @@ namespace Easy.Toolkit
 
             viewName ??= viewType.Name;
 
-            RegisterView<TView>(registry, viewName, false, false);
+            if (viewNameAwares.TryGetValue(viewName, out ViewViewModelAware viewViewModelAware) && viewViewModelAware != null)
+            {
+                throw new Exception($"view name : {viewName} already exists");
+            }
 
-            viewNameAwares[viewName].ViewModelType = typeof(TViewModel);
+            ViewViewModelAware aware = new ViewViewModelAware
+            {
+                AutoWareViewModel = false,
+                ThrowExceptionWhenViewModelNotExist = false,
+                ViewType = viewType,
+                ViewName = viewName,
+                ViewModelType = typeof(TViewModel)
+            };
 
+            viewTypeAwares[aware.ViewType] = aware;
+            viewNameAwares[aware.ViewName] = aware;
+             
+            registry.Register<TView>().AsSingleton();
             registry.Register<TViewModel>().AsSingleton();
         }
 

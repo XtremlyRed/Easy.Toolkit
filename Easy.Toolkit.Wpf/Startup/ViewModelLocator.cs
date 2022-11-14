@@ -107,7 +107,7 @@ namespace Easy.Toolkit
 
             public bool AutoWareViewModel;
 
-            public bool NotExistViewModelThrowException;
+            public bool ThrowExceptionWhenViewModelNotExist;
         }
 
 
