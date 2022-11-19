@@ -5,6 +5,7 @@
 		<Nullable>disable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 		<UseWPF>true</UseWPF>
+		
 	</PropertyGroup>
  
 	<PropertyGroup>

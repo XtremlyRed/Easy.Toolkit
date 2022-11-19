@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -19,7 +15,7 @@ namespace Easy.Toolkit
 
     public class EnumSelector : ComboBox
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private IDictionary<string, object> DisplayNameValueCollention { get; } = new Dictionary<string, object>();
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)] private bool isTriggerSelectedChengedEvent = true;
         static EnumSelector()
         {
@@ -75,7 +71,7 @@ namespace Easy.Toolkit
         /// </summary>
         public static DependencyProperty EnumTypeProperty = PropertyAssist.PropertyRegister<EnumSelector, Type>(i => i.EnumType, (s, e) =>
         {
-            s.SetType(e.NewValue);
+            s.SetType(e.NewValue, s.IgnoreItems);
         });
 
         /// <summary>
@@ -114,54 +110,53 @@ namespace Easy.Toolkit
 
         #endregion
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly Dictionary<Type, Dictionary<string, object>> EnumMapper = new Dictionary<Type, Dictionary<string, object>>();
+
+
         private void SetType(Type enumType, IEnumerable removeArray = null)
         {
             try
             {
-                DisplayNameValueCollention.Clear();
-                List<FieldInfo> list = enumType.GetFields().Where(i => i.IsStatic && !i.IsSpecialName).ToList();
-
-                List<object> removeArray2 = removeArray?.Cast<object>().Where(i => i != null).ToList();
-
-                foreach (FieldInfo fieldInfo in list)
+                if (EnumMapper.TryGetValue(enumType, out Dictionary<string, object> enumTypeMapper) == false)
                 {
-                    object value = fieldInfo.GetValue(null);
+                    List<FieldInfo> list = enumType.GetFields().Where(i => i.IsStatic && !i.IsSpecialName).ToList();
 
-                    if (removeArray2?.Any(i => i.GetHashCode() == value.GetHashCode()) ?? false)
+                    EnumMapper[enumType] = enumTypeMapper = new Dictionary<string, object>();
+
+                    foreach (FieldInfo fieldInfo in list)
                     {
-                        continue;
-                    }
+                        object[] attributes = fieldInfo.GetCustomAttributes(false);
 
-                    object[] attributes = fieldInfo.GetCustomAttributes(false);
+                        BrowsableAttribute browsable = attributes.OfType<BrowsableAttribute>().FirstOrDefault();
 
-                    BrowsableAttribute browsable = attributes.OfType<BrowsableAttribute>().FirstOrDefault();
+                        if (browsable != null && browsable.Browsable == false)
+                        {
+                            continue;
+                        }
 
-                    if (browsable != null && browsable.Browsable == false)
-                    {
-                        continue;
-                    }
-
-                    string displayName = attributes.OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName;
-
-                    if (string.IsNullOrWhiteSpace(displayName))
-                    {
-                        displayName = attributes.OfType<DescriptionAttribute>().FirstOrDefault()?.Description;
+                        string displayName = attributes.OfType<DescriptionAttribute>().FirstOrDefault()?.Description;
 
                         if (string.IsNullOrWhiteSpace(displayName))
                         {
                             displayName = fieldInfo.Name;
                         }
+
+                        enumTypeMapper[displayName] = fieldInfo.GetValue(null);
                     }
 
-                    if (DisplayNameValueCollention.ContainsKey(displayName))
-                    {
-                        continue;
-                    }
-
-                    DisplayNameValueCollention[displayName] = value;
                 }
 
-                ItemsSource = DisplayNameValueCollention.Keys.ToObservableCollection();
+                object[] removeArray2 = removeArray?.Cast<object>().Where(i => i != null).ToArray();
+
+                string[] keys = enumTypeMapper.Keys.ToArray();
+
+                if (removeArray2 != null && removeArray2.Length > 0)
+                {
+                    keys = enumTypeMapper.Where(i => removeArray2.Contains(i.Value) == false).Select(i => i.Key).ToArray();
+                }
+
+                ItemsSource = keys.ToObservableCollection();
 
                 if (EnumValue != null && SelectedItem is null)
                 {
@@ -177,24 +172,19 @@ namespace Easy.Toolkit
         private void SetEnumValue(object enumValue)
         {
 
-            if (enumValue is null || DisplayNameValueCollention.Count == 0)
+            if (enumValue is null || EnumType is null)
             {
                 return;
             }
 
             base.IsEditable = false;
 
-            KeyValuePair<string, object> existResult = DisplayNameValueCollention.FirstOrDefault(i => i.Value.GetHashCode() == enumValue.GetHashCode());
+            Dictionary<string, object> enumTyper = EnumMapper[EnumType];
+
+            KeyValuePair<string, object> existResult = enumTyper.FirstOrDefault(i => i.Value.GetHashCode() == enumValue.GetHashCode());
 
             if (existResult.Key is null || existResult.Value is null)
             {
-                existResult = DisplayNameValueCollention.FirstOrDefault();
-
-                Dispatcher.InvokeAsync(async () =>
-                {
-                    await Task.Delay(0100);
-                    SelectedItem = existResult.Key;
-                });
                 return;
             }
 
@@ -227,7 +217,9 @@ namespace Easy.Toolkit
             {
                 string key = SelectedItem as string;
 
-                if (DisplayNameValueCollention.TryGetValue(key, out object value))
+                Dictionary<string, object> enumTyper = EnumMapper[EnumType];
+
+                if (enumTyper.TryGetValue(key, out object value))
                 {
                     EnumValue = value;
                 }

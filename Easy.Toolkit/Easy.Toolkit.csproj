@@ -25,7 +25,10 @@
 			-->
 
 			net451;
-			net48;
+			net48; 
+			netcoreapp3.1; 
+			net6.0;
+			net7.0;
 			netstandard2.1;
 			netstandard2.0;
 		</TargetFrameworks>

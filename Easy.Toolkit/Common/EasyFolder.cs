@@ -352,7 +352,15 @@ namespace Easy.Toolkit
         /// to string
         /// </summary>
         /// <returns>folder path</returns>
-        public override string ToString() { string dir = Path.GetDirectoryName(folder); if (Directory.Exists(dir) == false) { Directory.CreateDirectory(dir); } return folder; }
+        public override string ToString()
+        {
+            string dir = Path.GetDirectoryName(folder);
+            if (Directory.Exists(dir) == false)
+            {
+                Directory.CreateDirectory(dir);
+            }
+            return folder;
+        }
         /// <summary>
         /// combines an array of strings into a path. 
         /// </summary>
@@ -360,7 +368,11 @@ namespace Easy.Toolkit
         /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
         /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
         /// <returns>The combined paths.</returns>
-        public ProgramsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramsFolder(folderCombine); }
+        public ProgramsFolder Combine(params string[] paths) 
+        { 
+            string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); 
+            return new ProgramsFolder(folderCombine); 
+        }
         /// <summary>
         /// get folder string from <paramref name="programsFolder"/>
         /// </summary>

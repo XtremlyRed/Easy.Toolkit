@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -13,10 +15,13 @@ namespace Easy.Toolkit
     /// </summary>
     public class Container : IContainer
     {
+
         // Map of registered types
+        [DebuggerBrowsable(DebuggerBrowsableState.Never),EditorBrowsable(EditorBrowsableState.Never)]
         private readonly Dictionary<Type, FunCreator> registeredTypes = new Dictionary<Type, FunCreator>();
 
         // Lifetime management
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)] 
         private readonly ContainerLifetime lifetime;
 
         /// <summary>

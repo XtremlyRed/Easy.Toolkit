@@ -81,7 +81,7 @@ namespace Easy.Toolkit
         }
 
         /// <summary>
-        /// loop collection{<typeparamref name="Target"/>} by forEachBody and element Index
+        /// loop collection{<typeparamref name="Target"/>} by forEachBody and element RetryIndex
         /// </summary>
         /// <typeparam name="Target"></typeparam>
         /// <param name="collection">collection</param>
