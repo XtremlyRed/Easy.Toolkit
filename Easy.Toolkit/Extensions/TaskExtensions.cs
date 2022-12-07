@@ -118,7 +118,7 @@ namespace Easy.Toolkit
         /// <param name="loopBody">loopBody</param>
         /// <param name="token"><see cref="CancellationToken"/></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static Task ForEachAsync<TType>(this IEnumerable<TType> collection, Action<TType> loopBody, CancellationToken token = default)
         {
             return loopBody is null
@@ -147,7 +147,7 @@ namespace Easy.Toolkit
         /// <param name="loopBody">loopBody</param>
         /// <param name="token"><see cref="CancellationToken"/></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static Task ForEachAsync<TType>(this IEnumerable<TType> collection, Action<TType, int> loopBody, CancellationToken token = default)
         {
             return loopBody is null

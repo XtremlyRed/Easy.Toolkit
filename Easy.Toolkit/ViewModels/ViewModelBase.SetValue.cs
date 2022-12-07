@@ -22,7 +22,7 @@ namespace Easy.Toolkit
         /// <param name="newValue">new value</param>
         /// <param name="propertyName">propertyName</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected bool SetValue<TType>(ref TType field, TType newValue, [CallerMemberName] string propertyName = null)
         {
             if (propertyName is null)
@@ -48,7 +48,7 @@ namespace Easy.Toolkit
         /// <param name="newValue">new value</param>
         /// <param name="propertyName">propertyName</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected bool SetValue<TType>(TType newValue, [CallerMemberName] string propertyName = null)
         {
             if (propertyName is null)
@@ -78,7 +78,7 @@ namespace Easy.Toolkit
         /// <param name="comparer">property value comparer</param>
         /// <param name="propertyName">propertyName</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected bool SetValue<TType>(TType newValue, IEqualityComparer<TType> comparer,
             [CallerMemberName] string propertyName = null)
         {
@@ -112,7 +112,7 @@ namespace Easy.Toolkit
         /// <param name="defaultValue">default Value</param>
         /// <param name="propertyName">propertyName</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected TType GetValue<TType>(TType defaultValue = default, [CallerMemberName] string propertyName = null)
         {
             if (propertyName is null)

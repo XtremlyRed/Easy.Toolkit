@@ -18,7 +18,7 @@ namespace Easy.Toolkit
         /// <typeparam name="TAttribute"></typeparam>
         /// <param name="type"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static TAttribute GetAttribute<TAttribute>(this Type type) where TAttribute : Attribute
         {
             if (type is null)
@@ -36,7 +36,7 @@ namespace Easy.Toolkit
         /// <typeparam name="TAttribute"></typeparam>
         /// <param name="property"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static TAttribute GetAttribute<TAttribute>(this PropertyInfo property) where TAttribute : Attribute
         {
             if (property is null)
@@ -54,7 +54,7 @@ namespace Easy.Toolkit
         /// <typeparam name="TAttribute"></typeparam>
         /// <param name="field"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static TAttribute GetAttribute<TAttribute>(this FieldInfo field) where TAttribute : Attribute
         {
             if (field is null)
@@ -72,7 +72,7 @@ namespace Easy.Toolkit
         /// <typeparam name="TAttribute"></typeparam>
         /// <param name="field"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static TAttribute GetAttribute<TAttribute>(this MemberInfo field) where TAttribute : Attribute
         {
             if (field is null)
@@ -90,7 +90,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="type"><see cref="Type"/></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static ICollection<Attribute> GetAttributes(this Type type)
         {
             if (type is null)
@@ -107,7 +107,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="property"><see cref="PropertyInfo"/></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static ICollection<Attribute> GetAttributes(this PropertyInfo property)
         {
             if (property is null)
@@ -123,7 +123,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="field"><see cref="FieldInfo"/></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static ICollection<Attribute> GetAttributes(this FieldInfo field)
         {
             if (field is null)
@@ -139,7 +139,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="member"><see cref="MemberInfo"/></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static ICollection<Attribute> GetAttributes(this MemberInfo member)
         {
             if (member is null)

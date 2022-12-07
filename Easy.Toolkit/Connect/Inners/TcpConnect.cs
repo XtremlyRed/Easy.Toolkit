@@ -75,7 +75,7 @@ namespace Easy.Toolkit.Connect
         /// startup tcp connect
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         IMessageTransfer ITcpConnect.RunAsync()
         {
             Socket socket = SocketBuilder();

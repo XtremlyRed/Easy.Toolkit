@@ -92,7 +92,16 @@ namespace Easy.Toolkit
             registry.Register<TViewModel>().AsSingleton();
         }
 
-
+        /// <summary>
+        /// register dialog window container
+        /// </summary>
+        /// <typeparam name="TDialogWindow">target window container</typeparam>
+        /// <param name="registry"><see cref="IContainerRegistry"/></param>
+        public static void RegisterDialogWindow<TDialogWindow>(this IContainerRegistry registry) 
+            where TDialogWindow:IDialogWindow
+        {
+            registry.Register<IDialogWindow,TDialogWindow>();
+        }
     }
 
      

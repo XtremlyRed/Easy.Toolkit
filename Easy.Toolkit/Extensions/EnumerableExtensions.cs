@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Easy.Toolkit
     /// </summary>
     public static class EnumerableExtensions
     {
+
+        #region  collection is  null  or empty
 
         /// <summary>
         ///  array is  null  or empty
@@ -33,6 +36,30 @@ namespace Easy.Toolkit
             return collection is null || collection.Count == 0;
         }
 
+        /// <summary>
+        ///  collection is  null  or empty
+        /// </summary> 
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty(this ICollection collection)
+        {
+            return collection is null || collection.Count == 0;
+        }
+
+        /// <summary>
+        /// readonly collection is  null  or empty
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty<Target>(this IReadOnlyCollection<Target> collection)
+        {
+            return collection is null || collection.Count == 0;
+        }
+
+        #endregion
+
+
 
         /// <summary>
         ///  collection is  null  or empty
@@ -55,14 +82,14 @@ namespace Easy.Toolkit
 
             return first;
         }
-  
+
         /// <summary>
         /// forEach   collection 
         /// </summary>
         /// <typeparam name="Target"></typeparam>
         /// <param name="collection">collection</param>
         /// <param name="forEachBody">forEachBody</param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static void ForEach<Target>(this IEnumerable<Target> collection, Action<Target> forEachBody)
         {
             if (collection is null)
@@ -86,7 +113,7 @@ namespace Easy.Toolkit
         /// <typeparam name="Target"></typeparam>
         /// <param name="collection">collection</param>
         /// <param name="forEachBody">forEachBody</param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static void ForEach<Target>(this IEnumerable<Target> collection, Action<Target, int> forEachBody)
         {
             if (collection is null)
@@ -113,7 +140,7 @@ namespace Easy.Toolkit
         /// <typeparam name="Target"></typeparam>
         /// <param name="collection"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static IReadOnlyList<Target> ToReadOnlyList<Target>(this IEnumerable<Target> collection)
         {
             if (collection is null)
@@ -122,10 +149,8 @@ namespace Easy.Toolkit
             }
 
             ReadOnlyList<Target> collection2 = new(collection);
-
-            IReadOnlyList<Target> c2 = collection2;
-
-            return c2;
+             
+            return collection2;
         }
 
         /// <summary>
@@ -135,7 +160,7 @@ namespace Easy.Toolkit
         /// <typeparam name="TValue"></typeparam>
         /// <param name="collection"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
             if (collection is null)
@@ -144,9 +169,8 @@ namespace Easy.Toolkit
             }
 
             ReadOnlyDictionary<TKey, TValue> list = new(collection);
-            IReadOnlyDictionary<TKey, TValue> newList = list;
-
-            return newList;
+        
+            return list;
         }
 
         /// <summary>
@@ -159,8 +183,8 @@ namespace Easy.Toolkit
         /// <param name="keySelector"></param>
         /// <param name="valueSelector"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="Exception"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
+        /// <Exception cref="Exception"></Exception>
         public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TObject, TKey, TValue>(this IEnumerable<TObject> collection, Func<TObject, TKey> keySelector, Func<TObject, TValue> valueSelector)
 
         {
@@ -209,7 +233,7 @@ namespace Easy.Toolkit
         /// <typeparam name="Target"></typeparam>
         /// <param name="collection"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static ObservableCollection<Target> ToObservableCollection<Target>(this IEnumerable<Target> collection)
         {
             if (collection is null)
@@ -228,7 +252,7 @@ namespace Easy.Toolkit
         /// <param name="collection">collection</param>
         /// <param name="items">items</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static ICollection<Target> AddItems<Target>(this ICollection<Target> collection, IEnumerable<Target> items)
         {
             if (collection is null)
@@ -255,7 +279,7 @@ namespace Easy.Toolkit
         /// <param name="collection">collection</param>
         /// <param name="items">items array</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static ICollection<Target> AddItems<Target>(this ICollection<Target> collection, params Target[] items)
         {
             if (collection is null)
@@ -275,6 +299,9 @@ namespace Easy.Toolkit
             return collection;
         }
 
+
+#if !NET6_0_OR_GREATER
+
         /// <summary>
         /// Max items OF collection
         /// </summary>
@@ -283,7 +310,7 @@ namespace Easy.Toolkit
         /// <param name="collection">collection</param>
         /// <param name="maxComparer"></param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static Target MaxBy<Target, TComparable>(this IEnumerable<Target> collection, Func<Target, TComparable> maxComparer)
             where TComparable : IComparable<TComparable>
             where Target : notnull
@@ -330,7 +357,7 @@ namespace Easy.Toolkit
         /// <param name="collection">collection</param>
         /// <param name="minComparer"></param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static Target MinBy<Target, TComparable>(this IEnumerable<Target> collection, Func<Target, TComparable> minComparer)
             where TComparable : IComparable<TComparable>
             where Target : notnull
@@ -368,7 +395,7 @@ namespace Easy.Toolkit
         }
 
 
-#if !NET6_0_OR_GREATER
+
 
         /// <summary>
         /// segment a <typeparamref name="Target"/> collection
@@ -377,8 +404,8 @@ namespace Easy.Toolkit
         /// <param name="targets">collection</param>
         /// <param name="segmentCapacity">the capacity of segment</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
+        /// <Exception cref="ArgumentOutOfRangeException"></Exception>
         public static IEnumerable<IEnumerable<Target>> Chunk<Target>(this IEnumerable<Target> targets, int segmentCapacity)
         {
 
@@ -431,7 +458,7 @@ namespace Easy.Toolkit
                 throw new InvalidOperationException("empty collection");
             }
 
-            Random random = new(DateTime.Now.Millisecond);
+            
 
             int currentIndex;
             object tempValue;
@@ -439,14 +466,12 @@ namespace Easy.Toolkit
             for (int i = 0; i < targets.Count; i++)
             {
                 int targetIndex = maxIndex - i;
-                currentIndex = random.Next(0, targets.Count - i);
+                currentIndex = RandomExtensions.random1.Next(0, targets.Count - i);
                 tempValue = targets[currentIndex];
                 targets[currentIndex] = targets[targetIndex];
                 targets[targetIndex] = tempValue;
             }
-
-            random = null;
-
+             
             return targets;
         }
     }

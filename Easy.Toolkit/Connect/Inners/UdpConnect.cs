@@ -49,8 +49,8 @@ namespace Easy.Toolkit.Connect
         /// startup udp connect
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">if localEndPoint is null</exception>
-        /// <exception cref="ArgumentOutOfRangeException">if connectConfiguration.bufferSize less than or equal to 0</exception>
+        /// <Exception cref="ArgumentNullException">if localEndPoint is null</Exception>
+        /// <Exception cref="ArgumentOutOfRangeException">if connectConfiguration.bufferSize less than or equal to 0</Exception>
         public IMessageTransfer RunAsync()
         {
             if (connectConfiguration.localEndPoint is null)

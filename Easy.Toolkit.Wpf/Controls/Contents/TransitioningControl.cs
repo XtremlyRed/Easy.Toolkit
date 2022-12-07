@@ -182,6 +182,7 @@ namespace Easy.Toolkit
                 byte value = (byte)Random.Next(1, 10);
                 mode = (TransitionMode)value;
             }
+
             if (mode == TransitionMode.None)
             {
                 return;

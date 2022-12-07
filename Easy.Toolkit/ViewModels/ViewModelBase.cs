@@ -19,7 +19,7 @@ namespace Easy.Toolkit
         /// Raise Property Changed
         /// </summary>
         /// <param name="propertyName">propertyName</param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (propertyName is null)

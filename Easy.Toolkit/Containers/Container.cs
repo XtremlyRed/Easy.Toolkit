@@ -17,11 +17,11 @@ namespace Easy.Toolkit
     {
 
         // Map of registered types
-        [DebuggerBrowsable(DebuggerBrowsableState.Never),EditorBrowsable(EditorBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
         private readonly Dictionary<Type, FunCreator> registeredTypes = new Dictionary<Type, FunCreator>();
 
         // Lifetime management
-        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)] 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
         private readonly ContainerLifetime lifetime;
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Easy.Toolkit
         /// <param name="serviceTypes">Interface to register</param>
         /// <param name="implementationType">Implementing type</param>
         /// <returns></returns>
-        public IRegisteredType Register(Type implementationType, Type[] serviceTypes)
+        public IRegisteredType Register(Type[] serviceTypes, Type implementationType)
         {
             if (implementationType is null)
             {

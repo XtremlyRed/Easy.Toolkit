@@ -92,9 +92,9 @@ namespace Easy.Toolkit.Connect
         /// <param name="buffer"></param>
         /// <param name="offset"></param>
         /// <param name="length"></param>
-        /// <exception cref="ArgumentNullException">socket is null</exception>
-        /// <exception cref="ArgumentNullException">buffer is null or empty</exception>
-        /// <exception cref="ArgumentOutOfRangeException">buffer length > messageBufferSize</exception>
+        /// <Exception cref="ArgumentNullException">socket is null</Exception>
+        /// <Exception cref="ArgumentNullException">buffer is null or empty</Exception>
+        /// <Exception cref="ArgumentOutOfRangeException">buffer length > messageBufferSize</Exception>
         public void SendAsync(Socket socket, byte[] buffer, int offset, int length)
         {
             if (buffer == null)
@@ -137,8 +137,8 @@ namespace Easy.Toolkit.Connect
         /// <param name="buffer"></param>
         /// <param name="offset"></param>
         /// <param name="length"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
+        /// <Exception cref="ArgumentOutOfRangeException"></Exception>
         public void SendAsync(Socket socket, EndPoint endPoint, byte[] buffer, int offset, int length)
         {
             if (buffer == null)

@@ -31,7 +31,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <typeparam name="TPropertyType">property type</typeparam>
         /// <param name="propertyExpression">the Expression of the property changed</param>
-        /// <exception cref="ArgumentException"></exception>
+        /// <Exception cref="ArgumentException"></Exception>
         public virtual void RaisePropertyChanged<TPropertyType>(Expression<Func<TViewModel, TPropertyType>> propertyExpression)
         {
             if (propertyExpression is null)

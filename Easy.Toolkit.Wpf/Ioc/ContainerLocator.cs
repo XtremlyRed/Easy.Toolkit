@@ -40,8 +40,7 @@ namespace Easy.Toolkit
         /// <typeparam name="TContainer"></typeparam>
         [DebuggerNonUserCode]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static void SetContainer<TContainer>()
-            where TContainer : IContainerRegistry, new()
+        public static void SetContainer<TContainer>() where TContainer : IContainerRegistry, new()
         {
             TContainer registry1 = new TContainer();
             RegisterDefault(registry1);
@@ -52,11 +51,11 @@ namespace Easy.Toolkit
         [EditorBrowsable(EditorBrowsableState.Never)]
         private static void RegisterDefault(IContainerRegistry registry1)
         {
-            registry1.Register<Messenger, IMessenger>().AsSingleton();
-            registry1.Register<PopupManager, IPopupManager>().AsSingleton();
-            registry1.Register<NavigationManager, INavigationManager>().AsSingleton();
-            registry1.Register<DialogManager, IDialogManager>().AsSingleton();
-            registry1.Register<DefaultDialogWindow, IDialogWindow>();
+            registry1.Register<IMessenger, Messenger>().AsSingleton();
+            registry1.Register<IPopupManager, PopupManager>().AsSingleton();
+            registry1.Register<INavigationManager, NavigationManager>().AsSingleton();
+            registry1.Register<IDialogManager, DialogManager>().AsSingleton();
+            registry1.RegisterDialogWindow<DefaultDialogWindow>();
             ContainerLocator.registry = registry1;
             ContainerLocator.container = registry1.Buidler();
         }

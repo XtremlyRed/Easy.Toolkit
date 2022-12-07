@@ -53,8 +53,8 @@ namespace Easy.Toolkit.Connect
         /// <param name="offset"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
+        /// <Exception cref="InvalidOperationException"></Exception>
         public IMessageTransfer Transfer(byte[] buffer, int offset, int length)
         {
             disposeChecker?.Invoke();

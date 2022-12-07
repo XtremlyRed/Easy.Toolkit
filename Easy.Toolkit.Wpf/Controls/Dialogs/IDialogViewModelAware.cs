@@ -11,7 +11,7 @@ namespace Easy.Toolkit
         /// if the dialog can be closed.
         /// </summary>
         /// <returns>If <c>true</c> the dialog can be closed. If <c>false</c> the dialog will not close.</returns>
-        bool CanClose { get; }
+        bool CanClose { get; } 
 
         /// <summary>
         /// called when the dialog is closed.

@@ -69,7 +69,7 @@ namespace Easy.Toolkit
         /// <param name="joinString">join char</param>
         /// <param name="selector">value selecor</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static string Join<TTarget>(this IEnumerable<TTarget> targets, string joinString, Func<TTarget, string> selector)
         {
             if (targets is null)
@@ -91,7 +91,7 @@ namespace Easy.Toolkit
         /// <param name="targets">collection</param>
         /// <param name="joinString">join char</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static string Join<TTarget>(this IEnumerable<TTarget> targets, string joinString = ",")
         {
             return targets is null
@@ -108,7 +108,7 @@ namespace Easy.Toolkit
         /// <param name="collection">collection</param>
         /// <param name="action">builder function</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static StringBuilder StringBuilder<Target>(this IEnumerable<Target> collection, Action<StringBuilder, Target> action)
         {
             if (collection is null)

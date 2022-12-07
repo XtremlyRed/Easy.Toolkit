@@ -14,7 +14,7 @@ namespace Easy.Toolkit
         /// <param name="newValue">new value</param>
         /// <param name="propertyName">propertyName</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected bool SetProperty<TType>(ref TType field, TType newValue, [CallerMemberName] string propertyName = null)
         {
             if (propertyName is null)
@@ -39,7 +39,7 @@ namespace Easy.Toolkit
         /// <param name="comparer">propety value comparer</param>
         /// <param name="propertyName">propertyName</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected bool SetProperty<TType>(ref TType field, TType newValue, IEqualityComparer<TType> comparer,
             [CallerMemberName] string propertyName = null)
         {
@@ -71,7 +71,7 @@ namespace Easy.Toolkit
         /// <param name="callback">property value changed callback</param>
         /// <param name="propertyName">propertyName</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected bool SetProperty<TType>(TType oldValue, TType newValue, Action<TType> callback,
             [CallerMemberName] string propertyName = null)
         {
@@ -105,7 +105,7 @@ namespace Easy.Toolkit
         /// <param name="callback">property value changed callback</param>
         /// <param name="propertyName">propertyName</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected bool SetProperty<TType>(TType oldValue, TType newValue, IEqualityComparer<TType> comparer, Action<TType> callback, [CallerMemberName] string propertyName = null)
         {
             if (propertyName is null)
@@ -145,7 +145,7 @@ namespace Easy.Toolkit
         /// <param name="callback">property value changed callback</param>
         /// <param name="propertyName">propertyName</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         protected bool SetProperty<TModel, TType>(TType oldValue, TType newValue, TModel model,
             Action<TModel, TType> callback,
             [CallerMemberName] string propertyName = null)

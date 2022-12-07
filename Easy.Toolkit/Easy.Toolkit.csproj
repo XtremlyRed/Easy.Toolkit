@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Nullable>disable</Nullable> 
+		<Nullable>disable</Nullable>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>$(SolutionDir)\easyToolkit.snk</AssemblyOriginatorKeyFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -14,30 +14,15 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>
-		
-			<!--
-			net40;
+			net451;
 			net48;
 			netcoreapp3.1;
-			net5.0;
-			net6.0;
-			net7.0;
-			-->
-
-			net451;
-			net48; 
-			netcoreapp3.1; 
 			net6.0;
 			net7.0;
 			netstandard2.1;
 			netstandard2.0;
 		</TargetFrameworks>
 	</PropertyGroup>
-
-
-	<!--<ItemGroup Label="Package"> 
-		<None Include="$(OutputPath)\$(AssemblyName).SourceGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-	</ItemGroup>-->
 
 	<Import Project="$(SolutionDir)\GlobalCompileSettings.Targets" />
 

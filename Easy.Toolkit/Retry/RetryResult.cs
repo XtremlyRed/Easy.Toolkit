@@ -79,7 +79,7 @@ namespace Easy.Toolkit
         /// <summary>
         /// get result from <paramref name="retryResult"/>
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="retryResult"/> is null</exception>
+        /// <Exception cref="ArgumentNullException"><paramref name="retryResult"/> is null</Exception>
         /// <param name="retryResult"><typeparamref name="TResult"/></param>
         public static implicit operator TResult(RetryResult<TResult> retryResult)
         {

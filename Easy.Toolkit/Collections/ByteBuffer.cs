@@ -278,7 +278,7 @@ namespace Easy.Toolkit
         /// <param name="offset">offset of the byte array</param>
         /// <param name="length">write count</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public void Write(byte[] buffer, int offset, int length)
         {
             if (buffer is null || buffer.Length == 0)
@@ -297,7 +297,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="buffer"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public void Write(byte[] buffer)
         {
             if (buffer is null || buffer.Length == 0)

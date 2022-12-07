@@ -268,8 +268,8 @@ namespace Easy.Toolkit
         /// combines four strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public EasyFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new EasyFolder(folderCombine); }
         /// <summary>
@@ -314,8 +314,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public DesktopFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopFolder(folderCombine); }
         /// <summary>
@@ -365,8 +365,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public ProgramsFolder Combine(params string[] paths) 
         { 
@@ -412,8 +412,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public MyDocumentsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyDocumentsFolder(folderCombine); }
         /// <summary>
@@ -455,8 +455,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public PersonalFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PersonalFolder(folderCombine); }
         /// <summary>
@@ -498,8 +498,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public FavoritesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FavoritesFolder(folderCombine); }
         /// <summary>
@@ -541,8 +541,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public StartupFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartupFolder(folderCombine); }
         /// <summary>
@@ -584,8 +584,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public RecentFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new RecentFolder(folderCombine); }
         /// <summary>
@@ -627,8 +627,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public SendToFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SendToFolder(folderCombine); }
         /// <summary>
@@ -670,8 +670,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public StartMenuFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new StartMenuFolder(folderCombine); }
         /// <summary>
@@ -713,8 +713,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public MyMusicFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyMusicFolder(folderCombine); }
         /// <summary>
@@ -756,8 +756,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public MyVideosFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyVideosFolder(folderCombine); }
         /// <summary>
@@ -799,8 +799,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public DesktopDirectoryFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new DesktopDirectoryFolder(folderCombine); }
         /// <summary>
@@ -842,8 +842,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public MyComputerFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyComputerFolder(folderCombine); }
         /// <summary>
@@ -885,8 +885,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public NetworkShortcutsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new NetworkShortcutsFolder(folderCombine); }
         /// <summary>
@@ -928,8 +928,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public FontsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new FontsFolder(folderCombine); }
         /// <summary>
@@ -971,8 +971,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public TemplatesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new TemplatesFolder(folderCombine); }
         /// <summary>
@@ -1014,8 +1014,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonStartMenuFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartMenuFolder(folderCombine); }
         /// <summary>
@@ -1057,8 +1057,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonProgramsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramsFolder(folderCombine); }
         /// <summary>
@@ -1100,8 +1100,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonStartupFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonStartupFolder(folderCombine); }
         /// <summary>
@@ -1143,8 +1143,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonDesktopDirectoryFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDesktopDirectoryFolder(folderCombine); }
         /// <summary>
@@ -1186,8 +1186,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public ApplicationDataFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ApplicationDataFolder(folderCombine); }
         /// <summary>
@@ -1229,8 +1229,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public PrinterShortcutsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new PrinterShortcutsFolder(folderCombine); }
         /// <summary>
@@ -1272,8 +1272,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public LocalApplicationDataFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalApplicationDataFolder(folderCombine); }
         /// <summary>
@@ -1315,8 +1315,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public InternetCacheFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new InternetCacheFolder(folderCombine); }
         /// <summary>
@@ -1358,8 +1358,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CookiesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CookiesFolder(folderCombine); }
         /// <summary>
@@ -1401,8 +1401,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public HistoryFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new HistoryFolder(folderCombine); }
         /// <summary>
@@ -1444,8 +1444,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonApplicationDataFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonApplicationDataFolder(folderCombine); }
         /// <summary>
@@ -1487,8 +1487,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public WindowsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new WindowsFolder(folderCombine); }
         /// <summary>
@@ -1530,8 +1530,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public SystemFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemFolder(folderCombine); }
         /// <summary>
@@ -1573,8 +1573,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public ProgramFilesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesFolder(folderCombine); }
         /// <summary>
@@ -1616,8 +1616,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public MyPicturesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new MyPicturesFolder(folderCombine); }
         /// <summary>
@@ -1659,8 +1659,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public UserProfileFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new UserProfileFolder(folderCombine); }
         /// <summary>
@@ -1702,8 +1702,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public SystemX86Folder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new SystemX86Folder(folderCombine); }
         /// <summary>
@@ -1745,8 +1745,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public ProgramFilesX86Folder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ProgramFilesX86Folder(folderCombine); }
         /// <summary>
@@ -1788,8 +1788,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonProgramFilesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesFolder(folderCombine); }
         /// <summary>
@@ -1831,8 +1831,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonProgramFilesX86Folder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonProgramFilesX86Folder(folderCombine); }
         /// <summary>
@@ -1874,8 +1874,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonTemplatesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonTemplatesFolder(folderCombine); }
         /// <summary>
@@ -1917,8 +1917,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonDocumentsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonDocumentsFolder(folderCombine); }
         /// <summary>
@@ -1960,8 +1960,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonAdminToolsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonAdminToolsFolder(folderCombine); }
         /// <summary>
@@ -2003,8 +2003,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public AdminToolsFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new AdminToolsFolder(folderCombine); }
         /// <summary>
@@ -2046,8 +2046,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonMusicFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonMusicFolder(folderCombine); }
         /// <summary>
@@ -2089,8 +2089,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonPicturesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonPicturesFolder(folderCombine); }
         /// <summary>
@@ -2132,8 +2132,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonVideosFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonVideosFolder(folderCombine); }
         /// <summary>
@@ -2175,8 +2175,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public ResourcesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new ResourcesFolder(folderCombine); }
         /// <summary>
@@ -2218,8 +2218,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public LocalizedResourcesFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new LocalizedResourcesFolder(folderCombine); }
         /// <summary>
@@ -2261,8 +2261,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CommonOemLinksFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CommonOemLinksFolder(folderCombine); }
         /// <summary>
@@ -2304,8 +2304,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CDBurningFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CDBurningFolder(folderCombine); }
         /// <summary>
@@ -2347,8 +2347,8 @@ namespace Easy.Toolkit
         /// combines an array of strings into a path. 
         /// </summary>
         /// <param name="paths">an array of parts of the path.</param>
-        /// <exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</exception>
-        /// <exception cref="System.ArgumentNullException">one of the strings in the array is null.</exception>
+        /// <Exception cref="System.ArgumentException">one of the strings in the array contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars.</Exception>
+        /// <Exception cref="System.ArgumentNullException">one of the strings in the array is null.</Exception>
         /// <returns>The combined paths.</returns>
         public CurrentFolder Combine(params string[] paths) { string folderCombine = Path.Combine(new[] { folder }.Concat(paths).ToArray()); return new CurrentFolder(folderCombine); }
         /// <summary>

@@ -35,8 +35,8 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="targets">array</param>
         /// <returns>put count</returns>
-        /// <exception cref="ObjectDisposedException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ObjectDisposedException"></Exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public void Put(params TTarget[] targets)
         {
             if (disposed)
@@ -77,7 +77,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="ObjectDisposedException"></exception>
+        /// <Exception cref="ObjectDisposedException"></Exception>
         public async Task<TTarget> PopupAsync(CancellationToken cancellationToken = default)
         {
             if (disposed)
@@ -109,7 +109,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="ObjectDisposedException"></exception>
+        /// <Exception cref="ObjectDisposedException"></Exception>
         public TTarget Popup(CancellationToken cancellationToken = default)
         {
             if (disposed)

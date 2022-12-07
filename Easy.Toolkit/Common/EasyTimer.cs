@@ -93,8 +93,8 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
+        /// <Exception cref="ArgumentException"></Exception>
         public static EasyTimer SetTimer(object token)
         {
             return token is null
@@ -110,8 +110,8 @@ namespace Easy.Toolkit
         /// <param name="token"></param>
         /// <param name="removeTokenAfterRead"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="NotSupportedException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
+        /// <Exception cref="NotSupportedException"></Exception>
         public static TimeSpan GetTimeSpan(object token, bool removeTokenAfterRead = true)
         {
             if (token is null)
@@ -138,8 +138,8 @@ namespace Easy.Toolkit
         /// <param name="token"></param>
         /// <param name="removeTokenAfterRead"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="NotSupportedException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
+        /// <Exception cref="NotSupportedException"></Exception>
         public static double GetTotalMilliseconds(object token, bool removeTokenAfterRead = true)
         {
             if (token is null)
@@ -168,7 +168,7 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="action">action callback</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static EasyTimer Run(Action action)
         {
             if (action is null)

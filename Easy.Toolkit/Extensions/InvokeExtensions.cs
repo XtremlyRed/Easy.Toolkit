@@ -11,55 +11,52 @@ namespace Easy.Toolkit
     /// </summary>
     public static class Invoker
     {
-        /// <summary>
-        /// invoke callback where <paramref name="target"/> not null
-        /// </summary>
-        /// <typeparam name="Target"></typeparam>
-        /// <param name="target"></param>
-        /// <param name="whenCallback"></param>
-        public static void WhenNotNull<Target>(Target target, Action<Target> whenCallback) where Target : class
-        {
-            if (target is null)
-            {
-                return;
-            }
+        //    /// <summary>
+        //    /// invoke callback where <paramref name="target"/> not null
+        //    /// </summary>
+        //    /// <typeparam name="Target"></typeparam>
+        //    /// <param name="target"></param>
+        //    /// <param name="whenCallback"></param>
+        //    public static void WhenNotNull<Target>(Target target, Action<Target> whenCallback) where Target : class
+        //    {
+        //        if (target is null)
+        //        {
+        //            return;
+        //        } 
+        //        whenCallback?.Invoke(target);
+        //    }
 
-            whenCallback?.Invoke(target);
-        }
+        //    /// <summary>
+        //    /// invoke callback when <paramref name="condition"/> is true
+        //    /// </summary>
+        //    /// <param name="condition"></param>
+        //    /// <param name="whenCallback"></param>
+        //    public static void WhenTrue(bool condition, Action whenCallback)
+        //    {
+        //        if (condition)
+        //        {
+        //            whenCallback?.Invoke();
+        //        }
+        //    }
 
-        /// <summary>
-        /// invoke callback when <paramref name="condition"/> is true
-        /// </summary>
-        /// <param name="condition"></param>
-        /// <param name="whenCallback"></param>
-        public static void WhenTrue(bool condition, Action whenCallback)
-        {
-            if (condition)
-            {
-                whenCallback?.Invoke();
-            }
-        }
-
-        /// <summary>
-        /// invoke callback where <paramref name="condition"/> result is true
-        /// </summary>
-        /// <param name="condition"></param>
-        /// <param name="whenCallback"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static void WhenTrue(Func<bool> condition, Action whenCallback)
-        {
-            if (condition is null)
-            {
-                throw new ArgumentNullException(nameof(condition));
-            }
-
-            if (condition.Invoke() == false)
-            {
-                return;
-            }
-
-            whenCallback?.Invoke();
-        }
+        //    /// <summary>
+        //    /// invoke callback where <paramref name="condition"/> result is true
+        //    /// </summary>
+        //    /// <param name="condition"></param>
+        //    /// <param name="whenCallback"></param>
+        //    /// <Exception cref="ArgumentNullException"></Exception>
+        //    public static void WhenTrue(Func<bool> condition, Action whenCallback)
+        //    {
+        //        if (condition is null)
+        //        {
+        //            throw new ArgumentNullException(nameof(condition));
+        //        } 
+        //        if (condition.Invoke() == false)
+        //        {
+        //            return;
+        //        } 
+        //        whenCallback?.Invoke();
+        //    }
 
         /// <summary>
         /// run delegate and ignore exception
@@ -89,8 +86,8 @@ namespace Easy.Toolkit
         /// <param name="startIndex">startIndex</param>
         /// <param name="count">count [ ? > 0]</param>
         /// <param name="loopBody">loopBody</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentOutOfRangeException"></Exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static void For(int startIndex, int count, Action<int> loopBody)
         {
             if (loopBody is null)
@@ -115,8 +112,8 @@ namespace Easy.Toolkit
         /// <param name="startIndex">startIndex</param>
         /// <param name="count">count [ ? > 0]</param>
         /// <param name="loopBody">loopBody</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentOutOfRangeException"></Exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static void For(int startIndex, int count, Action loopBody)
         {
             if (loopBody is null)
@@ -143,8 +140,8 @@ namespace Easy.Toolkit
         /// <param name="loopBody">loopBody</param>
         /// <param name="token"><see cref="CancellationToken"/></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentOutOfRangeException"></Exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static Task ForAsync(int startIndex, int count, Action<int, CancellationToken> loopBody, CancellationToken token = default)
         {
 
@@ -181,8 +178,8 @@ namespace Easy.Toolkit
         /// <param name="loopBody">loopBody</param>
         /// <param name="token"><see cref="CancellationToken"/></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentOutOfRangeException"></Exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static Task ForAsync(int startIndex, int count, Action<CancellationToken> loopBody, CancellationToken token = default)
         {
             return loopBody is null
@@ -211,7 +208,7 @@ namespace Easy.Toolkit
         /// <param name="loopBody">loopBody</param>
         /// <param name="token"><see cref="CancellationToken"/></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static Task WhileAsync(Func<bool> loopCondition, Action<CancellationToken> loopBody, CancellationToken token = default)
         {
             return loopCondition is null
@@ -233,7 +230,7 @@ namespace Easy.Toolkit
         /// <param name="loopCondition">condition</param>
         /// <param name="loopBody">loopBody</param> 
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static void While(Func<bool> loopCondition, Action loopBody)
         {
             if (loopCondition is null)

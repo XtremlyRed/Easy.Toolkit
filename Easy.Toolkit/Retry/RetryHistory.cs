@@ -20,7 +20,7 @@ namespace Easy.Toolkit
         public int RetryIndex { get; internal set; }
 
         /// <summary>
-        /// execute exception
+        /// execute Exception
         /// </summary> 
         public Exception Exception { get; internal set; }
     }

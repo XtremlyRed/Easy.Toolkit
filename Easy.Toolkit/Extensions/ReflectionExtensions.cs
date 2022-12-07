@@ -35,7 +35,7 @@ namespace Easy.Toolkit
         /// <typeparam name="TPropertyType"></typeparam>
         /// <param name="propertySelector">property Selector</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static string GetPropertyName<TSource, TPropertyType>(Expression<Func<TSource, TPropertyType>> propertySelector)
         {
             if (propertySelector is null)
@@ -99,7 +99,7 @@ namespace Easy.Toolkit
         /// <param name="type"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public static object CreateInstance(this Type type, params object[] parameters)
         {
             return type == null ? throw new ArgumentNullException(nameof(type)) : Activator.CreateInstance(type, parameters);

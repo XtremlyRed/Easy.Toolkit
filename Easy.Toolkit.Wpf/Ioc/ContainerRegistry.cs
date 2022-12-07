@@ -17,12 +17,16 @@ namespace Easy.Toolkit
 
         public IRegisteredType Register<Target>(Type type)
         {
+            if (type is null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
             return Container.Register<Target>(type);
         }
 
-        public IRegisteredType Register<TImplementation, TService>() where TImplementation : TService
+        public IRegisteredType Register<TService, TImplementation>() where TImplementation : TService
         {
-            return Container.Register<TImplementation, TService>();
+            return Container.Register<TService, TImplementation>();
         }
 
         public IRegisteredType Register<Target>(Func<object> factory)
@@ -40,28 +44,105 @@ namespace Easy.Toolkit
         }
 
 
-        public IRegisteredType Register(Type implementationType, Type serviceType)
+        public IRegisteredType Register(Type serviceType, Type implementationType)
         {
-            return Container.Register(implementationType, new[] { serviceType });
+            if (serviceType is null)
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
+            if (implementationType is null)
+            {
+                throw new ArgumentNullException(nameof(implementationType));
+            }
+            return Container.Register(new[] { serviceType }, implementationType);
         }
 
         public IRegisteredType Register(Type type)
         {
+            if (type is null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
             return Container.Register(type);
         }
 
-        public void RegisterInstance(object instace)
+
+        public void RegisterSingleton<Target>(Target target) where Target : class
         {
-            if (instace is null)
+            if (target is null)
             {
-                throw new ArgumentNullException(nameof(instace));
+                throw new ArgumentNullException(nameof(target));
             }
-            Container.Register(instace.GetType(), () => instace).AsSingleton();
+            Container.Register<Target>(() => target).AsSingleton();
         }
 
-        public IRegisteredType RegisterMany(Type implementationType, Type[] serviceTypes)
+        public void RegisterSingleton<Target>() where Target : class
         {
-            return Container.Register(implementationType, serviceTypes);
+
+            Container.Register<Target>().AsSingleton();
+        }
+
+        public void RegisterSingleton<Target>(Func<object> factory)
+        {
+            if (factory is null)
+            {
+                throw new ArgumentNullException(nameof(factory));
+            }
+            Container.Register<Target>(factory).AsSingleton();
+        }
+
+        public void RegisterSingleton<TService, TImplementation>() where TImplementation : TService
+        {
+            Container.Register<TService, TImplementation>().AsSingleton();
+        }
+
+        public void RegisterSingleton(Type type)
+        {
+            if (type is null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+            Container.Register(type).AsSingleton();
+        }
+
+        public void RegisterSingleton(Type serviceType, Type implementationType)
+        {
+            if (serviceType is null)
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
+
+            if (implementationType is null)
+            {
+                throw new ArgumentNullException(nameof(implementationType));
+            }
+            Container.Register(new[] { serviceType }, implementationType).AsSingleton();
+        }
+
+        public IRegisteredType RegisterMany(Type[] serviceTypes, Type implementationType)
+        {
+            if (serviceTypes is null || serviceTypes.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(serviceTypes));
+            }
+            if (implementationType is null)
+            {
+                throw new ArgumentNullException(nameof(implementationType));
+            }
+            return Container.Register(serviceTypes, implementationType);
+        }
+
+        public void RegisterManySingleton(Type[] serviceTypes, Type implementationType)
+        {
+            if (serviceTypes is null || serviceTypes.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(serviceTypes));
+            }
+            if (implementationType is null)
+            {
+                throw new ArgumentNullException(nameof(implementationType));
+            }
+            Container.Register(serviceTypes, implementationType).AsSingleton();
         }
     }
 
@@ -128,7 +209,7 @@ namespace Easy.Toolkit
 
                 frameworkElement.DataContext = ContainerLocator.Container.Resolve(aware.ViewModelType);
             }
-             
+
             return @object;
         }
     }

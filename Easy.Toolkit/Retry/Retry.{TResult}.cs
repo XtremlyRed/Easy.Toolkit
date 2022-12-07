@@ -12,14 +12,14 @@ namespace Easy.Toolkit
     public interface IRetry<TResult>
     {
         /// <summary>
-        /// handle exception
+        /// handle Exception
         /// </summary>
         /// <typeparam name="TException"></typeparam>
         /// <returns></returns>
         IRetry<TResult> OrHandle<TException>() where TException : Exception;
 
         /// <summary>
-        /// handle exception
+        /// handle Exception
         ///  <para> eligible will be deemed as having to try again </para>
         /// </summary>
         /// <typeparam name="TException"></typeparam>

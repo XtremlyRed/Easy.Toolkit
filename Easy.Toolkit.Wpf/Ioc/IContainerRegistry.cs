@@ -1,27 +1,25 @@
-﻿
-using System;
-namespace Easy.Toolkit
+﻿namespace Easy.Toolkit
 {
     /// <summary>
     /// container   registry
     /// </summary>
     public interface IContainerRegistry
-    {  
+    {
         /// <summary>
         /// register many
         /// </summary>
-        /// <param name="ImplementationType"></param>
-        /// <param name="serviceTypes"></param>
+        /// <param name="serviceTypes"></param>    
+        /// <param name="implementationType"></param> 
         /// <returns></returns>
-        IRegisteredType RegisterMany(Type ImplementationType, Type[] serviceTypes);
+        IRegisteredType RegisterMany(Type[] serviceTypes, Type implementationType);
 
         /// <summary>
         /// register
         /// </summary>
-        /// <param name="ImplementationType"></param>
         /// <param name="serviceType"></param>
+        /// <param name="implementationType"></param> 
         /// <returns></returns>
-        IRegisteredType Register(Type ImplementationType, Type serviceType);
+        IRegisteredType Register(Type serviceType, Type implementationType);
 
         /// <summary>
         /// register
@@ -36,7 +34,7 @@ namespace Easy.Toolkit
         /// <typeparam name="TImplementation"></typeparam>
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
-        IRegisteredType Register<TImplementation, TService>()  where TImplementation : TService;
+        IRegisteredType Register<TService, TImplementation>() where TImplementation : TService;
 
         /// <summary>
         /// register
@@ -57,8 +55,56 @@ namespace Easy.Toolkit
         /// register instance
         /// </summary>
         /// <param name="target"></param>
-        void RegisterInstance(object target);
+        void RegisterSingleton<Target>(Target target) where Target : class;
 
+        /// <summary>
+        /// register instance
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <returns></returns>
+        void RegisterSingleton<Target>() where Target : class;
+
+
+        /// <summary>
+        /// register instance
+        /// </summary>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="factory"></param>
+        /// <returns></returns>
+        void RegisterSingleton<Target>(Func<object> factory);
+
+        /// <summary>
+        /// register instance
+        /// </summary>
+        /// <typeparam name="TImplementation"></typeparam>
+        /// <typeparam name="TService"></typeparam>
+        /// <returns></returns>
+        void RegisterSingleton<TService, TImplementation>() where TImplementation : TService;
+
+        /// <summary>
+        /// register instance
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        void RegisterSingleton(Type type);
+
+
+        /// <summary>
+        /// register instance
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <param name="implementationType"></param> 
+        /// <returns></returns>
+        void RegisterSingleton(Type serviceType, Type implementationType);
+
+
+        /// <summary>
+        /// register many instance
+        /// </summary>
+        /// <param name="serviceTypes"></param>    
+        /// <param name="implementationType"></param> 
+        /// <returns></returns>
+        void RegisterManySingleton(Type[] serviceTypes, Type implementationType);
 
         /// <summary>
         /// build provider

@@ -14,7 +14,7 @@ namespace Easy.Toolkit
     /// </summary>
     public class Messenger : IMessenger
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never),EditorBrowsable(EditorBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
         private readonly ConcurrentDictionary<string, Mapper> mappers = new();
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Easy.Toolkit
         /// 
         /// </summary>
         /// <param name="subscriber"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public virtual void UnregisterAll(object subscriber)
         {
             if (subscriber == null)
@@ -52,8 +52,8 @@ namespace Easy.Toolkit
         /// </summary>
         /// <param name="publishToken"></param>
         /// <param name="messengerParamters"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
+        /// <Exception cref="ArgumentException"></Exception>
         public virtual void Publish(string publishToken, params object[] messengerParamters)
         {
             _ = publishToken ?? throw new ArgumentNullException(nameof(publishToken));
@@ -62,7 +62,7 @@ namespace Easy.Toolkit
             {
                 if (string.Compare(mapper.ReturnType.Name, "void", StringComparison.OrdinalIgnoreCase) != 0)
                 {
-                    throw new ArgumentException("return type error or type exception");
+                    throw new ArgumentException("return type error or type Exception");
                 }
 
                 mapper.Invoke(messengerParamters ?? new object[] { null });
@@ -80,8 +80,8 @@ namespace Easy.Toolkit
         /// <param name="publishToken"></param>
         /// <param name="messengerParamters"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
+        /// <Exception cref="ArgumentException"></Exception>
         public virtual TResult Publish<TResult>(string publishToken, params object[] messengerParamters)
         {
             _ = publishToken ?? throw new ArgumentNullException(nameof(publishToken));
@@ -90,7 +90,7 @@ namespace Easy.Toolkit
             {
                 if (Equals(mapper.ReturnType, typeof(TResult)) == false)
                 {
-                    throw new ArgumentException("return type error or type exception");
+                    throw new ArgumentException("return type error or type Exception");
                 }
 
                 object invokerValue = mapper.Invoke(messengerParamters ?? new object[] { null });
@@ -108,8 +108,8 @@ namespace Easy.Toolkit
         /// <param name="publishToken"></param> 
         /// <param name="messageParams"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public virtual Task PublishAsync(string publishToken,    params object[] messageParams)
+        /// <Exception cref="ArgumentNullException"></Exception>
+        public virtual Task PublishAsync(string publishToken, params object[] messageParams)
         {
             _ = publishToken ?? throw new ArgumentNullException(nameof(publishToken));
 
@@ -123,14 +123,14 @@ namespace Easy.Toolkit
         /// <param name="publishToken"></param> 
         /// <param name="messageParams"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public virtual Task<TResult> PublishAsync<TResult>(string publishToken,    params object[] messageParams)
+        /// <Exception cref="ArgumentNullException"></Exception>
+        public virtual Task<TResult> PublishAsync<TResult>(string publishToken, params object[] messageParams)
         {
             _ = publishToken ?? throw new ArgumentNullException(nameof(publishToken));
 
             return Task.Factory.StartNew(() => Publish<TResult>(publishToken, messageParams), CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
-         
+
         /// <summary>
         /// subscribe function
         /// </summary> 
@@ -1105,9 +1105,11 @@ namespace Easy.Toolkit
         {
             private object Handler;
             private MethodInfo Method;
-
+            public SynchronizationContext synchronizationContext;
             public void Update(object subscriber, string token, MethodInfo method, object handler)
             {
+                synchronizationContext = SynchronizationContext.Current;
+
                 Token = token;
                 Subscriber = subscriber;
                 Arguments = method.GetParameters().Select(i => i.ParameterType).ToArray();

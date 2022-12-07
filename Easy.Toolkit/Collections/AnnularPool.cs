@@ -75,7 +75,7 @@ namespace Easy.Toolkit
         /// <param name="writeBuffer">array data</param>
         /// <param name="offset">offset in array</param>
         /// <param name="length">length</param>
-        /// <exception cref="Exception"></exception>
+        /// <Exception cref="Exception"></Exception>
         public void Write(Target[] writeBuffer, int offset, int length)
         {
 
@@ -115,7 +115,7 @@ namespace Easy.Toolkit
         /// <param name="readBuffer"></param>
         /// <param name="offset"></param>
         /// <param name="length"></param>
-        /// <exception cref="Exception"></exception>
+        /// <Exception cref="Exception"></Exception>
         public void Read(Target[] readBuffer, int offset, int length)
         {
             if (length <= 0)

@@ -17,7 +17,7 @@ namespace Easy.Toolkit
         /// <param name="parameters"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        void Show(string viewName, IDialogParameters parameters, Action<DialogResult> callback);
+        void Show(string viewName, IDialogParameters parameters, Action<DialogOperateResult> callback);
 
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Easy.Toolkit
         /// <param name="parameters"></param>
         /// <param name="callback"></param> 
         /// <returns></returns>
-        void ShowDialog(string viewName, IDialogParameters parameters, Action<DialogResult> callback);
+        void ShowDialog(string viewName, IDialogParameters parameters, Action<DialogOperateResult> callback);
 
     }
 
@@ -133,7 +133,7 @@ namespace Easy.Toolkit
         /// <param name="parameters"></param>
         /// <param name="callback"></param> 
         /// <returns></returns>
-        public void Show(string viewName, IDialogParameters parameters, Action<DialogResult> callback)
+        public void Show(string viewName, IDialogParameters parameters, Action<DialogOperateResult> callback)
         {
             InnerDisplay(false, viewName, parameters, callback);
         }
@@ -147,13 +147,13 @@ namespace Easy.Toolkit
         /// <param name="parameters"></param>
         /// <param name="callback"></param> 
         /// <returns></returns>
-        public void ShowDialog(string viewName, IDialogParameters parameters, Action<DialogResult> callback)
+        public void ShowDialog(string viewName, IDialogParameters parameters, Action<DialogOperateResult> callback)
         {
             InnerDisplay(true, viewName, parameters, callback);
         }
 
 
-        private void InnerDisplay(bool isModal, string viewName, IDialogParameters parameters, Action<DialogResult> callback)
+        private void InnerDisplay(bool isModal, string viewName, IDialogParameters parameters, Action<DialogOperateResult> callback)
         {
             if (ViewRegisterExtensions.viewNameAwares.TryGetValue(viewName, out ViewModelLocator.ViewViewModelAware aware) == false)
             {
@@ -210,12 +210,12 @@ namespace Easy.Toolkit
         /// <param name="dialogWindow">The dialog window.</param>
         /// <param name="callback">The action invoked when the dialog is closed.</param>
         /// <param name="openCallback"></param>
-        private void ConfigureEvents(IDialogWindow dialogWindow, Action<DialogResult> callback, Action openCallback)
+        private void ConfigureEvents(IDialogWindow dialogWindow, Action<DialogOperateResult> callback, Action openCallback)
         {
             EventHandler<DialogResultEventArgs> requestCloseHandler = null;
-            requestCloseHandler = (s,  re) =>
+            requestCloseHandler = (s, re) =>
             {
-                dialogWindow.Result = re.DialogResult;
+                dialogWindow.Result = re.DialogResultMode;
                 dialogWindow.Close();
             };
 
@@ -256,7 +256,14 @@ namespace Easy.Toolkit
                 dialogWindow.DataContext = null;
                 dialogWindow.Content = null;
 
-                callback?.Invoke(dialogWindow.Result);
+                if (callback != null)
+                {
+                    callback.Invoke(new DialogOperateResult()
+                    {
+                        DialogResult = dialogWindow.Result
+                    });
+                }
+
             };
             dialogWindow.Closed += closedHandler;
         }

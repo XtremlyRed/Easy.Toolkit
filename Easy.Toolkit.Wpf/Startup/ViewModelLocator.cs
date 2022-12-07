@@ -8,7 +8,8 @@ using System.Windows;
 
 
 namespace Easy.Toolkit
-{
+{ 
+
     /// <summary>
     /// Used to actively position ViewModel
     /// </summary>
@@ -72,6 +73,8 @@ namespace Easy.Toolkit
         internal static Func<Type, Type> defaultViewTypeToViewModelTypeResolver =
           viewType =>
           {
+
+
               string viewName = viewType.FullName;
               viewName = viewName.Replace(".Views.", ".ViewModels.");
               string viewAssemblyName = viewType.GetTypeInfo().Assembly.FullName;

@@ -16,7 +16,7 @@ namespace Easy.Toolkit
         /// <returns>IRegisteredType object</returns>
         public static IRegisteredType Register<T>(this Container container, Type implementationType)
         {
-            return container.Register(typeof(T), new[] { implementationType });
+            return container.Register(new[] { implementationType }, typeof(T));
         }
 
         /// <summary>
@@ -26,10 +26,10 @@ namespace Easy.Toolkit
         /// <typeparam name="TImplementationType">Implementing implementationType</typeparam>
         /// <param name="container">This container instance</param>
         /// <returns>IRegisteredType object</returns>
-        public static IRegisteredType Register<TImplementationType, TServiceType>(this Container container)
+        public static IRegisteredType Register<TServiceType, TImplementationType>(this Container container)
             where TImplementationType : TServiceType
         {
-            return container.Register(typeof(TImplementationType), new[] { typeof(TServiceType) });
+            return container.Register(new[] { typeof(TServiceType) }, typeof(TImplementationType));
         }
 
 
@@ -41,14 +41,14 @@ namespace Easy.Toolkit
         /// <param name="implementationType">implementationType</param>
         /// <param name="serviceTypes">service types to register</param>
         /// <returns>IRegisteredType object</returns>
-        public static IRegisteredType Register(this Container container, Type implementationType, Type[] serviceTypes)
+        public static IRegisteredType Register(this Container container, Type[] serviceTypes, Type implementationType)
         {
             if (serviceTypes is null || serviceTypes.Length == 0)
             {
                 throw new ArgumentNullException(nameof(serviceTypes));
             }
 
-            return container.Register(implementationType, serviceTypes);
+            return container.Register(serviceTypes, implementationType);
         }
 
 
@@ -77,7 +77,7 @@ namespace Easy.Toolkit
         /// <returns>IRegisteredType object</returns>
         public static IRegisteredType Register<T>(this Container container)
         {
-            return container.Register(typeof(T), new[] { typeof(T) });
+            return container.Register(new[] { typeof(T) }, typeof(T));
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Easy.Toolkit
         /// <returns>IRegisteredType object</returns>
         public static IRegisteredType Register(this Container container, Type implementationType)
         {
-            return container.Register(implementationType, new[] { implementationType });
+            return container.Register(new[] { implementationType }, implementationType);
         }
 
         /// <summary>

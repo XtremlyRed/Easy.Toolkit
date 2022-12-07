@@ -62,7 +62,7 @@ namespace Easy.Toolkit
         /// add an exist collection into this Collection
         /// </summary>
         /// <param name="collection">an exist collection</param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public void AddRange(IEnumerable<Target> collection)
         {
             if (collection is null)
@@ -80,7 +80,7 @@ namespace Easy.Toolkit
         /// add an exist array into this Collection
         /// </summary>
         /// <param name="array">an exist array</param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <Exception cref="ArgumentNullException"></Exception>
         public void AddRange(params Target[] array)
         {
             if (array is null)

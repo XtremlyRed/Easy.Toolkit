@@ -46,7 +46,7 @@ namespace Easy.Toolkit
         IConnectConfiguration UseRemoteEndPoint(EndPoint remoteEndPoint);
 
         /// <summary>
-        /// execute when has exception
+        /// execute when has Exception
         /// </summary>
         /// <param name="errorCallback"></param>
         /// <returns></returns>
